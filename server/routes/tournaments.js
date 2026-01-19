@@ -1,0 +1,190 @@
+const express = require('express')
+const router = express.Router()
+const Razorpay = require('razorpay')
+const crypto = require('crypto')
+const Tournament = require('../models/Tournament')
+const Registration = require('../models/Registration')
+const { authMiddleware, adminMiddleware } = require('../middleware/auth')
+
+// Initialize Razorpay
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+})
+
+// Get all tournaments
+router.get('/', async (req, res) => {
+  try {
+    const tournaments = await Tournament.find().sort({ date: 1 })
+    res.json(tournaments)
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching tournaments' })
+  }
+})
+
+// Get tournament by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const tournament = await Tournament.findById(req.params.id)
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' })
+    }
+    res.json(tournament)
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching tournament' })
+  }
+})
+
+// Register for tournament
+router.post('/:id/register', authMiddleware, async (req, res) => {
+  try {
+    const tournament = await Tournament.findById(req.params.id)
+    
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' })
+    }
+
+    if (tournament.registeredTeams >= tournament.totalSlots) {
+      return res.status(400).json({ message: 'Tournament is full' })
+    }
+
+    const { teamName, teamLeader, players } = req.body
+
+    // Check if already registered
+    const existingReg = await Registration.findOne({
+      user: req.user._id,
+      tournament: tournament._id
+    })
+
+    if (existingReg) {
+      return res.status(400).json({ message: 'You are already registered for this tournament' })
+    }
+
+    if (tournament.type === 'paid') {
+      // Create Razorpay order
+      const amount = tournament.entryFee * 100 // Convert to paise
+      const order = await razorpay.orders.create({
+        amount,
+        currency: 'INR',
+        receipt: `tournament_${tournament._id}_${Date.now()}`
+      })
+
+      res.json({
+        orderId: order.id,
+        amount: order.amount,
+        currency: order.currency
+      })
+    } else {
+      // Free tournament - direct registration
+      const registration = new Registration({
+        user: req.user._id,
+        tournament: tournament._id,
+        teamName,
+        teamLeader,
+        players,
+        paymentStatus: 'completed',
+        amount: 0
+      })
+
+      await registration.save()
+      
+      tournament.registeredTeams += 1
+      await tournament.save()
+
+      res.status(201).json({ message: 'Registration successful', registration })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error registering for tournament' })
+  }
+})
+
+// Verify payment and complete registration
+router.post('/:id/verify-payment', authMiddleware, async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, teamData } = req.body
+
+    // Verify signature
+    const sign = razorpay_order_id + '|' + razorpay_payment_id
+    const expectedSign = crypto
+      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+      .update(sign.toString())
+      .digest('hex')
+
+    if (razorpay_signature !== expectedSign) {
+      return res.status(400).json({ message: 'Invalid payment signature' })
+    }
+
+    const tournament = await Tournament.findById(req.params.id)
+    
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' })
+    }
+
+    // Create registration
+    const registration = new Registration({
+      user: req.user._id,
+      tournament: tournament._id,
+      teamName: teamData.teamName,
+      teamLeader: teamData.teamLeader,
+      players: teamData.players,
+      paymentStatus: 'completed',
+      paymentId: razorpay_payment_id,
+      orderId: razorpay_order_id,
+      amount: tournament.entryFee
+    })
+
+    await registration.save()
+    
+    tournament.registeredTeams += 1
+    await tournament.save()
+
+    res.json({ message: 'Payment verified and registration complete', registration })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error verifying payment' })
+  }
+})
+
+// Create tournament (Admin only)
+router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const tournament = new Tournament(req.body)
+    await tournament.save()
+    res.status(201).json(tournament)
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating tournament' })
+  }
+})
+
+// Update tournament (Admin only)
+router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const tournament = await Tournament.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    )
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' })
+    }
+    res.json(tournament)
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating tournament' })
+  }
+})
+
+// Delete tournament (Admin only)
+router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const tournament = await Tournament.findByIdAndDelete(req.params.id)
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' })
+    }
+    res.json({ message: 'Tournament deleted successfully' })
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting tournament' })
+  }
+})
+
+module.exports = router
