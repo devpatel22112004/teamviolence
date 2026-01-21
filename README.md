@@ -94,11 +94,23 @@ teamviolence/
 
 ## 📱 Pages
 
+- **Home** - Hero section with stats
+- **About** - Team story and values
+- **Team** - Player profiles
+- **Tournaments** - Browse and filter events
+- **Tournament Details** - Register and pay
+- **Login/Register** - User authentication
+- **Dashboard** - User profile and registrations
 
-## 📚 Documentation
+## 📚 Complete Documentation
 
-- 🏗️ [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture & diagrams
-- ✅ [CHECKLIST.md](CHECKLIST.md) - Complete setup checklist
+📖 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete guide including:
+- Detailed setup instructions
+- Full API documentation
+- Deployment guides
+- Troubleshooting
+- Architecture details
+- Contributing guidelines
 
 ## 🎮 Screenshots
 
@@ -113,10 +125,34 @@ Your website includes:
 ## 🔐 Security
 
 - JWT authentication
-- Password hashing
+- Password hashing (bcrypt)
 - Protected routes
 - Payment verification
 - CORS configuration
+- Input validation
+
+## 🚀 Deployment
+
+See [DOCUMENTATION.md#deployment](DOCUMENTATION.md#-deployment) for detailed deployment instructions.
+
+**Quick Deploy Options:**
+- Vercel + Render (Recommended)
+- Netlify + Railway
+- AWS / DigitalOcean
+
+## 🆘 Support
+
+- 📖 Read [DOCUMENTATION.md](DOCUMENTATION.md)
+- 🐛 Open an issue
+- 💬 Start a discussion
+
+## 📄 License
+
+MIT License
+
+---
+
+**Built with ❤️ for Team VioLencE BGMI Clan**
 
 ## 🤝 Contributing
 
