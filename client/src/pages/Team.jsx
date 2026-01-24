@@ -101,53 +101,76 @@ const Team = () => {
   return (
     <div className="pt-20 pb-20">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-dark-950 to-dark-950" />
-        <div className="absolute inset-0 grid-overlay opacity-40" />
-        <div className="absolute -left-24 -top-24 w-96 h-96 bg-primary-500/25 blur-3xl" />
-        <div className="absolute right-10 top-10 w-72 h-72 bg-primary-700/25 blur-3xl" />
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/15 via-dark-950 to-dark-950" />
+        <div className="absolute inset-0 grid-overlay opacity-30" />
+        <div className="absolute -left-32 -top-32 w-96 h-96 bg-primary-500/20 blur-3xl" />
+        <div className="absolute -right-32 bottom-0 w-80 h-80 bg-primary-700/20 blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center"
+            transition={{ duration: 0.7 }}
+            className="space-y-8"
           >
             <div className="space-y-6">
-              <div className="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-100 text-sm font-semibold">
-                Prime roster reveal
-              </div>
-              <h1 className="text-5xl md:text-6xl font-display font-bold leading-tight">
-                Meet Our <span className="text-primary-400">Elite Squad</span>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/40 text-primary-100 text-sm font-bold"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+                </span>
+                Prime Roster Reveal
+              </motion.div>
+              <h1 className="text-5xl md:text-7xl font-display font-black leading-tight max-w-3xl">
+                Meet Our <span className="gradient-text">Elite Squad</span>
               </h1>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                Aggressive pushes, perfect sync, and icy clutch factor—this is Team VioLencE.
+              <p className="text-xl text-gray-300 leading-relaxed max-w-3xl">
+                Aggressive pushes, perfect coordination, and icy clutch factor. This is Team VioLencE.
               </p>
               <p className="text-gray-400 leading-relaxed max-w-3xl">
-                A roster of sharpshooters, shot-callers, and utility masters forged to dominate every lobby. Click any player to open a premium stat card with their role impact and social hubs.
+                A roster of sharpshooters, shot-callers, and utility masters forged to dominate every lobby. Click any player to unlock their premium stat card and role impact analysis.
               </p>
               <div className="flex flex-wrap gap-3">
-                {['Clutch DNA', 'LAN ready', 'Tier-1 scrims'].map((tag) => (
-                  <span key={tag} className="pill text-xs uppercase tracking-wide">{tag}</span>
+                {['🔥 Clutch DNA', '🎮 LAN ready', '⚡ Tier-1 scrims'].map((tag) => (
+                  <motion.span 
+                    key={tag} 
+                    whileHover={{ scale: 1.05 }}
+                    className="pill text-sm font-bold tracking-wide"
+                  >
+                    {tag}
+                  </motion.span>
                 ))}
               </div>
             </div>
 
+            {/* Hero Image Grid */}
             <div className="relative">
-              <div className="absolute -inset-6 bg-primary-500/10 blur-3xl rounded-full" />
-              <div className="relative grid grid-cols-3 gap-4">
-                {displayMembers.slice(0, 6).map((member) => (
-                  <div
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary-600/20 to-primary-700/20 blur-2xl rounded-3xl" />
+              <div className="relative grid grid-cols-3 gap-4 md:gap-6">
+                {displayMembers.slice(0, 6).map((member, idx) => (
+                  <motion.div
                     key={member._id}
-                    className="rounded-2xl overflow-hidden border border-primary-500/25 shadow-lg shadow-primary-900/30 cursor-pointer group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    whileHover={{ y: -10, scale: 1.05 }}
+                    className="rounded-2xl overflow-hidden border-2 border-primary-500/30 hover:border-primary-400 shadow-xl shadow-primary-900/30 cursor-pointer group"
                     onClick={() => setSelected(member)}
                   >
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="h-28 w-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
+                    <div className="aspect-square bg-gradient-to-br from-primary-600/30 to-primary-800/30 relative overflow-hidden">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -155,27 +178,33 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Team Members */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+      {/* Team Members Grid */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {displayMembers.map((member, index) => (
             <motion.div
               key={member._id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="card group hover:scale-[1.02] cursor-pointer"
+              transition={{ delay: index * 0.08 }}
+              whileHover={{ y: -8 }}
+              className="card-interactive group"
               onClick={() => setSelected(member)}
             >
               {/* Member Image */}
-              <div className="relative mb-6 overflow-hidden rounded-lg">
-                <div className="aspect-video bg-gradient-to-br from-primary-600/20 to-primary-800/20 flex items-center justify-center border border-primary-500/30">
+              <div className="relative mb-6 overflow-hidden rounded-2xl">
+                <div className="aspect-video bg-gradient-to-br from-primary-600/20 to-primary-800/20 flex items-center justify-center border border-primary-500/30 group-hover:border-primary-500/60 transition-all">
                   {member.image ? (
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   ) : (
                     <div className="text-6xl font-display font-bold text-primary-500/30">
@@ -186,123 +215,192 @@ const Team = () => {
               </div>
 
               {/* Member Info */}
-              <div>
-                <h3 className="text-2xl font-display font-bold mb-2">{member.name}</h3>
-                <p className="text-primary-500 font-semibold mb-4">{member.role}</p>
-                <p className="text-gray-400 mb-6">{member.description}</p>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-2xl font-display font-bold mb-1 group-hover:gradient-text transition-all">{member.name}</h3>
+                  <p className="text-primary-400 font-bold text-sm uppercase tracking-widest">{member.role}</p>
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">{member.description}</p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-dark-800 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-primary-500">{member.kills}+</div>
-                    <div className="text-sm text-gray-400">Total Kills</div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="glass-card p-4 text-center rounded-xl">
+                    <div className="text-2xl font-bold gradient-text">{member.kills}+</div>
+                    <div className="text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
                   </div>
-                  <div className="bg-dark-800 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-primary-500">{member.winRate}%</div>
-                    <div className="text-sm text-gray-400">Win Rate</div>
+                  <div className="glass-card p-4 text-center rounded-xl">
+                    <div className="text-2xl font-bold gradient-text">{member.winRate}%</div>
+                    <div className="text-xs text-gray-400 uppercase font-bold mt-1">Win Rate</div>
                   </div>
                 </div>
 
                 {/* Social Links */}
-                <div className="flex space-x-4">
+                <div className="flex space-x-3">
                   {member.socials?.discord && (
-                    <a
+                    <motion.a
                       href={member.socials.discord}
-                      className="text-gray-400 hover:text-primary-500 transition-colors"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-gray-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500"
                     >
-                      <FaDiscord size={24} />
-                    </a>
+                      <FaDiscord size={18} />
+                    </motion.a>
                   )}
                   {member.socials?.instagram && (
-                    <a
+                    <motion.a
                       href={member.socials.instagram}
-                      className="text-gray-400 hover:text-primary-500 transition-colors"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-gray-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500"
                     >
-                      <FaInstagram size={24} />
-                    </a>
+                      <FaInstagram size={18} />
+                    </motion.a>
                   )}
                   {member.socials?.youtube && (
-                    <a
+                    <motion.a
                       href={member.socials.youtube}
-                      className="text-gray-400 hover:text-primary-500 transition-colors"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-gray-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500"
                     >
-                      <FaYoutube size={24} />
-                    </a>
+                      <FaYoutube size={18} />
+                    </motion.a>
                   )}
                 </div>
 
-                <button className="mt-6 text-primary-300 font-semibold inline-flex items-center" onClick={(e) => { e.stopPropagation(); setSelected(member) }}>
-                  View profile
-                  <span className="ml-2">→</span>
-                </button>
+                <motion.button 
+                  whileHover={{ x: 5 }}
+                  className="mt-4 text-primary-300 hover:text-primary-200 font-bold inline-flex items-center text-sm uppercase tracking-widest" 
+                  onClick={(e) => { e.stopPropagation(); setSelected(member) }}
+                >
+                  View Profile
+                  <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                </motion.button>
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Modal */}
       <AnimatePresence>
         {selected && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center px-4"
+            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setSelected(null)}></div>
+            <motion.div 
+              className="absolute inset-0 bg-black/70 backdrop-blur-lg" 
+              onClick={() => setSelected(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            />
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-3xl glass-strong rounded-2xl p-6 border-primary-500/30"
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ type: "spring", damping: 25 }}
+              className="relative w-full max-w-4xl glass-strong rounded-3xl p-8 border border-primary-500/40 overflow-hidden max-h-[90vh] overflow-y-auto"
             >
-              <button
-                className="absolute top-4 right-4 text-gray-400 hover:text-primary-300"
+              {/* Close Button */}
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute top-6 right-6 text-gray-400 hover:text-primary-300 w-10 h-10 rounded-lg hover:bg-dark-800 flex items-center justify-center z-10"
                 onClick={() => setSelected(null)}
                 aria-label="Close profile"
               >
                 ✕
-              </button>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="overflow-hidden rounded-xl border border-primary-500/30">
+              </motion.button>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Image */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="overflow-hidden rounded-2xl border-2 border-primary-500/40"
+                >
                   <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="space-y-4">
+                </motion.div>
+
+                {/* Info */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="space-y-6"
+                >
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Prime roster</p>
-                    <h3 className="text-3xl font-display font-bold">{selected.name}</h3>
-                    <p className="text-primary-300 font-semibold">{selected.role}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-primary-400 font-bold">Prime Roster</p>
+                    <h3 className="text-4xl font-display font-black mb-2">{selected.name}</h3>
+                    <p className="text-primary-300 font-bold text-lg">{selected.role}</p>
                   </div>
-                  <p className="text-gray-300 leading-relaxed">{selected.description}</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-dark-900/80 rounded-lg p-3 border border-dark-700">
-                      <p className="text-xs text-gray-400">Total Kills</p>
-                      <p className="text-2xl font-bold text-primary-200">{selected.kills}+</p>
+
+                  <p className="text-gray-300 leading-relaxed text-lg">{selected.description}</p>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="glass-card p-4 rounded-xl border border-primary-500/30">
+                      <p className="text-xs text-gray-400 uppercase font-bold mb-2">Total Kills</p>
+                      <p className="text-3xl font-black gradient-text">{selected.kills}+</p>
                     </div>
-                    <div className="bg-dark-900/80 rounded-lg p-3 border border-dark-700">
-                      <p className="text-xs text-gray-400">Win Rate</p>
-                      <p className="text-2xl font-bold text-primary-200">{selected.winRate}%</p>
+                    <div className="glass-card p-4 rounded-xl border border-primary-500/30">
+                      <p className="text-xs text-gray-400 uppercase font-bold mb-2">Win Rate</p>
+                      <p className="text-3xl font-black gradient-text">{selected.winRate}%</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    {selected.socials?.instagram && (
-                      <a href={selected.socials.instagram} className="text-gray-400 hover:text-primary-300 transition-colors" target="_blank" rel="noreferrer">
-                        <FaInstagram size={24} />
-                      </a>
-                    )}
-                    {selected.socials?.youtube && (
-                      <a href={selected.socials.youtube} className="text-gray-400 hover:text-primary-300 transition-colors" target="_blank" rel="noreferrer">
-                        <FaYoutube size={24} />
-                      </a>
-                    )}
-                    {selected.socials?.discord && (
-                      <a href={selected.socials.discord} className="text-gray-400 hover:text-primary-300 transition-colors" target="_blank" rel="noreferrer">
-                        <FaDiscord size={24} />
-                      </a>
-                    )}
+
+                  {/* Social Links */}
+                  <div className="space-y-3 pt-4 border-t border-dark-700">
+                    <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">Follow {selected.name}</p>
+                    <div className="flex items-center space-x-3">
+                      {selected.socials?.instagram && (
+                        <motion.a 
+                          href={selected.socials.instagram} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          whileHover={{ scale: 1.15 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                        >
+                          <FaInstagram size={20} />
+                        </motion.a>
+                      )}
+                      {selected.socials?.youtube && (
+                        <motion.a 
+                          href={selected.socials.youtube} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          whileHover={{ scale: 1.15 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                        >
+                          <FaYoutube size={20} />
+                        </motion.a>
+                      )}
+                      {selected.socials?.discord && (
+                        <motion.a 
+                          href={selected.socials.discord} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          whileHover={{ scale: 1.15 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                        >
+                          <FaDiscord size={20} />
+                        </motion.a>
+                      )}
+                    </div>
                   </div>
-                </div>
+
+                  {/* Close Button Mobile */}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelected(null)}
+                    className="w-full mt-6 btn-secondary py-3"
+                  >
+                    Close Profile
+                  </motion.button>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

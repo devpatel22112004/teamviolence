@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaBars, FaTimes, FaTrophy, FaUsers, FaInfoCircle, FaHome, FaUser } from 'react-icons/fa'
+import { FaBars, FaTimes, FaTrophy, FaUsers, FaInfoCircle, FaHome, FaUser, FaGamepad } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
@@ -25,136 +25,171 @@ const Navbar = () => {
     { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
   ]
 
+  const isActive = (path) => location.pathname === path
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-dark-950/95 backdrop-blur-lg shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <img
-              src="/images/team-violence-logo.png"
-              alt="Team VioLencE logo"
-              className="h-12 w-12 rounded-lg border border-primary-500/40 shadow-lg shadow-primary-500/30"
-            />
-            <div className="text-3xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
-              Team VioLencE
-            </div>
-          </Link>
+    <>
+      {/* Animated Background Blur */}
+      {scrolled && (
+        <div className="fixed inset-0 top-0 h-32 bg-gradient-to-b from-dark-950/80 to-transparent pointer-events-none z-40" />
+      )}
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`flex items-center space-x-2 text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === link.path
-                    ? 'text-primary-500'
-                    : 'text-gray-300 hover:text-primary-500'
-                }`}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`navbar fixed w-full z-50 transition-all duration-300 ${
+          scrolled 
+            ? 'backdrop-blur-xl shadow-2xl shadow-primary-900/10' 
+            : ''
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Link 
+              to="/" 
+              className="flex items-center space-x-3 group"
+            >
+              <motion.div
+                whileHover={{ rotate: 5, scale: 1.05 }}
+                className="relative"
               >
-                <link.icon />
-                <span>{link.name}</span>
-              </Link>
-            ))}
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/dashboard"
-                  className="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-primary-500"
-                >
-                  <FaUser />
-                  <span>Dashboard</span>
-                </Link>
-                <button
-                  onClick={logout}
-                  className="btn-secondary !py-2 !px-6 text-sm"
-                >
-                  Logout
-                </button>
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300" />
+                <div className="relative bg-dark-950 rounded-lg border border-primary-500/40 p-2 group-hover:border-primary-500/70 transition">
+                  <FaGamepad className="text-primary-500 text-lg" />
+                </div>
+              </motion.div>
+              <div className="flex flex-col">
+                <div className="text-2xl font-display font-black gradient-text">
+                  Team VioLencE
+                </div>
+                <div className="text-xs text-primary-400 font-bold tracking-widest">ESPORTS</div>
               </div>
-            ) : (
-              <Link to="/login" className="btn-primary !py-2 !px-6 text-sm">
-                Login
-              </Link>
-            )}
-          </div>
+            </Link>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-300 hover:text-primary-500 transition-colors"
-          >
-            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-900/98 backdrop-blur-lg border-t border-dark-800"
-          >
-            <div className="px-4 py-6 space-y-4">
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center space-x-3 text-base font-medium transition-colors py-2 ${
-                    location.pathname === link.path
-                      ? 'text-primary-500'
-                      : 'text-gray-300 hover:text-primary-500'
+                  className={`nav-link flex items-center space-x-2 text-sm font-semibold ${
+                    isActive(link.path) ? 'active text-white' : 'text-gray-200'
                   }`}
                 >
-                  <link.icon />
+                  <link.icon className="text-lg" />
                   <span>{link.name}</span>
                 </Link>
               ))}
+            </div>
+
+            {/* Right Side - Auth */}
+            <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <>
                   <Link
                     to="/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 text-base font-medium text-gray-300 hover:text-primary-500 py-2"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
                   >
-                    <FaUser />
+                    <FaUser className="text-lg" />
                     <span>Dashboard</span>
                   </Link>
-                  <button
-                    onClick={() => {
-                      logout()
-                      setIsOpen(false)
-                    }}
-                    className="btn-secondary w-full"
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={logout}
+                    className="btn-secondary !py-2 !px-6 text-sm"
                   >
                     Logout
-                  </button>
+                  </motion.button>
                 </>
               ) : (
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="btn-primary w-full block text-center"
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  Login
-                </Link>
+                  <Link 
+                    to="/login" 
+                    className="btn-modern !py-2 !px-6 text-sm"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
               )}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden text-gray-300 hover:text-primary-500 transition-colors p-2 hover:bg-dark-800 rounded-lg"
+            >
+              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-dark-950/95 backdrop-blur-xl border-t border-primary-500/20"
+            >
+              <div className="px-4 py-6 space-y-2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`nav-link flex items-center space-x-3 text-base font-semibold ${
+                      isActive(link.path) ? 'active text-white' : 'text-gray-200'
+                    }`}
+                  >
+                    <link.icon className="text-lg" />
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
+                
+                <div className="border-t border-dark-800 pt-4 mt-4 space-y-3">
+                  {user ? (
+                    <>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-primary-400 hover:bg-dark-800"
+                      >
+                        <FaUser className="text-lg" />
+                        <span>Dashboard</span>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          logout()
+                          setIsOpen(false)
+                        }}
+                        className="btn-secondary w-full"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      to="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="btn-modern w-full block text-center"
+                    >
+                      Login
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   )
 }
 

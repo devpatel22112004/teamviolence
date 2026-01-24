@@ -99,4 +99,35 @@ router.get('/me', authMiddleware, async (req, res) => {
   })
 })
 
+// Google OAuth Login
+router.post('/google', async (req, res) => {
+  try {
+    const { googleToken } = req.body
+
+    // In production, you should verify the token with Google
+    // For now, we'll create/update user based on decoded info
+    // You can use: const { OAuth2Client } = require('google-auth-library')
+
+    // Placeholder: In real scenario, decode and verify the JWT token from Google
+    // const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    // const ticket = await client.verifyIdToken({
+    //   idToken: googleToken,
+    //   audience: process.env.GOOGLE_CLIENT_ID,
+    // });
+    // const payload = ticket.getPayload();
+
+    // For demo purposes, we'll create a simple user from the token
+    // In production, verify this properly
+
+    res.status(200).json({
+      message: 'Google login setup - token verification needed',
+      token: null,
+      user: null
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error during Google login' })
+  }
+})
+
 module.exports = router

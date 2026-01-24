@@ -56,8 +56,16 @@ export const AuthProvider = ({ children }) => {
     setUser(null)
   }
 
+  const loginWithGoogle = async (googleToken) => {
+    const res = await axios.post('/api/auth/google', { googleToken })
+    localStorage.setItem('token', res.data.token)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
+    setUser(res.data.user)
+    return res.data
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, loginWithGoogle }}>
       {children}
     </AuthContext.Provider>
   )
