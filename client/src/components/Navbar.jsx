@@ -228,12 +228,12 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Right Section - Account + Auth (md+) */}
-            <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-shrink-0">
+            {/* Right Section - Always Visible */}
+            <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
               {user ? (
                 <>
-                  {/* Dashboard Links - show from md, compact sizing; expand at lg+ */}
-                  <div className={`hidden md:flex items-center gap-1.5 lg:gap-2 xl:gap-3 transition-colors duration-300 border-l pl-3 lg:pl-4 whitespace-nowrap ${
+                  {/* Dashboard Links - XL screens only */}
+                  <div className={`hidden xl:flex items-center gap-2 transition-colors duration-300 border-l pl-4 ${
                     isHomePage && !scrolled ? 'border-white/20' : 'border-dark-700'
                   }`}>
                     {dashboardLinks.map((link) => (
@@ -241,7 +241,7 @@ const Navbar = () => {
                         <motion.div
                           whileHover={{ scale: 1.08, y: -2 }}
                           whileTap={{ scale: 0.96 }}
-                          className={`relative px-2.5 md:px-3 lg:px-3.5 py-1.5 md:py-2 rounded-lg transition-all duration-300 text-[11px] md:text-xs font-bold inline-flex items-center justify-center gap-1.5 flex-shrink-0 group ${
+                          className={`relative px-3 py-2 rounded-lg transition-all duration-300 text-xs font-bold inline-flex items-center justify-center gap-1.5 flex-shrink-0 group ${
                             isActive(link.path)
                               ? isHomePage && !scrolled
                                 ? 'text-white'
@@ -263,9 +263,9 @@ const Navbar = () => {
                             />
                           )}
                           <motion.div whileHover={{ rotate: 12 }} className="relative z-10 flex-shrink-0">
-                            <link.icon className="text-[11px] md:text-sm" />
+                            <link.icon className="text-xs" />
                           </motion.div>
-                          <span className="relative z-10 whitespace-nowrap text-[11px] md:text-xs">{link.name}</span>
+                          <span className="relative z-10 whitespace-nowrap text-xs">{link.name}</span>
                         </motion.div>
                       </Link>
                     ))}

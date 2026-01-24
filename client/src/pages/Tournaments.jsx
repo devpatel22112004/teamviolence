@@ -205,7 +205,7 @@ const Tournaments = () => {
               {/* Glow Effect */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl opacity-0 group-hover:opacity-30 blur transition duration-300" />
               
-              <div className="relative card-interactive rounded-2xl overflow-hidden">
+              <div className="relative card-interactive rounded-2xl overflow-hidden p-4 sm:p-5 md:p-6">
                 {/* Badge */}
                 {tournament.badge && (
                   <motion.div
