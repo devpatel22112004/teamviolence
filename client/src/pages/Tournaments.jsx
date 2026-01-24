@@ -221,11 +221,11 @@ const Tournaments = () => {
                   {/* Header */}
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-2">
-                        <h3 className="text-3xl font-display font-black group-hover:gradient-text transition-all">
+                      <div className="space-y-2 flex-1 min-w-0">
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-black group-hover:gradient-text transition-all leading-tight break-words">
                           {tournament.title}
                         </h3>
-                        <p className="text-primary-400 font-bold text-sm uppercase tracking-widest">
+                        <p className="text-primary-400 font-bold text-xs sm:text-sm uppercase tracking-widest">
                           {tournament.mode}
                         </p>
                       </div>
