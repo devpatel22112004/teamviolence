@@ -289,8 +289,7 @@ const TeamManagement = () => {
             <FaUsers className="text-7xl text-gray-600 mx-auto mb-6 opacity-50" />
             <h3 className="text-2xl font-bold mb-2">No Teams Yet</h3>
             <p className="text-gray-400 text-lg mb-8">Register for a tournament to create your first team!</p>
-            <motion.a
-            >
+            <div>
               <Link to="/tournaments" className="flex items-center justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -301,7 +300,7 @@ const TeamManagement = () => {
                   Browse Tournaments
                 </motion.button>
               </Link>
-            </motion.div
+            </div>
           </motion.div>
         )}
       </div>
