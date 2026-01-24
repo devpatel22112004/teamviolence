@@ -59,20 +59,10 @@ const Navbar = () => {
 
   const NavLink = ({ link, isHome }) => {
     const [isHovering, setIsHovering] = useState(false)
-    const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 })
-
-    const handleMouseMove = (e) => {
-      const rect = e.currentTarget.getBoundingClientRect()
-      setHoverPos({
-        x: e.clientX - rect.left - rect.width / 2,
-        y: e.clientY - rect.top - rect.height / 2,
-      })
-    }
 
     return (
       <Link to={link.path}>
         <motion.div
-          onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           whileHover={{ scale: 1.1, y: -3 }}
@@ -87,8 +77,8 @@ const Navbar = () => {
               : 'text-gray-300'
           }`}
         >
-          {/* Cursor-tracking spotlight disabled to avoid movement */}
-          {false && isHovering && (
+          {/* Static hover glow (no movement) */}
+          {isHovering && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -100,8 +90,9 @@ const Navbar = () => {
                   isHome ? 'bg-white/30' : 'bg-primary-400/30'
                 } blur-3xl`}
                 style={{
-                  left: `${hoverPos.x + 50}px`,
-                  top: `${hoverPos.y + 50}px`,
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
                 }}
               />
             </motion.div>
