@@ -271,24 +271,53 @@ const Navbar = () => {
                     ))}
                   </div>
 
-                  {/* Logout Button */}
+                  {/* Logout Button - Pill Shape */}
                   <motion.button
-                    whileHover={{ scale: 1.08, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.12, y: -3 }}
+                    whileTap={{ scale: 0.92 }}
                     onClick={logout}
-                    className={`relative px-4 lg:px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 inline-flex items-center justify-center gap-2 flex-shrink-0 group whitespace-nowrap ${
+                    className={`relative px-3 py-3 rounded-full text-sm font-bold transition-all duration-300 inline-flex items-center justify-center flex-shrink-0 group w-12 h-12 backdrop-blur-md border-2 overflow-hidden ${
                       isHomePage && !scrolled
-                        ? 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]'
-                        : 'text-red-400 drop-shadow-[0_0_12px_rgba(239,68,68,0.4)]'
+                        ? 'border-red-400/40 drop-shadow-[0_0_15px_rgba(248,113,113,0.5)]'
+                        : 'border-red-500/50 drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]'
                     }`}
+                    title="Logout"
                   >
+                    {/* Animated background gradient */}
                     <motion.div
-                      className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                        isHomePage && !scrolled ? 'bg-white/15' : 'bg-red-500/15'
+                      className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                        isHomePage && !scrolled 
+                          ? 'bg-gradient-to-br from-red-500/30 to-red-600/20' 
+                          : 'bg-gradient-to-br from-red-600/40 to-red-500/30'
                       }`}
                     />
-                    <FaSignOutAlt className="text-base relative z-10 flex-shrink-0" />
-                    <span className="hidden sm:inline relative z-10">Logout</span>
+                    
+                    {/* Glowing border on hover */}
+                    {isHomePage && !scrolled ? (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-red-400/60 opacity-0 group-hover:opacity-100"
+                        animate={{
+                          boxShadow: ['0 0 15px rgba(248,113,113,0.4)', '0 0 25px rgba(248,113,113,0.2)']
+                        }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-red-500/60 opacity-0 group-hover:opacity-100"
+                        animate={{
+                          boxShadow: ['0 0 15px rgba(239,68,68,0.5)', '0 0 25px rgba(239,68,68,0.3)']
+                        }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                      />
+                    )}
+                    
+                    <motion.div
+                      whileHover={{ rotate: 15, scale: 1.3 }}
+                      transition={{ type: 'spring', stiffness: 400 }}
+                      className="relative z-10"
+                    >
+                      <FaSignOutAlt className={`text-lg ${isHomePage && !scrolled ? 'text-red-300' : 'text-red-400'}`} />
+                    </motion.div>
                   </motion.button>
                 </>
               ) : (
