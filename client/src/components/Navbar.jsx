@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaBars, FaTimes, FaTrophy, FaUsers, FaInfoCircle, FaHome, FaUser, FaGamepad } from 'react-icons/fa'
+import { FaBars, FaTimes, FaTrophy, FaUsers, FaInfoCircle, FaHome, FaUser, FaGamepad, FaSignOutAlt } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
@@ -25,103 +25,119 @@ const Navbar = () => {
     { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
   ]
 
+  const dashboardLinks = [
+    { name: 'Dashboard', path: '/dashboard', icon: FaUser },
+    { name: 'My Teams', path: '/team-management', icon: FaUsers },
+    { name: 'My Registrations', path: '/my-registrations', icon: FaTrophy },
+    { name: 'Profile', path: '/profile', icon: FaUser },
+  ]
+
   const isActive = (path) => location.pathname === path
+
+  const NavLink = ({ link }) => (
+    <Link to={link.path}>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`relative flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 group ${
+          isActive(link.path)
+            ? 'text-primary-500 bg-primary-500/10 border border-primary-500/30'
+            : 'text-gray-300 hover:text-primary-400 border border-transparent'
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/0 via-primary-600/0 to-primary-600/0 group-hover:from-primary-600/5 group-hover:via-primary-600/10 group-hover:to-primary-600/5 rounded-lg transition-all duration-300" />
+        
+        <link.icon className="text-base relative z-10" />
+        <span className="text-sm font-semibold relative z-10">{link.name}</span>
+        
+        {isActive(link.path) && (
+          <motion.div
+            layoutId="navbar-active"
+            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full"
+            transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+          />
+        )}
+      </motion.div>
+    </Link>
+  )
 
   return (
     <>
-      {/* Animated Background Blur */}
-      {scrolled && (
-        <div className="fixed inset-0 top-0 h-32 bg-gradient-to-b from-dark-950/80 to-transparent pointer-events-none z-40" />
-      )}
-
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`navbar fixed w-full z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'backdrop-blur-xl shadow-2xl shadow-primary-900/10' 
-            : ''
+        transition={{ duration: 0.5 }}
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-dark-950/80 backdrop-blur-xl shadow-xl shadow-primary-900/5 border-b border-primary-500/10'
+            : 'bg-dark-950/40 backdrop-blur-sm'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3 group"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="flex-shrink-0"
             >
-              <motion.div
-                whileHover={{ rotate: 5, scale: 1.05 }}
-                className="relative"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300" />
-                <div className="relative bg-dark-950 rounded-lg border border-primary-500/40 p-2 group-hover:border-primary-500/70 transition">
-                  <FaGamepad className="text-primary-500 text-lg" />
-                </div>
-              </motion.div>
-              <div className="flex flex-col">
-                <div className="text-2xl font-display font-black gradient-text">
-                  Team VioLencE
-                </div>
-                <div className="text-xs text-primary-400 font-bold tracking-widest">ESPORTS</div>
-              </div>
-            </Link>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`nav-link flex items-center space-x-2 text-sm font-semibold ${
-                    isActive(link.path) ? 'active text-white' : 'text-gray-200'
-                  }`}
+              <Link to="/" className="flex items-center space-x-3 group cursor-pointer">
+                <motion.div
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                  className="relative"
                 >
-                  <link.icon className="text-lg" />
-                  <span>{link.name}</span>
-                </Link>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl blur opacity-0 group-hover:opacity-60 transition-all duration-300" />
+                  <div className="relative bg-dark-950 rounded-lg p-2.5 border border-primary-500/40 group-hover:border-primary-500/80 transition-all duration-300">
+                    <FaGamepad className="text-primary-500 text-xl" />
+                  </div>
+                </motion.div>
+                <div className="hidden sm:flex flex-col">
+                  <span className="text-xl font-display font-black gradient-text leading-tight">
+                    Team VioLencE
+                  </span>
+                  <span className="text-xs font-bold text-primary-400 tracking-widest">ESPORTS</span>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-1">
+              {navLinks.map((link) => (
+                <NavLink key={link.path} link={link} />
               ))}
             </div>
 
-            {/* Right Side - Auth */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Right Section */}
+            <div className="hidden md:flex items-center space-x-2">
               {user ? (
                 <>
-                  <Link
-                    to="/dashboard"
-                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
-                  >
-                    <FaUser className="text-lg" />
-                    <span>Dashboard</span>
-                  </Link>
-                  <Link
-                    to="/team-management"
-                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
-                  >
-                    <FaUsers className="text-lg" />
-                    <span>My Teams</span>
-                  </Link>
-                  <Link
-                    to="/my-registrations"
-                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
-                  >
-                    <FaTrophy className="text-lg" />
-                    <span>My Registrations</span>
-                  </Link>
-                  <Link
-                    to="/profile"
-                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
-                  >
-                    <FaUser className="text-lg" />
-                    <span>Profile</span>
-                  </Link>
+                  <div className="hidden lg:flex items-center space-x-1 border-l border-dark-700 pl-2 ml-2">
+                    {dashboardLinks.map((link) => (
+                      <Link key={link.path} to={link.path}>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 text-xs font-semibold ${
+                            isActive(link.path)
+                              ? 'text-primary-400 bg-primary-500/10 border border-primary-500/30'
+                              : 'text-gray-400 hover:text-primary-400 border border-transparent hover:bg-dark-800/50'
+                          }`}
+                        >
+                          <link.icon />
+                          <span className="hidden xl:inline">{link.name}</span>
+                        </motion.div>
+                      </Link>
+                    ))}
+                  </div>
+
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={logout}
-                    className="btn-secondary !py-2 !px-6 text-sm"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-primary-400 border border-transparent hover:border-primary-500/30 hover:bg-dark-800 transition-all duration-300"
                   >
-                    Logout
+                    <FaSignOutAlt className="text-base" />
+                    <span className="hidden sm:inline">Logout</span>
                   </motion.button>
                 </>
               ) : (
@@ -129,11 +145,12 @@ const Navbar = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link 
-                    to="/login" 
-                    className="btn-modern !py-2 !px-6 text-sm"
+                  <Link
+                    to="/login"
+                    className="flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 text-white text-sm font-bold hover:shadow-lg hover:shadow-primary-500/50 transition-all duration-300"
                   >
-                    Login
+                    <FaUser className="text-base" />
+                    <span>Login</span>
                   </Link>
                 </motion.div>
               )}
@@ -143,9 +160,14 @@ const Navbar = () => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-gray-300 hover:text-primary-500 transition-colors p-2 hover:bg-dark-800 rounded-lg"
+              className="md:hidden p-2.5 text-gray-300 hover:text-primary-500 border border-dark-700 rounded-lg hover:border-primary-500/30 transition-all duration-300"
             >
-              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              <motion.div
+                animate={{ rotate: isOpen ? 90 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              </motion.div>
             </motion.button>
           </div>
         </div>
@@ -157,51 +179,83 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-dark-950/95 backdrop-blur-xl border-t border-primary-500/20"
+              transition={{ duration: 0.3 }}
+              className="md:hidden bg-dark-950 border-t border-primary-500/10 backdrop-blur-xl"
             >
-              <div className="px-4 py-6 space-y-2">
+              <div className="px-4 py-4 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
                 {navLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`nav-link flex items-center space-x-3 text-base font-semibold ${
-                      isActive(link.path) ? 'active text-white' : 'text-gray-200'
-                    }`}
                   >
-                    <link.icon className="text-lg" />
-                    <span>{link.name}</span>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                        isActive(link.path)
+                          ? 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
+                          : 'text-gray-300 hover:text-primary-400 hover:bg-dark-800 border border-transparent'
+                      }`}
+                    >
+                      <link.icon className="text-lg" />
+                      <span className="font-semibold">{link.name}</span>
+                    </motion.div>
                   </Link>
                 ))}
-                
-                <div className="border-t border-dark-800 pt-4 mt-4 space-y-3">
+
+                {user && (
+                  <>
+                    <div className="border-t border-dark-700 pt-4 mt-4 space-y-2">
+                      <div className="text-xs font-semibold text-primary-400 px-4 py-2">YOUR ACCOUNT</div>
+                      {dashboardLinks.map((link) => (
+                        <Link
+                          key={link.path}
+                          to={link.path}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                              isActive(link.path)
+                                ? 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
+                                : 'text-gray-300 hover:text-primary-400 hover:bg-dark-800 border border-transparent'
+                            }`}
+                          >
+                            <link.icon className="text-lg" />
+                            <span className="font-semibold text-sm">{link.name}</span>
+                          </motion.div>
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                <div className="border-t border-dark-700 pt-4 mt-4 space-y-2">
                   {user ? (
-                    <>
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-primary-400 hover:bg-dark-800"
-                      >
-                        <FaUser className="text-lg" />
-                        <span>Dashboard</span>
-                      </Link>
-                      <button
-                        onClick={() => {
-                          logout()
-                          setIsOpen(false)
-                        }}
-                        className="btn-secondary w-full"
-                      >
-                        Logout
-                      </button>
-                    </>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        logout()
+                        setIsOpen(false)
+                      }}
+                      className="flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg bg-red-600/20 text-red-400 hover:bg-red-600/30 border border-red-500/30 font-semibold transition-all duration-300"
+                    >
+                      <FaSignOutAlt />
+                      <span>Logout</span>
+                    </motion.button>
                   ) : (
                     <Link
                       to="/login"
                       onClick={() => setIsOpen(false)}
-                      className="btn-modern w-full block text-center"
+                      className="block"
                     >
-                      Login
+                      <motion.button
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 text-white font-bold hover:shadow-lg hover:shadow-primary-500/50 transition-all duration-300"
+                      >
+                        <FaUser />
+                        <span>Login</span>
+                      </motion.button>
                     </Link>
                   )}
                 </div>
