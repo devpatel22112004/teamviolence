@@ -80,16 +80,16 @@ const Dashboard = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-2 break-words">
             Welcome, <span className="gradient-text">{user?.name}</span>
           </h1>
-          <p className="text-gray-400">Manage your tournament registrations and profile</p>
+          <p className="text-sm sm:text-base text-gray-400">Manage your tournament registrations and profile</p>
         </motion.div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

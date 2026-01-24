@@ -38,18 +38,18 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center pt-20 pb-20 px-4">
+    <div className="min-h-screen flex items-center justify-center pt-20 pb-20 px-4 sm:px-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md"
       >
-        <div className="card">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-display font-bold mb-2">
+        <div className="card p-6 sm:p-8">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-3xl sm:text-4xl font-display font-bold mb-2">
               Join <span className="text-primary-500">Team VioLencE</span>
             </h1>
-            <p className="text-gray-400">Create your account</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Create your account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">

@@ -120,22 +120,22 @@ const Home = () => {
                 <span>{slides[activeSlide].tag}</span>
               </div>
               <div>
-                <p className="text-gray-400 uppercase tracking-[0.3em] text-xs mb-3">Team VioLencE</p>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05]">
+                <p className="text-gray-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] text-xs mb-3">Team VioLencE</p>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black leading-tight sm:leading-[1.05]">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 via-primary-500 to-primary-700">{slides[activeSlide].title}</span>
                 </h1>
               </div>
-              <p className="text-lg md:text-xl text-gray-300 max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl">
                 {slides[activeSlide].subtitle}
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/tournaments" className="btn-primary text-lg inline-flex items-center">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                <Link to="/tournaments" className="btn-primary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center px-4 sm:px-6 py-3">
                   <FaPlay className="mr-2" />
-                  Watch & Register
+                  <span className="whitespace-nowrap">Watch & Register</span>
                 </Link>
-                <Link to="/team" className="btn-secondary text-lg inline-flex items-center">
+                <Link to="/team" className="btn-secondary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center px-4 sm:px-6 py-3">
                   <FaUsers className="mr-2" />
-                  Meet the Roster
+                  <span className="whitespace-nowrap">Meet the Roster</span>
                 </Link>
               </div>
 
@@ -211,13 +211,13 @@ const Home = () => {
 
       {/* Pillars + Stats */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10">
-          <div className="space-y-6">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-3xl md:text-4xl font-display font-bold">Signature System</h2>
-              <span className="text-sm text-primary-300 flex items-center"><FaShieldAlt className="mr-2" /> Anti-tilt protocols</span>
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 lg:gap-10">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Signature System</h2>
+              <span className="text-xs sm:text-sm text-primary-300 flex items-center"><FaShieldAlt className="mr-2" /> Anti-tilt protocols</span>
             </div>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               {pillars.map((pillar) => (
                 <div key={pillar.title} className="glass rounded-2xl p-5 border-primary-500/10 hover:border-primary-500/30 transition-all">
                   <div className="w-12 h-12 rounded-xl bg-primary-500/15 text-primary-200 flex items-center justify-center mb-4">
@@ -235,14 +235,14 @@ const Home = () => {
               <h3 className="text-xl font-semibold text-gray-100">Numbers that matter</h3>
               <span className="text-xs text-gray-400 uppercase tracking-widest">Live form</span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="bg-dark-900/80 rounded-xl p-4 border border-dark-800">
-                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-500/15 text-primary-200 mb-2">
+                <div key={stat.label} className="bg-dark-900/80 rounded-xl p-3 sm:p-4 border border-dark-800">
+                  <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-500/15 text-primary-200 mb-2 text-sm sm:text-base">
                     <stat.icon />
                   </div>
-                  <div className="text-2xl font-bold text-primary-200">{stat.value}</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
+                  <div className="text-xl sm:text-2xl font-bold text-primary-200">{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -252,20 +252,20 @@ const Home = () => {
 
       {/* Featured Tournaments Rail */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <div>
-            <p className="text-sm text-gray-400 uppercase tracking-widest">Live & upcoming</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">Featured Tournaments</h2>
+            <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">Live & upcoming</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Featured Tournaments</h2>
           </div>
-          <Link to="/tournaments" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-sm">
+          <Link to="/tournaments" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-xs sm:text-sm">
             See all <FaArrowRight className="ml-2" />
           </Link>
         </div>
-        <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
+        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0">
           {featuredTournaments.map((item) => (
             <div
               key={item.title}
-              className="min-w-[280px] md:min-w-[320px] snap-start glass-strong rounded-2xl p-6 border-primary-500/25"
+              className="min-w-[260px] sm:min-w-[280px] md:min-w-[320px] snap-start glass-strong rounded-2xl p-4 sm:p-6 border-primary-500/25"
             >
               <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${item.accent} mb-4`}>
                 {item.type}
@@ -298,12 +298,12 @@ const Home = () => {
 
       {/* Roster Spotlight */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <div>
-            <p className="text-sm text-gray-400 uppercase tracking-widest">Prime roster</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">Faces behind the tag</h2>
+            <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">Prime roster</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Faces behind the tag</h2>
           </div>
-          <Link to="/team" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-sm">
+          <Link to="/team" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-xs sm:text-sm">
             Full lineup <FaArrowRight className="ml-2" />
           </Link>
         </div>
@@ -336,26 +336,26 @@ const Home = () => {
 
       {/* CTA */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-strong rounded-3xl p-10 text-center border-primary-500/25">
+        <div className="glass-strong rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 text-center border-primary-500/25">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
           >
-            <p className="text-sm text-primary-200 uppercase tracking-[0.3em]">Prime drop</p>
-            <h2 className="text-4xl md:text-5xl font-display font-bold">
+            <p className="text-xs sm:text-sm text-primary-200 uppercase tracking-[0.2em] sm:tracking-[0.3em]">Prime drop</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold px-2">
               Ready to queue with Team VioLencE?
             </h2>
-            <p className="text-gray-300 max-w-3xl mx-auto text-lg">
+            <p className="text-gray-300 max-w-3xl mx-auto text-sm sm:text-base md:text-lg px-2">
               Secure your slot in our next event, scrim with the roster, and experience a studio-grade esports platform built for the spotlight.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/tournaments" className="btn-primary text-lg inline-flex items-center">
-                <FaTrophy className="mr-2" /> View tournaments
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center px-2">
+              <Link to="/tournaments" className="btn-primary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center">
+                <FaTrophy className="mr-2" /> <span>View tournaments</span>
               </Link>
-              <Link to="/about" className="btn-secondary text-lg inline-flex items-center">
-                <FaGamepad className="mr-2" /> Learn the story
+              <Link to="/about" className="btn-secondary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center">
+                <FaGamepad className="mr-2" /> <span>Learn the story</span>
               </Link>
             </div>
           </motion.div>

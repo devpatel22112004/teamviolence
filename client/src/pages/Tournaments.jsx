@@ -137,20 +137,20 @@ const Tournaments = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-center max-w-4xl mx-auto space-y-8"
+            className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-6 md:space-y-8 px-4"
           >
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/40 text-primary-100 text-sm font-bold"
+              className="inline-flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/40 text-primary-100 text-xs sm:text-sm font-bold"
             >
               <FaFire className="text-primary-400 animate-bounce" />
-              Live Tournaments
+              <span>Live Tournaments</span>
             </motion.div>
-            <h1 className="text-5xl md:text-7xl font-display font-black leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-black leading-tight">
               Join <span className="gradient-text">Tournaments</span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-2">
               Compete in exciting BGMI tournaments with incredible prize pools. Free and paid options available for all skill levels!
             </p>
           </motion.div>
@@ -158,11 +158,11 @@ const Tournaments = () => {
       </section>
 
       {/* Filter Tabs */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4"
         >
           {[
             { value: 'all', label: '🎮 All Tournaments', icon: '📋' },
@@ -174,7 +174,7 @@ const Tournaments = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setFilter(tab.value)}
-              className={`px-8 py-3 rounded-xl font-bold text-lg transition-all border-2 uppercase tracking-widest ${
+              className={`w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base lg:text-lg transition-all border-2 uppercase tracking-wider sm:tracking-widest ${
                 filter === tab.value
                   ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white border-primary-500 shadow-xl shadow-primary-500/50'
                   : 'bg-dark-800/60 text-gray-300 hover:bg-dark-700 border-dark-700 backdrop-blur-sm'
@@ -193,7 +193,7 @@ const Tournaments = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="grid md:grid-cols-2 lg:grid-cols-2 gap-8"
+          className="grid gap-6 sm:gap-8 md:grid-cols-2"
         >
           {filteredTournaments.map((tournament, index) => (
             <motion.div
@@ -258,26 +258,26 @@ const Tournaments = () => {
                   </div>
 
                   {/* Tournament Details Grid */}
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3">
                     {/* Prize Pool */}
-                    <div className="glass-card p-4 rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
-                      <FaTrophy className="text-primary-400 text-2xl mx-auto mb-2" />
-                      <p className="text-xs text-gray-400 font-bold mb-1">Prize Pool</p>
-                      <p className="text-lg font-black gradient-text">₹{tournament.prizePool.toLocaleString()}</p>
+                    <div className="glass-card p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
+                      <FaTrophy className="text-primary-400 text-lg sm:text-xl md:text-2xl mx-auto mb-1 sm:mb-2" />
+                      <p className="text-[10px] sm:text-xs text-gray-400 font-bold mb-1">Prize Pool</p>
+                      <p className="text-sm sm:text-base md:text-lg font-black gradient-text">₹{tournament.prizePool.toLocaleString()}</p>
                     </div>
 
                     {/* Slots */}
-                    <div className="glass-card p-4 rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
-                      <FaUsers className="text-primary-400 text-2xl mx-auto mb-2" />
-                      <p className="text-xs text-gray-400 font-bold mb-1">Slots</p>
-                      <p className="text-lg font-black gradient-text">{tournament.registeredTeams}/{tournament.totalSlots}</p>
+                    <div className="glass-card p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
+                      <FaUsers className="text-primary-400 text-lg sm:text-xl md:text-2xl mx-auto mb-1 sm:mb-2" />
+                      <p className="text-[10px] sm:text-xs text-gray-400 font-bold mb-1">Slots</p>
+                      <p className="text-sm sm:text-base md:text-lg font-black gradient-text">{tournament.registeredTeams}/{tournament.totalSlots}</p>
                     </div>
 
                     {/* Date */}
-                    <div className="glass-card p-4 rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
-                      <FaCalendar className="text-primary-400 text-2xl mx-auto mb-2" />
-                      <p className="text-xs text-gray-400 font-bold mb-1">Date</p>
-                      <p className="text-sm font-black gradient-text">{new Date(tournament.date).toLocaleDateString('en-IN', {
+                    <div className="glass-card p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-primary-500/20 text-center group-hover:border-primary-500/50 transition-all">
+                      <FaCalendar className="text-primary-400 text-lg sm:text-xl md:text-2xl mx-auto mb-1 sm:mb-2" />
+                      <p className="text-[10px] sm:text-xs text-gray-400 font-bold mb-1">Date</p>
+                      <p className="text-xs sm:text-sm font-black gradient-text">{new Date(tournament.date).toLocaleDateString('en-IN', {
                         day: '2-digit',
                         month: 'short',
                       })}</p>
