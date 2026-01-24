@@ -169,8 +169,8 @@ const Navbar = () => {
             : 'bg-dark-950/40 backdrop-blur-sm'
         }`}
       >
-        {/* Cursor-tracking ambient glow - constrained to navbar */}
-        {isInsideNav && (
+        {/* Cursor-tracking ambient glow - disabled to avoid jitter */}
+        {false && isInsideNav && (
           <motion.div
             className="absolute inset-0 pointer-events-none overflow-hidden"
             style={{
