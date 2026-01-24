@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaTrophy, FaCalendar, FaUsers, FaRupeeSign, FaTimes } from 'react-icons/fa'
 import axios from 'axios'
@@ -177,12 +178,15 @@ const MyRegistrations = () => {
             <FaTrophy className="text-6xl text-gray-600 mx-auto mb-4 opacity-50" />
             <p className="text-gray-400 text-xl font-semibold">No registrations yet</p>
             <p className="text-gray-500 mt-2">Register for tournaments to see them here</p>
-            <a
-              href="/tournaments"
-              className="inline-block mt-6 btn-modern py-3 px-8"
-            >
-              Browse Tournaments
-            </a>
+            <Link to="/tournaments">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block mt-6 btn-modern py-3 px-8"
+              >
+                Browse Tournaments
+              </motion.button>
+            </Link>
           </motion.div>
         )}
       </div>

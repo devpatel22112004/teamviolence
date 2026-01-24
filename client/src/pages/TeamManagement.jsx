@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaUsers, FaEdit, FaTrash, FaTimes, FaPlus, FaUserShield, FaCrown } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
@@ -289,14 +290,18 @@ const TeamManagement = () => {
             <h3 className="text-2xl font-bold mb-2">No Teams Yet</h3>
             <p className="text-gray-400 text-lg mb-8">Register for a tournament to create your first team!</p>
             <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/tournaments"
-              className="btn-modern inline-block"
             >
-              <FaPlus className="inline mr-2" />
-              Browse Tournaments
-            </motion.a>
+              <Link to="/tournaments" className="flex items-center justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-modern inline-flex items-center"
+                >
+                  <FaPlus className="inline mr-2" />
+                  Browse Tournaments
+                </motion.button>
+              </Link>
+            </motion.div
           </motion.div>
         )}
       </div>

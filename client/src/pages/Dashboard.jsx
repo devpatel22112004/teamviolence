@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaTrophy, FaUser, FaCalendar, FaCheckCircle, FaClock, FaEdit, FaTimes, FaGamepad, FaUsers, FaMedal } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
@@ -382,14 +383,15 @@ const Dashboard = () => {
               <FaTrophy className="text-7xl text-gray-600 mx-auto mb-6 opacity-50" />
               <h3 className="text-2xl font-bold mb-2">No Tournaments Yet</h3>
               <p className="text-gray-400 text-lg mb-8">Join your first tournament and start competing!</p>
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="/tournaments"
-                className="btn-modern inline-block"
-              >
-                Browse Tournaments
-              </motion.a>
+              <Link to="/tournaments">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-modern inline-block"
+                >
+                  Browse Tournaments
+                </motion.button>
+              </Link>
             </motion.div>
           )}
         </motion.div>
