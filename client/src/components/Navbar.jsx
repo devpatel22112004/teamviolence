@@ -87,8 +87,8 @@ const Navbar = () => {
               : 'text-gray-300'
           }`}
         >
-          {/* Cursor-tracking spotlight on hover */}
-          {isHovering && (
+          {/* Cursor-tracking spotlight disabled to avoid movement */}
+          {false && isHovering && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
