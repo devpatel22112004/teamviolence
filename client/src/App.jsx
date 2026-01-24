@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
+import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -21,6 +22,8 @@ function App() {
     <AuthProvider>
       <Router basename="/teamviolence">
         <div className="min-h-screen flex flex-col">
+          {/* Ensure every route starts at the top */}
+          <ScrollToTop behavior="smooth" />
           <Navbar />
           <main className="flex-grow">
             <Routes>
