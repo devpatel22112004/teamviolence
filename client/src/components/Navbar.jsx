@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaBars, FaTimes, FaTrophy, FaUsers, FaInfoCircle, FaHome, FaUser, FaGamepad, FaSignOutAlt, FaCompass } from 'react-icons/fa'
@@ -8,6 +8,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isInsideNav, setIsInsideNav] = useState(false)
+  const navRef = useRef(null)
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
@@ -18,7 +20,15 @@ const Navbar = () => {
     }
     
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
+      if (navRef.current) {
+        const rect = navRef.current.getBoundingClientRect()
+        const isInside = e.clientY >= rect.top && e.clientY <= rect.bottom
+        setIsInsideNav(isInside)
+        
+        if (isInside) {
+          setMousePos({ x: e.clientX, y: e.clientY - rect.top })
+        }
+      }
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -144,6 +154,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
+        ref={navRef}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -157,19 +168,21 @@ const Navbar = () => {
             : 'bg-dark-950/40 backdrop-blur-sm'
         }`}
       >
-        {/* Cursor-tracking ambient glow background */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            background: isHomePage && !scrolled
-              ? `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.05), transparent 80%)`
-              : `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(14,165,233,0.04), transparent 80%)`
-          }}
-          transition={{ default: { duration: 0 } }}
-        />
+        {/* Cursor-tracking ambient glow background - constrained to navbar */}
+        {isInsideNav && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none overflow-hidden"
+            style={{
+              background: isHomePage && !scrolled
+                ? `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.05), transparent 80%)`
+                : `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(14,165,233,0.04), transparent 80%)`
+            }}
+            transition={{ default: { duration: 0 } }}
+          />
+        )}
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-[auto_1fr_auto] items-center h-20 gap-6">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center h-20 gap-4 lg:gap-6">
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -216,8 +229,8 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Right Section */}
-            <div className="hidden md:flex items-center gap-3">
+            {/* Right Section - Prevent Overflow */}
+            <div className="hidden md:flex items-center gap-2 lg:gap-3 overflow-hidden">
               {user ? (
                 <>
                   <div className={`hidden lg:flex items-center gap-2 transition-colors duration-300 ${
@@ -228,7 +241,7 @@ const Navbar = () => {
                         <motion.div
                           whileHover={{ scale: 1.07, y: -2 }}
                           whileTap={{ scale: 0.96 }}
-                          className={`relative px-3.5 py-2 rounded-xl transition-all duration-300 text-xs font-extrabold inline-flex items-center justify-center gap-2 ${
+                          className={`relative px-3 py-2 rounded-xl transition-all duration-300 text-xs font-extrabold inline-flex items-center justify-center gap-1.5 flex-shrink-0 ${
                             isActive(link.path)
                               ? isHomePage && !scrolled
                                 ? 'text-white'
@@ -250,9 +263,9 @@ const Navbar = () => {
                             />
                           )}
                           <motion.div whileHover={{ rotate: 12 }} className="relative z-10">
-                            <link.icon className="text-sm" />
+                            <link.icon className="text-sm flex-shrink-0" />
                           </motion.div>
-                          <span className="relative z-10 whitespace-nowrap">{link.name}</span>
+                          <span className="relative z-10 whitespace-nowrap hidden xl:inline">{link.name}</span>
                         </motion.div>
                       </Link>
                     ))}
@@ -262,7 +275,7 @@ const Navbar = () => {
                     whileHover={{ scale: 1.08, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={logout}
-                    className={`relative px-4 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 ${
+                    className={`relative px-3 lg:px-4 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 flex-shrink-0 ${
                       isHomePage && !scrolled
                         ? 'text-white hover:text-gray-100 drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]'
                         : 'text-red-400 hover:text-red-300 drop-shadow-[0_0_12px_rgba(239,68,68,0.35)]'
@@ -273,22 +286,22 @@ const Navbar = () => {
                         isHomePage && !scrolled ? 'bg-white/15' : 'bg-red-500/15'
                       }`}
                     />
-                    <FaSignOutAlt className="text-base relative z-10" />
+                    <FaSignOutAlt className="text-base relative z-10 flex-shrink-0" />
                     <span className="hidden sm:inline relative z-10">Logout</span>
                   </motion.button>
                 </>
               ) : (
-                <Link to="/login" className="block">
+                <Link to="/login" className="block flex-shrink-0">
                   <motion.button
                     whileHover={{ scale: 1.08, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative px-6 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 ${
+                    className={`relative px-4 lg:px-6 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 ${
                       isHomePage && !scrolled
                         ? 'bg-gradient-to-r from-white to-gray-200 text-black drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
                         : 'bg-gradient-to-r from-primary-600 to-primary-500 text-white drop-shadow-[0_0_12px_rgba(14,165,233,0.35)]'
                     }`}
                   >
-                    <FaUser className="text-base" />
+                    <FaUser className="text-base flex-shrink-0" />
                     <span>Login</span>
                   </motion.button>
                 </Link>
