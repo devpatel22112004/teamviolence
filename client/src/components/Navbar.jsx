@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
@@ -15,8 +16,17 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
     }
+    
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+    }
+
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
   }, [])
 
   const navLinks = [
@@ -35,48 +45,101 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path
 
-  const NavLink = ({ link, isHome }) => (
-    <Link to={link.path}>
-      <motion.div
-        whileHover={{ scale: 1.08, y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        className={`relative flex items-center space-x-2 px-4 py-2.5 rounded-lg transition-all duration-300 group ${
-          isActive(link.path)
-            ? isHome
-              ? 'text-white bg-gradient-to-r from-primary-600 to-primary-500 shadow-lg shadow-primary-600/40'
-              : 'text-primary-400 bg-primary-500/15 border border-primary-500/40'
-            : isHome
-            ? 'text-gray-200 hover:text-white hover:bg-white/5 border border-white/10'
-            : 'text-gray-300 hover:text-primary-300 border border-transparent'
-        }`}
-      >
-        <div className={`absolute inset-0 rounded-lg opacity-0 group-hover:opacity-20 transition-all duration-300 ${
-          isHome ? 'bg-white' : 'bg-primary-600'
-        }`} />
-        
+  const NavLink = ({ link, isHome }) => {
+    const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 })
+    const [isHovering, setIsHovering] = useState(false)
+
+    const handleMouseMove = (e) => {
+      const rect = e.currentTarget.getBoundingClientRect()
+      setHoverPos({
+        x: e.clientX - rect.left - rect.width / 2,
+        y: e.clientY - rect.top - rect.height / 2,
+      })
+    }
+
+    return (
+      <Link to={link.path}>
         <motion.div
-          whileHover={{ rotate: 10 }}
-          transition={{ type: 'spring', stiffness: 300 }}
-          className="relative z-10"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          whileHover={{ scale: 1.09, y: -3 }}
+          whileTap={{ scale: 0.96 }}
+          className={`relative px-5 py-2.5 rounded-xl transition-all duration-300 group inline-flex items-center gap-3 ${
+            isActive(link.path)
+              ? isHome
+                ? 'text-white'
+                : 'text-primary-300'
+              : isHome
+              ? 'text-gray-200'
+              : 'text-gray-300'
+          }`}
         >
-          <link.icon className={`text-lg ${isActive(link.path) && isHome ? 'text-white' : ''}`} />
-        </motion.div>
-        <span className="text-sm font-bold relative z-10 tracking-wide">{link.name}</span>
-        
-        {isActive(link.path) && (
+          {/* Cursor-tracking spotlight */}
+          {isHovering && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none"
+            >
+              <div
+                className={`absolute w-32 h-32 rounded-full pointer-events-none ${
+                  isHome ? 'bg-white/20' : 'bg-primary-400/20'
+                } blur-2xl`}
+                style={{
+                  left: `${hoverPos.x + 50}px`,
+                  top: `${hoverPos.y + 50}px`,
+                  filter: 'blur(20px)',
+                }}
+              />
+            </motion.div>
+          )}
+
+          {/* Premium gradient background on active/hover */}
+          {(isActive(link.path) || isHovering) && (
+            <motion.div
+              layoutId={`nav-pill-${link.path}`}
+              className={`absolute inset-0 rounded-xl ${
+                isActive(link.path)
+                  ? isHome
+                    ? 'bg-gradient-to-br from-white/20 to-white/5 shadow-lg shadow-white/20'
+                    : 'bg-gradient-to-br from-primary-500/20 to-primary-500/5 shadow-lg shadow-primary-500/30'
+                  : isHome
+                  ? 'bg-white/10 shadow-lg shadow-white/20'
+                  : 'bg-primary-500/10 shadow-lg shadow-primary-500/25'
+              }`}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+            />
+          )}
+
+          {/* Border glow on hover */}
           <motion.div
-            layoutId="navbar-active"
-            className={`absolute -bottom-1.5 left-0 right-0 h-1 rounded-full ${
-              isHome
-                ? 'bg-white shadow-lg shadow-white/50'
-                : 'bg-gradient-to-r from-primary-400 to-primary-600 shadow-lg shadow-primary-600/40'
-            }`}
-            transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+            className={`absolute inset-0 rounded-xl border pointer-events-none ${
+              isActive(link.path)
+                ? isHome
+                  ? 'border-white/40'
+                  : 'border-primary-400/40'
+                : isHome
+                ? 'border-white/20'
+                : 'border-primary-500/20'
+            } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
           />
-        )}
-      </motion.div>
-    </Link>
-  )
+
+          <motion.div
+            whileHover={{ rotate: 12, scale: 1.15 }}
+            transition={{ type: 'spring', stiffness: 400 }}
+            className="relative z-10"
+          >
+            <link.icon className="text-lg" />
+          </motion.div>
+          <span className="text-sm font-extrabold tracking-wide relative z-10">
+            {link.name}
+          </span>
+        </motion.div>
+      </Link>
+    )
+  }
 
   return (
     <>
@@ -94,14 +157,25 @@ const Navbar = () => {
             : 'bg-dark-950/40 backdrop-blur-sm'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+        {/* Cursor-tracking ambient glow background */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          style={{
+            background: isHomePage && !scrolled
+              ? `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.05), transparent 80%)`
+              : `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(14,165,233,0.04), transparent 80%)`
+          }}
+          transition={{ default: { duration: 0 } }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center h-20 gap-6">
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex-shrink-0"
             >
-              <Link to="/" className="flex items-center space-x-3 group cursor-pointer">
+              <Link to="/" className="flex items-center gap-3 group cursor-pointer">
                 <motion.div
                   whileHover={{ rotate: 15, scale: 1.15 }}
                   transition={{ type: 'spring', stiffness: 300 }}
@@ -135,75 +209,89 @@ const Navbar = () => {
               </Link>
             </motion.div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
+            {/* Desktop Navigation - Center */}
+            <div className="hidden lg:flex justify-center items-center gap-2">
               {navLinks.map((link) => (
                 <NavLink key={link.path} link={link} isHome={isHomePage && !scrolled} />
               ))}
             </div>
 
             {/* Right Section */}
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center gap-3">
               {user ? (
                 <>
-                  <div className={`hidden lg:flex items-center space-x-1 transition-colors duration-300 ${
-                    isHomePage && !scrolled ? 'border-l border-white/20 pl-2 ml-2' : 'border-l border-dark-700 pl-2 ml-2'
+                  <div className={`hidden lg:flex items-center gap-2 transition-colors duration-300 ${
+                    isHomePage && !scrolled ? 'border-l border-white/20 pl-3 ml-0' : 'border-l border-dark-700 pl-3 ml-0'
                   }`}>
                     {dashboardLinks.map((link) => (
                       <Link key={link.path} to={link.path}>
                         <motion.div
-                          whileHover={{ scale: 1.08, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-300 text-xs font-bold ${
+                          whileHover={{ scale: 1.07, y: -2 }}
+                          whileTap={{ scale: 0.96 }}
+                          className={`relative px-3.5 py-2 rounded-xl transition-all duration-300 text-xs font-extrabold inline-flex items-center justify-center gap-2 ${
                             isActive(link.path)
                               ? isHomePage && !scrolled
-                                ? 'text-white bg-white/15 border border-white/30'
-                                : 'text-primary-400 bg-primary-500/10 border border-primary-500/30'
+                                ? 'text-white'
+                                : 'text-primary-300'
                               : isHomePage && !scrolled
-                              ? 'text-gray-200 hover:text-white border border-white/10 hover:bg-white/10'
-                              : 'text-gray-400 hover:text-primary-400 border border-transparent hover:bg-dark-800/50'
+                              ? 'text-gray-200'
+                              : 'text-gray-400'
                           }`}
                         >
-                          <motion.div whileHover={{ rotate: 10 }}>
-                            <link.icon />
+                          {(isActive(link.path)) && (
+                            <motion.div
+                              layoutId={`dash-pill-${link.path}`}
+                              className={`absolute inset-0 rounded-xl ${
+                                isHomePage && !scrolled
+                                  ? 'bg-white/15 shadow-lg shadow-white/15'
+                                  : 'bg-primary-500/10 shadow-lg shadow-primary-500/20'
+                              }`}
+                              transition={{ type: 'spring', stiffness: 200 }}
+                            />
+                          )}
+                          <motion.div whileHover={{ rotate: 12 }} className="relative z-10">
+                            <link.icon className="text-sm" />
                           </motion.div>
-                          <span className="hidden xl:inline">{link.name}</span>
+                          <span className="relative z-10 whitespace-nowrap">{link.name}</span>
                         </motion.div>
                       </Link>
                     ))}
                   </div>
 
                   <motion.button
-                    whileHover={{ scale: 1.08 }}
+                    whileHover={{ scale: 1.08, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={logout}
-                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+                    className={`relative px-4 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 ${
                       isHomePage && !scrolled
-                        ? 'text-white hover:text-gray-100 border border-white/20 hover:border-white/40 hover:bg-white/10'
-                        : 'text-gray-300 hover:text-primary-400 border border-transparent hover:border-primary-500/30 hover:bg-dark-800'
+                        ? 'text-white hover:text-gray-100 drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]'
+                        : 'text-red-400 hover:text-red-300 drop-shadow-[0_0_12px_rgba(239,68,68,0.35)]'
                     }`}
                   >
-                    <FaSignOutAlt className="text-base" />
-                    <span className="hidden sm:inline">Logout</span>
+                    <motion.div
+                      className={`absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300 ${
+                        isHomePage && !scrolled ? 'bg-white/15' : 'bg-red-500/15'
+                      }`}
+                    />
+                    <FaSignOutAlt className="text-base relative z-10" />
+                    <span className="hidden sm:inline relative z-10">Logout</span>
                   </motion.button>
                 </>
               ) : (
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    to="/login"
-                    className={`flex items-center space-x-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+                <Link to="/login" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative px-6 py-2.5 rounded-xl text-sm font-extrabold transition-all duration-300 inline-flex items-center gap-2 ${
                       isHomePage && !scrolled
-                        ? 'bg-gradient-to-r from-white to-gray-200 text-black hover:shadow-lg hover:shadow-white/50'
-                        : 'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:shadow-lg hover:shadow-primary-500/50'
+                        ? 'bg-gradient-to-r from-white to-gray-200 text-black drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                        : 'bg-gradient-to-r from-primary-600 to-primary-500 text-white drop-shadow-[0_0_12px_rgba(14,165,233,0.35)]'
                     }`}
                   >
                     <FaUser className="text-base" />
                     <span>Login</span>
-                  </Link>
-                </motion.div>
+                  </motion.button>
+                </Link>
               )}
             </div>
 
@@ -211,7 +299,7 @@ const Navbar = () => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden p-2.5 rounded-lg transition-all duration-300 ${
+              className={`md:hidden p-2.5 rounded-xl transition-all duration-300 ${
                 isHomePage && !scrolled
                   ? 'text-white hover:text-gray-200 border border-white/20 hover:border-white/40 hover:bg-white/10'
                   : 'text-gray-300 hover:text-primary-500 border border-dark-700 hover:border-primary-500/30'
