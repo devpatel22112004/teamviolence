@@ -12,12 +12,14 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import TeamManagement from './pages/TeamManagement'
+import MyRegistrations from './pages/MyRegistrations'
+import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/teamviolence">
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-grow">
@@ -42,6 +44,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <TeamManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/my-registrations" 
+                element={
+                  <ProtectedRoute>
+                    <MyRegistrations />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/profile" 
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
                   </ProtectedRoute>
                 } 
               />

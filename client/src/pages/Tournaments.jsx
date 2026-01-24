@@ -30,6 +30,7 @@ const Tournaments = () => {
       setTournaments(res.data)
     } catch (error) {
       console.error('Error fetching tournaments:', error)
+      toast.error('Unable to load tournaments. Using demo data.')
       setTournaments(defaultTournaments)
     } finally {
       setLoading(false)
@@ -415,48 +416,63 @@ const Tournaments = () => {
 
                 {/* Registration Form */}
                 {user ? (
-                  <form onSubmit={handleRegister} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Name</label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.teamName}
-                        onChange={(e) => setFormData({...formData, teamName: e.target.value})}
-                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
-                        placeholder="Enter your team name"
-                      />
+                  selectedTournament.type === 'paid' ? (
+                    <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-6 text-center space-y-4">
+                      <p className="text-amber-100 font-semibold text-lg">💰 Paid Tournament</p>
+                      <p className="text-amber-200 text-sm">
+                        This is a paid tournament requiring payment processing. 
+                      </p>
+                      <p className="text-amber-200 text-sm">
+                        For now, please register for FREE tournaments to test the system.
+                      </p>
+                      <p className="text-amber-300 text-xs font-bold">
+                        Paid tournaments will be available soon!
+                      </p>
                     </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Leader</label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.leaderName}
-                        onChange={(e) => setFormData({...formData, leaderName: e.target.value})}
-                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
-                        placeholder="Enter leader name"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Members (comma separated)</label>
-                      <textarea
-                        value={formData.members}
-                        onChange={(e) => setFormData({...formData, members: e.target.value})}
-                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
-                        placeholder="Player1, Player2, Player3, Player4"
-                        rows="3"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={registering}
-                      className="w-full btn-modern py-3 flex items-center justify-center space-x-2 disabled:opacity-50"
-                    >
-                      <FaCheck size={16} />
-                      <span>{registering ? 'Registering...' : 'Register Now'}</span>
-                    </button>
-                  </form>
+                  ) : (
+                    <form onSubmit={handleRegister} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-200 mb-2">Team Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.teamName}
+                          onChange={(e) => setFormData({...formData, teamName: e.target.value})}
+                          className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                          placeholder="Enter your team name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-200 mb-2">Team Leader</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.leaderName}
+                          onChange={(e) => setFormData({...formData, leaderName: e.target.value})}
+                          className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                          placeholder="Enter leader name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-200 mb-2">Team Members (comma separated)</label>
+                        <textarea
+                          value={formData.members}
+                          onChange={(e) => setFormData({...formData, members: e.target.value})}
+                          className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                          placeholder="Player1, Player2, Player3, Player4"
+                          rows="3"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={registering}
+                        className="w-full btn-modern py-3 flex items-center justify-center space-x-2 disabled:opacity-50"
+                      >
+                        <FaCheck size={16} />
+                        <span>{registering ? 'Registering...' : 'Register Now'}</span>
+                      </button>
+                    </form>
+                  )
                 ) : (
                   <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-4 text-center">
                     <p className="text-amber-100 font-semibold">Login required</p>
@@ -482,12 +498,34 @@ const Tournaments = () => {
       return
     }
 
+    // Validation
+    if (!formData.teamName.trim()) {
+      toast.error('Team name is required')
+      return
+    }
+    if (!formData.leaderName.trim()) {
+      toast.error('Team leader name is required')
+      return
+    }
+    
+    const players = formData.members.split(',').map(m => m.trim()).filter(m => m)
+    if (players.length === 0) {
+      toast.error('At least one player name is required')
+      return
+    }
+
+    // Check if tournament ID is valid
+    if (!selectedTournament || !selectedTournament._id) {
+      toast.error('Invalid tournament selected')
+      return
+    }
+
     setRegistering(true)
     try {
       const res = await axios.post(`/api/tournaments/${selectedTournament._id}/register`, {
-        teamName: formData.teamName,
-        leaderName: formData.leaderName,
-        members: formData.members.split(',').map(m => m.trim())
+        teamName: formData.teamName.trim(),
+        teamLeader: formData.leaderName.trim(),
+        players: players
       })
       
       toast.success('✅ Successfully registered for tournament!')
@@ -497,7 +535,9 @@ const Tournaments = () => {
       // Refresh tournaments
       fetchTournaments()
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed')
+      const errorMsg = error.response?.data?.message || error.message || 'Registration failed'
+      toast.error(errorMsg)
+      console.error('Registration error:', error)
     } finally {
       setRegistering(false)
     }

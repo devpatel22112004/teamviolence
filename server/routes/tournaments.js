@@ -50,6 +50,17 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
 
     const { teamName, teamLeader, players } = req.body
 
+    // Validation
+    if (!teamName || teamName.trim() === '') {
+      return res.status(400).json({ message: 'Team name is required' })
+    }
+    if (!teamLeader || teamLeader.trim() === '') {
+      return res.status(400).json({ message: 'Team leader name is required' })
+    }
+    if (!players || !Array.isArray(players) || players.length === 0) {
+      return res.status(400).json({ message: 'At least one player is required' })
+    }
+
     // Check if already registered
     const existingReg = await Registration.findOne({
       user: req.user._id,
@@ -61,6 +72,13 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
     }
 
     if (tournament.type === 'paid') {
+      // Check if Razorpay keys are configured
+      if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+        return res.status(400).json({ 
+          message: 'Payment service not available for paid tournaments. Please contact administrator or try free tournaments.'
+        })
+      }
+
       // Create Razorpay order
       const amount = tournament.entryFee * 100 // Convert to paise
       const order = await razorpay.orders.create({
@@ -79,6 +97,10 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
       const registration = new Registration({
         user: req.user._id,
         tournament: tournament._id,
+        tournamentTitle: tournament.title,
+        tournamentMode: tournament.mode,
+        tournamentType: tournament.type,
+        entryFee: tournament.entryFee,
         teamName,
         teamLeader,
         players,
@@ -95,7 +117,7 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
     }
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Error registering for tournament' })
+    res.status(500).json({ message: 'Error registering for tournament', error: error.message })
   }
 })
 
@@ -125,6 +147,10 @@ router.post('/:id/verify-payment', authMiddleware, async (req, res) => {
     const registration = new Registration({
       user: req.user._id,
       tournament: tournament._id,
+      tournamentTitle: tournament.title,
+      tournamentMode: tournament.mode,
+      tournamentType: tournament.type,
+      entryFee: tournament.entryFee,
       teamName: teamData.teamName,
       teamLeader: teamData.teamLeader,
       players: teamData.players,
@@ -247,6 +273,20 @@ router.delete('/registrations/:id', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error('Cancel registration error:', error)
     res.status(500).json({ message: 'Error cancelling registration' })
+  }
+})
+
+// Get user's tournament registrations
+router.get('/my/registrations', authMiddleware, async (req, res) => {
+  try {
+    const registrations = await Registration.find({ user: req.user._id })
+      .populate('tournament')
+      .sort({ createdAt: -1 })
+    
+    res.json(registrations)
+  } catch (error) {
+    console.error('Error fetching registrations:', error)
+    res.status(500).json({ message: 'Error fetching registrations' })
   }
 })
 

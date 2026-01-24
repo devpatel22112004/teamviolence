@@ -1,167 +1,215 @@
-# 🎮 Team VioLencE - Professional BGMI Esports Website
+# 🎮 Team VioLencE - BGMI Tournament Platform
 
-![MERN Stack](https://img.shields.io/badge/Stack-MERN-green?style=for-the-badge)
+A comprehensive tournament management system for BGMI (Battlegrounds Mobile India) esports tournaments.
 
-A premium, fully responsive esports website for Team VioLencE BGMI clan featuring tournament management, payment gateway integration, team showcase, and modern Netflix/Prime-style UI with smooth animations.
+![Status](https://img.shields.io/badge/status-active-success.svg)
+![MongoDB](https://img.shields.io/badge/MongoDB-Connected-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js v18+ installed
+- MongoDB running (local or Atlas)
+- Git
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/devpatel22112004/teamviolence.git
+cd teamviolence
+
+# Install all dependencies
+npm install
+cd server && npm install
+cd ../client && npm install
+cd ..
+
+# Configure environment variables (see below)
+
+# Seed database with test data
+cd server && npm run seed
+
+# Start servers
+./start.sh
+```
+
+### Environment Setup
+
+**Backend (.env in server/):**
+```env
+MONGODB_URI=mongodb://localhost:27017/teamviolence
+JWT_SECRET=your_super_secret_jwt_key_change_this
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+PORT=5000
+NODE_ENV=development
+```
+
+**Frontend (.env in client/):**
+```env
+VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
+VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+```
+
+### Access Application
+
+- **Frontend:** http://localhost:3000/teamviolence/
+- **Backend:** http://localhost:5000
+
+**Test Credentials:**
+- User: `user@test.com` / `user123`
+- Admin: `admin@teamviolence.com` / `admin123`
+
+---
 
 ## ✨ Features
 
-- 🏆 **Tournament System** - Free & Paid tournaments with Razorpay payment integration
-- 👥 **Team Showcase** - Display player profiles with stats and social links
-- 💳 **Payment Gateway** - Automated payment verification
-- 🎨 **Premium UI** - Netflix/Prime-style design with Framer Motion animations
-- 🔐 **Authentication** - Secure JWT-based auth system
-- 📱 **Fully Responsive** - Works on all devices
+### User Features
+- 🎮 Browse & view tournaments
+- 📝 Register for tournaments
+- 👥 Team management
+- 💳 Secure payment processing (Razorpay)
+- 📊 View registration history
+- 👤 User profile management
+- 🔐 Secure authentication (JWT + Google OAuth)
+
+### Admin Features
+- ➕ Create & manage tournaments
+- 📊 View all registrations
+- 👥 Manage team members
+- ✅ Approve/reject registrations
+
+### Technical Features
+- 🔒 JWT-based authentication
+- 🌐 RESTful API architecture
+- 📱 Fully responsive design
+- ⚡ Real-time updates
+- 🎨 Modern UI with Tailwind CSS
+- 🎭 Smooth animations with Framer Motion
+
+---
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React 18, Vite, Tailwind CSS, Framer Motion, React Router  
-**Backend:** Node.js, Express, MongoDB, JWT, Razorpay  
+### Frontend
+- React 18, Vite, Tailwind CSS
+- Framer Motion, React Router v6
+- Axios, Context API
 
-## 📦 Quick Start
+### Backend
+- Node.js, Express.js
+- MongoDB with Mongoose
+- JWT, bcryptjs, Multer
+- Razorpay SDK, Google Auth
 
-### 1. Install Dependencies
-```bash
-npm run install-all
-```
+---
 
-### 2. Setup Environment Variables
-
-**Server (.env in /server):**
-```env
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_secret_key
-RAZORPAY_KEY_ID=your_razorpay_key
-RAZORPAY_KEY_SECRET=your_razorpay_secret
-PORT=5000
-```
-
-**Client (.env in /client):**
-```env
-VITE_RAZORPAY_KEY_ID=your_razorpay_key
-```
-
-### 3. Create Upload Directory
-```bash
-mkdir -p server/uploads/team
-```
-
-### 4. Run Development Server
-```bash
-npm run dev
-```
-
-Opens:
-- Frontend: http://localhost:3000
-- Backend: http://localhost:5000
-
-## 📚 Project Structure
+## 📁 Project Structure
 
 ```
 teamviolence/
-├── client/          # React frontend
+├── client/                 # React frontend
 │   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── context/
+│   │   ├── components/    # Reusable components
+│   │   ├── pages/        # Page components
+│   │   ├── context/      # Auth context
+│   │   └── App.jsx       # Main app
 │   └── package.json
-├── server/          # Express backend
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   └── package.json
-└── package.json
+├── server/                # Express backend
+│   ├── models/           # Mongoose models
+│   ├── routes/           # API routes
+│   ├── middleware/       # Auth middleware
+│   ├── index.js          # Server entry
+│   └── seed.js           # Database seeder
+├── start.sh              # Start servers
+├── stop.sh               # Stop servers
+├── status.sh             # Check status
+└── README.md             # This file
 ```
 
-## 🔧 API Endpoints
+---
 
-### Auth
+## 🔧 Available Scripts
+
+### Helper Scripts
+```bash
+./start.sh           # Start both servers
+./stop.sh            # Stop all servers
+./status.sh          # Check server status
+```
+
+### Backend (server/)
+```bash
+npm start            # Start server
+npm run dev          # Start with nodemon
+npm run seed         # Seed database
+```
+
+### Frontend (client/)
+```bash
+npm run dev          # Start dev server
+npm run build        # Build for production
+npm run preview      # Preview build
+```
+
+---
+
+## 📡 API Endpoints
+
+### Authentication
 - `POST /api/auth/register` - Register user
 - `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user
+- `POST /api/auth/google` - Google OAuth
 
 ### Tournaments
 - `GET /api/tournaments` - Get all tournaments
-- `POST /api/tournaments/:id/register` - Register for tournament
-- `POST /api/tournaments/:id/verify-payment` - Verify payment
+- `GET /api/tournaments/:id` - Get tournament
+- `POST /api/tournaments` - Create (admin)
+- `PUT /api/tournaments/:id` - Update (admin)
+- `POST /api/tournaments/:id/register` - Register
 
-### Team
-- `GET /api/team` - Get team members
+### Team & Users
+- `GET /api/team/members` - Get team members
+- `GET /api/users/profile` - Get profile
+- `PUT /api/users/profile` - Update profile
 
-### Users
-- `GET /api/users/registrations` - Get user registrations
-- `GET /api/users/profile` - Get user profile
+---
 
-## 📱 Pages
+## 🛑 Troubleshooting
 
-- **Home** - Hero section with stats
-- **About** - Team story and values
-- **Team** - Player profiles
-- **Tournaments** - Browse and filter events
-- **Tournament Details** - Register and pay
-- **Login/Register** - User authentication
-- **Dashboard** - User profile and registrations
+### Port Already in Use
+```bash
+./stop.sh
+```
 
-## 📚 Complete Documentation
+### Database Connection Error
+- Check MongoDB is running
+- Verify `.env` connection string
 
-📖 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete guide including:
-- Detailed setup instructions
-- Full API documentation
-- Deployment guides
-- Troubleshooting
-- Architecture details
-- Contributing guidelines
+### Module Not Found
+```bash
+npm install
+cd server && npm install
+cd ../client && npm install
+```
 
-## 🎮 Screenshots
+---
 
-Your website includes:
-- Modern hero section with animations
-- Tournament listing with filters
-- Team member showcase
-- User dashboard
-- Payment integration
-- Mobile responsive design
-
-## 🔐 Security
-
-- JWT authentication
-- Password hashing (bcrypt)
-- Protected routes
-- Payment verification
-- CORS configuration
-- Input validation
-
-## 🚀 Deployment
-
-See [DOCUMENTATION.md#deployment](DOCUMENTATION.md#-deployment) for detailed deployment instructions.
-
-**Quick Deploy Options:**
-- Vercel + Render (Recommended)
-- Netlify + Railway
-- AWS / DigitalOcean
-
-## 🆘 Support
-
-- 📖 Read [DOCUMENTATION.md](DOCUMENTATION.md)
-- 🐛 Open an issue
-- 💬 Start a discussion
-
-## 📄 License
+## 📝 License
 
 MIT License
 
 ---
 
-**Built with ❤️ for Team VioLencE BGMI Clan**
+## 👨‍💻 Developer
 
-## 🤝 Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## 📄 License
-
-MIT License - Free to use for your clan
+**Dev Patel**
+- GitHub: [@devpatel22112004](https://github.com/devpatel22112004)
 
 ---
 
-**Need Help?** Check [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions and troubleshooting.
+**Made with ❤️ for the BGMI Esports Community**

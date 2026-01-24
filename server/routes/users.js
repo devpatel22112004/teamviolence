@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 const Registration = require('../models/Registration')
 const User = require('../models/User')
 const { authMiddleware } = require('../middleware/auth')
@@ -64,6 +65,46 @@ router.put('/profile', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error('Profile update error:', error)
     res.status(500).json({ message: 'Error updating profile' })
+  }
+})
+
+// Change password
+router.put('/change-password', authMiddleware, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body
+
+    // Validation
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({ message: 'Both passwords are required' })
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' })
+    }
+
+    // Get user with password
+    const user = await User.findById(req.user._id)
+
+    // Verify old password
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password)
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: 'Current password is incorrect' })
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10)
+
+    // Update password
+    await User.findByIdAndUpdate(
+      req.user._id,
+      { password: hashedPassword },
+      { new: true }
+    )
+
+    res.json({ message: 'Password changed successfully' })
+  } catch (error) {
+    console.error('Change password error:', error)
+    res.status(500).json({ message: 'Error changing password' })
   }
 })
 

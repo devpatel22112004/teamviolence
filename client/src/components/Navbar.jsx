@@ -101,6 +101,20 @@ const Navbar = () => {
                     <FaUsers className="text-lg" />
                     <span>My Teams</span>
                   </Link>
+                  <Link
+                    to="/my-registrations"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
+                  >
+                    <FaTrophy className="text-lg" />
+                    <span>My Registrations</span>
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
+                  >
+                    <FaUser className="text-lg" />
+                    <span>Profile</span>
+                  </Link>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

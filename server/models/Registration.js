@@ -11,6 +11,14 @@ const registrationSchema = new mongoose.Schema({
     ref: 'Tournament',
     required: true
   },
+  tournamentTitle: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  tournamentMode: String,
+  tournamentType: String,
+  entryFee: Number,
   teamName: {
     type: String,
     required: true,
