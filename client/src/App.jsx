@@ -11,6 +11,7 @@ import TournamentDetails from './pages/TournamentDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import TeamManagement from './pages/TeamManagement'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
@@ -33,6 +34,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/team-management" 
+                element={
+                  <ProtectedRoute>
+                    <TeamManagement />
                   </ProtectedRoute>
                 } 
               />

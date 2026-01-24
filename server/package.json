@@ -8,19 +8,25 @@
     "start": "node index.js",
     "seed": "node seed.js"
   },
-  "keywords": ["esports", "bgmi", "tournament", "api"],
+  "keywords": [
+    "esports",
+    "bgmi",
+    "tournament",
+    "api"
+  ],
   "author": "Team VioLencE",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^8.1.1",
-    "dotenv": "^16.4.1",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "google-auth-library": "^10.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1",
     "multer": "^1.4.5-lts.1",
-    "razorpay": "^2.9.2",
-    "crypto": "^1.0.1"
+    "razorpay": "^2.9.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"

@@ -187,4 +187,67 @@ router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   }
 })
 
+// Update tournament registration (team management)
+router.put('/registrations/:id', authMiddleware, async (req, res) => {
+  try {
+    const { teamName, leaderName, members } = req.body
+
+    const registration = await Registration.findById(req.params.id)
+    
+    if (!registration) {
+      return res.status(404).json({ message: 'Registration not found' })
+    }
+
+    // Check if user owns this registration
+    if (registration.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to update this registration' })
+    }
+
+    // Update registration
+    registration.teamName = teamName
+    registration.teamLeader = leaderName
+    registration.players = members
+    await registration.save()
+
+    res.json({
+      message: 'Team updated successfully',
+      registration
+    })
+  } catch (error) {
+    console.error('Update registration error:', error)
+    res.status(500).json({ message: 'Error updating registration' })
+  }
+})
+
+// Cancel tournament registration
+router.delete('/registrations/:id', authMiddleware, async (req, res) => {
+  try {
+    const registration = await Registration.findById(req.params.id).populate('tournament')
+    
+    if (!registration) {
+      return res.status(404).json({ message: 'Registration not found' })
+    }
+
+    // Check if user owns this registration
+    if (registration.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to cancel this registration' })
+    }
+
+    // Update tournament registered count
+    const tournament = await Tournament.findById(registration.tournament._id)
+    if (tournament) {
+      tournament.registeredTeams = Math.max(0, tournament.registeredTeams - 1)
+      await tournament.save()
+    }
+
+    // Delete registration
+    await Registration.findByIdAndDelete(req.params.id)
+
+    res.json({ message: 'Registration cancelled successfully' })
+  } catch (error) {
+    console.error('Cancel registration error:', error)
+    res.status(500).json({ message: 'Error cancelling registration' })
+  }
+})
+
 module.exports = router

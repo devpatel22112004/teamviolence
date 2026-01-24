@@ -94,6 +94,13 @@ const Navbar = () => {
                     <FaUser className="text-lg" />
                     <span>Dashboard</span>
                   </Link>
+                  <Link
+                    to="/team-management"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-primary-400 transition-all hover:bg-dark-800/50"
+                  >
+                    <FaUsers className="text-lg" />
+                    <span>My Teams</span>
+                  </Link>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

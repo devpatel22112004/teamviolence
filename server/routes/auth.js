@@ -102,30 +102,63 @@ router.get('/me', authMiddleware, async (req, res) => {
 // Google OAuth Login
 router.post('/google', async (req, res) => {
   try {
-    const { googleToken } = req.body
+    const { credential } = req.body
 
-    // In production, you should verify the token with Google
-    // For now, we'll create/update user based on decoded info
-    // You can use: const { OAuth2Client } = require('google-auth-library')
+    if (!credential) {
+      return res.status(400).json({ message: 'Google credential required' })
+    }
 
-    // Placeholder: In real scenario, decode and verify the JWT token from Google
-    // const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    // const ticket = await client.verifyIdToken({
-    //   idToken: googleToken,
-    //   audience: process.env.GOOGLE_CLIENT_ID,
-    // });
-    // const payload = ticket.getPayload();
+    // Verify Google token
+    const { OAuth2Client } = require('google-auth-library')
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+    
+    const payload = ticket.getPayload()
+    const { email, name, picture, sub: googleId } = payload
 
-    // For demo purposes, we'll create a simple user from the token
-    // In production, verify this properly
+    // Check if user exists
+    let user = await User.findOne({ email })
+
+    if (user) {
+      // User exists, update Google ID if not set
+      if (!user.googleId) {
+        user.googleId = googleId
+        await user.save()
+      }
+    } else {
+      // Create new user with Google data
+      user = new User({
+        name,
+        email,
+        googleId,
+        profilePicture: picture,
+        password: await bcrypt.hash(Math.random().toString(36), 10), // Random password
+        phone: '' // Google doesn't provide phone
+      })
+      await user.save()
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' })
 
     res.status(200).json({
-      message: 'Google login setup - token verification needed',
-      token: null,
-      user: null
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        profilePicture: user.profilePicture,
+        createdAt: user.createdAt
+      }
     })
   } catch (error) {
-    console.error(error)
+    console.error('Google OAuth error:', error)
     res.status(500).json({ message: 'Server error during Google login' })
   }
 })

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import { GoogleLogin } from '@react-oauth/google'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -59,16 +60,28 @@ const Login = () => {
 
           {/* Google Sign-In Button */}
           <div className="mb-6">
-            <button
-              type="button"
-              onClick={() => {
-                toast.loading('Setting up Google login...')
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                try {
+                  setLoading(true)
+                  await loginWithGoogle(credentialResponse.credential)
+                  toast.success('🎉 Google login successful!')
+                  navigate('/dashboard')
+                } catch (error) {
+                  toast.error(error.response?.data?.message || 'Google login failed')
+                } finally {
+                  setLoading(false)
+                }
               }}
-              className="w-full flex items-center justify-center space-x-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
-            >
-              <FaGoogle size={18} className="text-red-500" />
-              <span>Sign in with Google</span>
-            </button>
+              onError={() => {
+                toast.error('❌ Google login failed')
+              }}
+              theme="filled_blue"
+              size="large"
+              width="100%"
+              text="signin_with"
+              shape="rectangular"
+            />
           </div>
 
           {/* Divider */}

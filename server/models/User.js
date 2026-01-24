@@ -15,12 +15,20 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   password: {
     type: String,
     required: true
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  profilePicture: {
+    type: String
   },
   role: {
     type: String,

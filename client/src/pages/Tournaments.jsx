@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FaTrophy, FaUsers, FaCalendar, FaRupeeSign, FaGift, FaArrowRight, FaFire } from 'react-icons/fa'
+import { FaTrophy, FaUsers, FaCalendar, FaRupeeSign, FaGift, FaArrowRight, FaFire, FaTimes, FaCheck } from 'react-icons/fa'
 import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext'
 
 const Tournaments = () => {
+  const { user } = useAuth()
   const [tournaments, setTournaments] = useState([])
-  const [filter, setFilter] = useState('all') // all, free, paid
+  const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
+  const [selectedTournament, setSelectedTournament] = useState(null)
+  const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [registering, setRegistering] = useState(false)
+  const [formData, setFormData] = useState({
+    teamName: '',
+    leaderName: '',
+    members: ''
+  })
 
   useEffect(() => {
     fetchTournaments()
@@ -290,13 +301,18 @@ const Tournaments = () => {
                   </div>
 
                   {/* Register Button */}
-                  <Link
-                    to={`/tournaments/${tournament._id}`}
-                    className="btn-primary w-full text-center text-lg font-bold py-4 flex items-center justify-center group/btn"
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      setSelectedTournament(tournament)
+                      setShowRegisterModal(true)
+                    }}
+                    className="btn-modern w-full text-center text-lg font-bold py-4 flex items-center justify-center group/btn"
                   >
-                    View Details
+                    Register Now
                     <FaArrowRight className="ml-3 group-hover/btn:translate-x-2 transition-transform" />
-                  </Link>
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
@@ -339,9 +355,156 @@ const Tournaments = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Registration Modal */}
+      <AnimatePresence>
+        {showRegisterModal && selectedTournament && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            onClick={() => !registering && setShowRegisterModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-md bg-gradient-to-br from-dark-800 to-dark-950 rounded-2xl border border-primary-500/30 overflow-hidden"
+            >
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-primary-600 to-primary-700 p-6 flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-white">{selectedTournament.title}</h2>
+                  <p className="text-primary-100 text-sm">{selectedTournament.mode}</p>
+                </div>
+                <motion.button
+                  whileHover={{ rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setShowRegisterModal(false)}
+                  className="text-white hover:text-primary-100"
+                >
+                  <FaTimes size={24} />
+                </motion.button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
+                {/* Tournament Info */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-dark-700/50 p-3 rounded-lg">
+                    <p className="text-gray-400 text-xs font-semibold">ENTRY FEE</p>
+                    <p className="text-white text-lg font-bold">
+                      {selectedTournament.entryFee === 0 ? 'FREE' : `₹${selectedTournament.entryFee}`}
+                    </p>
+                  </div>
+                  <div className="bg-dark-700/50 p-3 rounded-lg">
+                    <p className="text-gray-400 text-xs font-semibold">PRIZE POOL</p>
+                    <p className="text-green-400 text-lg font-bold">₹{selectedTournament.prizePool.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-dark-700/50 p-3 rounded-lg">
+                    <p className="text-gray-400 text-xs font-semibold">SLOTS</p>
+                    <p className="text-primary-400 text-lg font-bold">{selectedTournament.totalSlots - selectedTournament.registeredTeams}</p>
+                  </div>
+                  <div className="bg-dark-700/50 p-3 rounded-lg">
+                    <p className="text-gray-400 text-xs font-semibold">DATE</p>
+                    <p className="text-white text-lg font-bold">{new Date(selectedTournament.date).toLocaleDateString()}</p>
+                  </div>
+                </div>
+
+                {/* Registration Form */}
+                {user ? (
+                  <form onSubmit={handleRegister} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.teamName}
+                        onChange={(e) => setFormData({...formData, teamName: e.target.value})}
+                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                        placeholder="Enter your team name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Leader</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.leaderName}
+                        onChange={(e) => setFormData({...formData, leaderName: e.target.value})}
+                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                        placeholder="Enter leader name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-200 mb-2">Team Members (comma separated)</label>
+                      <textarea
+                        value={formData.members}
+                        onChange={(e) => setFormData({...formData, members: e.target.value})}
+                        className="w-full bg-dark-700 border border-primary-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                        placeholder="Player1, Player2, Player3, Player4"
+                        rows="3"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={registering}
+                      className="w-full btn-modern py-3 flex items-center justify-center space-x-2 disabled:opacity-50"
+                    >
+                      <FaCheck size={16} />
+                      <span>{registering ? 'Registering...' : 'Register Now'}</span>
+                    </button>
+                  </form>
+                ) : (
+                  <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-4 text-center">
+                    <p className="text-amber-100 font-semibold">Login required</p>
+                    <p className="text-amber-200 text-sm mt-2">Please login to register for tournaments</p>
+                    <Link to="/login" className="btn-modern w-full mt-4 py-2 text-sm">
+                      Go to Login
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
+
+  async function handleRegister(e) {
+    e.preventDefault()
+    
+    if (!user) {
+      toast.error('Please login to register')
+      return
+    }
+
+    setRegistering(true)
+    try {
+      const res = await axios.post(`/api/tournaments/${selectedTournament._id}/register`, {
+        teamName: formData.teamName,
+        leaderName: formData.leaderName,
+        members: formData.members.split(',').map(m => m.trim())
+      })
+      
+      toast.success('✅ Successfully registered for tournament!')
+      setShowRegisterModal(false)
+      setFormData({ teamName: '', leaderName: '', members: '' })
+      
+      // Refresh tournaments
+      fetchTournaments()
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Registration failed')
+    } finally {
+      setRegistering(false)
+    }
+  }
 }
 
 export default Tournaments
+
+
 

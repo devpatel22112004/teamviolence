@@ -33,13 +33,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Team VioLencE API is running' })
 })
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB Connected'))
-.catch((err) => console.error('❌ MongoDB Connection Error:', err))
+// MongoDB Connection (without deprecated options)
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('✅ MongoDB Connected Successfully'))
+  .catch((err) => {
+    console.error('❌ MongoDB Connection Error:', err.message)
+    console.log('💡 Tip: Make sure MongoDB Atlas connection string is correct in .env file')
+  })
 
 // Start server
 const PORT = process.env.PORT || 5000
