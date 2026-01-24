@@ -22,9 +22,11 @@ const Navbar = () => {
     const handleMouseMove = (e) => {
       if (navRef.current) {
         const rect = navRef.current.getBoundingClientRect()
-        const isInside = e.clientY >= rect.top && e.clientY <= rect.bottom
+        const inX = e.clientX >= rect.left && e.clientX <= rect.right
+        const inY = e.clientY >= rect.top && e.clientY <= rect.bottom
+        const isInside = inX && inY
         setIsInsideNav(isInside)
-        
+
         if (isInside) {
           setMousePos({ x: e.clientX, y: e.clientY - rect.top })
         }
