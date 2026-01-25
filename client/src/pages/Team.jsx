@@ -144,7 +144,7 @@ const Team = () => {
                 Prime Lineup
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-display font-black leading-tight max-w-3xl">
-                Team VioLencE <span className="gradient-text">Lineup</span>
+                Team VIOLENCE <span className="gradient-text">Lineup</span>
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed max-w-3xl">
                 Aggressive pushes, perfect coordination, and icy clutch factor. This is Team VioLencE.
@@ -162,7 +162,7 @@ const Team = () => {
                   </div>
                   <div>
                     <p className="text-xs text-primary-300 uppercase tracking-[0.2em] font-bold">Clan Crest</p>
-                    <p className="text-lg font-display font-black text-white">Team VioLencE</p>
+                    <p className="text-lg font-display font-black text-white">Team VIOLENCE</p>
                     <p className="text-gray-400 text-sm">Locked, loaded, and LAN ready.</p>
                   </div>
                 </motion.div>
@@ -305,7 +305,7 @@ const Team = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative w-full max-w-4xl glass-strong rounded-3xl p-6 border border-primary-500/40 overflow-hidden"
+              className="relative w-full max-w-4xl glass-strong rounded-3xl p-4 sm:p-6 border border-primary-500/40 overflow-hidden max-h-[90vh] overflow-y-auto md:overflow-hidden"
             >
               {/* Close Button */}
               <motion.button
@@ -318,12 +318,12 @@ const Team = () => {
                 ✕
               </motion.button>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Image */}
                 <motion.div 
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="overflow-hidden rounded-2xl border-2 border-primary-500/40 h-[400px]"
+                  className="overflow-hidden rounded-2xl border-2 border-primary-500/40 h-64 sm:h-72 md:h-[400px]"
                 >
                   <img src={selected.image} alt={selected.name} className="w-full h-full object-cover object-center" />
                 </motion.div>
