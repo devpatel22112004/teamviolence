@@ -20,7 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 function App() {
   return (
     <AuthProvider>
-      <Router basename="/teamviolence">
+      <Router>
         <div className="min-h-screen flex flex-col">
           {/* Ensure every route starts at the top */}
           <ScrollToTop behavior="smooth" />
