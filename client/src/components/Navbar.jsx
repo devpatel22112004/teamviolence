@@ -201,7 +201,7 @@ const Navbar = () => {
                     }`} />
                   </div>
                 </motion.div>
-                <div className="hidden sm:flex flex-col min-w-fit">
+                <div className="flex flex-col min-w-fit">
                   <span className={`text-lg font-display font-black leading-tight transition-colors duration-300 ${
                     isHomePage && !scrolled ? 'text-white' : 'gradient-text'
                   }`}>
