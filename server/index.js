@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const dotenv = require('dotenv')
+const path = require('path')
 
 // Load environment variables
 dotenv.config()
@@ -22,6 +23,9 @@ app.use(express.urlencoded({ extended: true }))
 // Static files for uploads
 app.use('/uploads', express.static('uploads'))
 
+// Serve frontend static files (built React app)
+app.use(express.static(path.join(__dirname, '../client/dist')))
+
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/tournaments', tournamentRoutes)
@@ -31,6 +35,11 @@ app.use('/api/users', userRoutes)
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Team VioLencE API is running' })
+})
+
+// Serve index.html for all non-API routes (SPA routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'))
 })
 
 // MongoDB Connection (without deprecated options)
