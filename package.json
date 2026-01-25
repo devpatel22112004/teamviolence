@@ -8,6 +8,7 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
+    "build:all": "npm install && cd client && npm install && npm run build && cd ../server && npm install",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install"
   },
   "keywords": ["esports", "bgmi", "tournament", "mern"],
