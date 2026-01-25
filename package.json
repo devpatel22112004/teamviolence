@@ -8,7 +8,7 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "build:all": "npm install && cd client && npm install && npm run build && cd ../server && npm install",
+    "build:all": "npm install && npm --prefix ./client install && npm --prefix ./client run build && npm --prefix ./server install",
     "start": "cd server && npm start",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install"
   },
