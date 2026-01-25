@@ -34,7 +34,7 @@ const Team = () => {
       winRate: 76,
       description: 'Tactical shot-caller with ruthless mid-game aggression and crisp utilities.',
       image: '/images/dev-patel.jpg',
-      socials: { instagram: 'https://instagram.com', youtube: 'https://youtube.com' }
+      socials: { instagram: 'https://instagram.com/devpatel' }
     },
     {
       _id: '2',
@@ -44,7 +44,7 @@ const Team = () => {
       winRate: 74,
       description: 'Explosive opener who cracks compounds and creates space for the squad.',
       image: '/images/harsh-thakor.jpg',
-      socials: { instagram: 'https://instagram.com' }
+      socials: { instagram: 'https://instagram.com/harshthakor' }
     },
     {
       _id: '3',
@@ -54,7 +54,7 @@ const Team = () => {
       winRate: 72,
       description: 'Ice-cold anchor covering flanks and delivering late-game consistency.',
       image: '/images/karan-patel.jpeg',
-      socials: { instagram: 'https://instagram.com' }
+      socials: { instagram: 'https://instagram.com/karanpatel' }
     },
     {
       _id: '4',
@@ -64,7 +64,7 @@ const Team = () => {
       winRate: 71,
       description: 'Rotations mastermind with razor-sharp map reads and info plays.',
       image: '/images/mehul-darji.jpg',
-      socials: { instagram: 'https://instagram.com' }
+      socials: { instagram: 'https://instagram.com/mehuldarji' }
     },
     {
       _id: '5',
@@ -74,7 +74,7 @@ const Team = () => {
       winRate: 70,
       description: 'Long-range specialist landing knock after knock to open fights.',
       image: '/images/purvang-pandya.jpg',
-      socials: { instagram: 'https://instagram.com' }
+      socials: { instagram: 'https://instagram.com/purvangpandya' }
     },
     {
       _id: '6',
@@ -84,7 +84,7 @@ const Team = () => {
       winRate: 73,
       description: 'Adaptable flex who swaps roles on the fly and clutches chaotic end-games.',
       image: '/images/umang-rana.jpg',
-      socials: { instagram: 'https://instagram.com' }
+      socials: { instagram: 'https://instagram.com/umangrana' }
     },
   ]
 
