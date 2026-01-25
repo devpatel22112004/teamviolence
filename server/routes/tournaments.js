@@ -6,11 +6,7 @@ const Tournament = require('../models/Tournament')
 const Registration = require('../models/Registration')
 const { authMiddleware, adminMiddleware } = require('../middleware/auth')
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
-})
+
 
 // Get all tournaments
 router.get('/', async (req, res) => {
@@ -72,12 +68,18 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
     }
 
     if (tournament.type === 'paid') {
-      // Check if Razorpay keys are configured
+      // Require Razorpay keys for paid tournaments
       if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           message: 'Payment service not available for paid tournaments. Please contact administrator or try free tournaments.'
         })
       }
+
+      // Lazy-create Razorpay client only when keys exist
+      const razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+      })
 
       // Create Razorpay order
       const amount = tournament.entryFee * 100 // Convert to paise
