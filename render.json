@@ -1,0 +1,11 @@
+{
+  "name": "teamviolence",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "build": "cd client && npm run build"
+  }
+}
