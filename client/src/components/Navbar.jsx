@@ -43,7 +43,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/', icon: FaHome },
-    { name: 'Teams', path: '/team', icon: FaUsers },
+    { name: 'Lineup', path: '/team', icon: FaUsers },
     { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
     { name: 'Discover', path: '/about', icon: FaCompass },
   ]

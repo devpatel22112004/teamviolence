@@ -1,102 +1,119 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaDiscord, FaInstagram, FaYoutube } from 'react-icons/fa'
-import axios from 'axios'
+
+const CLAN_LOGO = encodeURI('/uploads/team/Clan Logo.png')
 
 const Team = () => {
-  const [members, setMembers] = useState([])
-  const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
 
-  useEffect(() => {
-    fetchMembers()
-  }, [])
-
-  const fetchMembers = async () => {
-    try {
-      const res = await axios.get('/api/team')
-      setMembers(res.data)
-    } catch (error) {
-      console.error('Error fetching team members:', error)
-      // Fallback to default members if API fails
-      setMembers(defaultMembers)
-    } finally {
-      setLoading(false)
-    }
+  const formatImagePath = (path) => {
+    if (!path) return ''
+    if (path.startsWith('http')) return path
+    return encodeURI(path)
   }
 
   const defaultMembers = [
     {
-      _id: '1',
+      _id: 'dev-patel',
       name: 'Dev Patel',
-      role: 'IGL / Assaulter',
-      kills: 5200,
-      winRate: 76,
-      description: 'Tactical shot-caller with ruthless mid-game aggression and crisp utilities.',
-      image: '/images/dev-patel.jpg',
+      role: 'IGL / Founder',
+      kills: 5320,
+      winRate: 77,
+      description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
+      popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
+      ingameName: '『VioLencE』乂',
+      since: 2019,
+      image: '/uploads/team/Dev Patel.jpg',
       socials: { instagram: 'https://instagram.com/devpatel' }
     },
     {
-      _id: '2',
-      name: 'Harsh Thakor',
-      role: 'Entry Fragger',
-      kills: 4950,
-      winRate: 74,
-      description: 'Explosive opener who cracks compounds and creates space for the squad.',
-      image: '/images/harsh-thakor.jpg',
-      socials: { instagram: 'https://instagram.com/harshthakor' }
+      _id: 'umang-rana',
+      name: 'Umang Rana',
+      role: 'Co-Leader / Flex IGL',
+      kills: 4580,
+      winRate: 73,
+      description: 'Aggressive co-leader who blends IGL instincts with raw fragging power. Unpredictable rotations, ruthless decision-making, and the firepower to back every call. Keeps the team sharp and enemies on edge.',
+      popupDescription: 'Aggressive co-leader with unpredictable IGL calls & raw firepower.',
+      ingameName: '『VioLencE』UB',
+      since: 2019,
+      image: '/uploads/team/Umang Rana.jpg',
+      socials: { instagram: 'https://instagram.com/umangrana' }
     },
     {
-      _id: '3',
-      name: 'Karan Patel',
-      role: 'Support / Anchor',
-      kills: 4600,
-      winRate: 72,
-      description: 'Ice-cold anchor covering flanks and delivering late-game consistency.',
-      image: '/images/karan-patel.jpeg',
-      socials: { instagram: 'https://instagram.com/karanpatel' }
+      _id: 'aayush-panchal',
+      name: 'Aayush Panchal',
+      role: 'Strategic Analyst',
+      kills: 4120,
+      winRate: 69,
+      description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
+      popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
+      ingameName: '『VioLencE』DP',
+      since: 2022,
+      image: '/uploads/team/Aayush Panchal.webp',
+      socials: { instagram: 'https://instagram.com/aayushpanchal' }
     },
     {
-      _id: '4',
-      name: 'Mehul Darji',
-      role: 'Scout / Recon',
-      kills: 4400,
-      winRate: 71,
-      description: 'Rotations mastermind with razor-sharp map reads and info plays.',
-      image: '/images/mehul-darji.jpg',
-      socials: { instagram: 'https://instagram.com/mehuldarji' }
-    },
-    {
-      _id: '5',
+      _id: 'purvang-pandya',
       name: 'Purvang Pandya',
-      role: 'Sniper / DMR',
-      kills: 4300,
+      role: 'Elite DMR Specialist',
+      kills: 4435,
       winRate: 70,
-      description: 'Long-range specialist landing knock after knock to open fights.',
-      image: '/images/purvang-pandya.jpg',
+      description: 'Legendary long-range specialist whose precision knocks open every engagement. Clutch DMR plays that shift momentum, ridiculous aim, and the poise to perform under pressure when it matters most.',
+      popupDescription: 'Elite DMR specialist with precision knocks & clutch aim.',
+      ingameName: '『VioLencE』PV',
+      since: 2023,
+      image: '/uploads/team/Purvang Pandya.jpg',
       socials: { instagram: 'https://instagram.com/purvangpandya' }
     },
     {
-      _id: '6',
-      name: 'Umang Rana',
-      role: 'Flex / Utility',
-      kills: 4500,
-      winRate: 73,
-      description: 'Adaptable flex who swaps roles on the fly and clutches chaotic end-games.',
-      image: '/images/umang-rana.jpg',
-      socials: { instagram: 'https://instagram.com/umangrana' }
+      _id: 'karan-patel',
+      name: 'Karan Patel',
+      role: 'Entry Fragger',
+      kills: 4725,
+      winRate: 72,
+      description: 'Fearless entry specialist who cracks compound doors and creates the chaos that wins fights. Aggressive entries, flawless trades, and the aggression to control zones. The breach that breaks defenses.',
+      popupDescription: 'Fearless entry fragger. Cracks compounds with flawless trades.',
+      ingameName: '『VioLencE』KP',
+      since: 2020,
+      image: '/uploads/team/Karan Patel.jpeg',
+      socials: { instagram: 'https://instagram.com/karanpatel' }
+    },
+    {
+      _id: 'mehul-darji',
+      name: 'Mehul Darji',
+      role: 'Aggressive Scout & Co-Leader',
+      kills: 4510,
+      winRate: 71,
+      description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
+      popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
+      ingameName: '『VioLencE』MD',
+      since: 2021,
+      image: '/uploads/team/Mehul Darji.jpg',
+      socials: { instagram: 'https://instagram.com/mehuldarji' }
+    },
+    {
+      _id: 'harsh-thakor',
+      name: 'Harsh Thakor',
+      role: 'Support Anchor',
+      kills: 5060,
+      winRate: 74,
+      description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
+      popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
+      ingameName: '『VioLencE』HT',
+      since: 2023,
+      image: '/uploads/team/Harsh Thakor.jpg',
+      socials: { instagram: 'https://instagram.com/harshthakor' }
     },
   ]
 
-  const displayMembers = members.length ? members : defaultMembers
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center pt-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-      </div>
-    )
-  }
+  const displayMembers = defaultMembers.map((member) => ({
+    ...member,
+    image: member.image ? formatImagePath(member.image) : formatImagePath(CLAN_LOGO),
+    kills: member.kills || 0,
+    winRate: member.winRate || 0,
+    description: member.description || 'Locked-in competitor ready to punish any misplay in the late circles.'
+  }))
 
   return (
     <div className="pt-20 pb-20">
@@ -124,10 +141,10 @@ const Team = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
                 </span>
-                Prime Roster Reveal
+                Prime Lineup
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-display font-black leading-tight max-w-3xl">
-                Meet Our <span className="gradient-text">Elite Squad</span>
+                Team VioLencE <span className="gradient-text">Lineup</span>
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed max-w-3xl">
                 Aggressive pushes, perfect coordination, and icy clutch factor. This is Team VioLencE.
@@ -135,43 +152,32 @@ const Team = () => {
               <p className="text-gray-400 leading-relaxed max-w-3xl">
                 A roster of sharpshooters, shot-callers, and utility masters forged to dominate every lobby. Click any player to unlock their premium stat card and role impact analysis.
               </p>
-              <div className="flex flex-wrap gap-3">
-                {['🔥 Clutch DNA', '🎮 LAN ready', '⚡ Tier-1 scrims'].map((tag) => (
-                  <motion.span 
-                    key={tag} 
-                    whileHover={{ scale: 1.05 }}
-                    className="pill text-sm font-bold tracking-wide"
-                  >
-                    {tag}
-                  </motion.span>
-                ))}
-              </div>
-            </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <motion.div
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="flex items-center gap-4 px-4 py-3 rounded-2xl border border-primary-500/40 bg-primary-500/10 shadow-lg shadow-primary-900/30"
+                >
+                  <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-primary-500/50 bg-dark-900 flex items-center justify-center p-2">
+                    <img src={CLAN_LOGO} alt="Team VioLencE clan crest" className="w-full h-full object-contain" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-primary-300 uppercase tracking-[0.2em] font-bold">Clan Crest</p>
+                    <p className="text-lg font-display font-black text-white">Team VioLencE</p>
+                    <p className="text-gray-400 text-sm">Locked, loaded, and LAN ready.</p>
+                  </div>
+                </motion.div>
 
-            {/* Hero Image Grid */}
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary-600/20 to-primary-700/20 blur-2xl rounded-3xl" />
-              <div className="relative grid grid-cols-3 gap-4 md:gap-6">
-                {displayMembers.slice(0, 6).map((member, idx) => (
-                  <motion.div
-                    key={member._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    whileHover={{ y: -10, scale: 1.05 }}
-                    className="rounded-2xl overflow-hidden border-2 border-primary-500/30 hover:border-primary-400 shadow-xl shadow-primary-900/30 cursor-pointer group"
-                    onClick={() => setSelected(member)}
-                  >
-                    <div className="aspect-square bg-gradient-to-br from-primary-600/30 to-primary-800/30 relative overflow-hidden">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </motion.div>
-                ))}
+                <div className="flex flex-wrap gap-3">
+                  {['🔥 Clutch DNA', '🎮 LAN ready', '⚡ Tier-1 scrims'].map((tag) => (
+                    <motion.span 
+                      key={tag} 
+                      whileHover={{ scale: 1.05 }}
+                      className="pill text-sm font-bold tracking-wide"
+                    >
+                      {tag}
+                    </motion.span>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -299,59 +305,75 @@ const Team = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative w-full max-w-4xl glass-strong rounded-3xl p-8 border border-primary-500/40 overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-4xl glass-strong rounded-3xl p-6 border border-primary-500/40 overflow-hidden"
             >
               {/* Close Button */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
-                className="absolute top-6 right-6 text-gray-400 hover:text-primary-300 w-10 h-10 rounded-lg hover:bg-dark-800 flex items-center justify-center z-10"
+                className="absolute top-4 right-4 text-gray-400 hover:text-primary-300 w-10 h-10 rounded-lg hover:bg-dark-800 flex items-center justify-center z-10"
                 onClick={() => setSelected(null)}
                 aria-label="Close profile"
               >
                 ✕
               </motion.button>
 
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-6">
                 {/* Image */}
                 <motion.div 
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="overflow-hidden rounded-2xl border-2 border-primary-500/40"
+                  className="overflow-hidden rounded-2xl border-2 border-primary-500/40 h-[400px]"
                 >
-                  <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
+                  <img src={selected.image} alt={selected.name} className="w-full h-full object-cover object-center" />
                 </motion.div>
 
                 {/* Info */}
                 <motion.div 
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="space-y-6"
+                  className="space-y-4 flex flex-col"
                 >
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-primary-400 font-bold">Prime Roster</p>
-                    <h3 className="text-4xl font-display font-black mb-2">{selected.name}</h3>
-                    <p className="text-primary-300 font-bold text-lg">{selected.role}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-primary-400 font-bold">Lineup Card</p>
+                    <h3 className="text-3xl font-display font-black mb-1">{selected.name}</h3>
+                    <p className="text-primary-300 font-bold text-base">{selected.role}</p>
                   </div>
 
-                  <p className="text-gray-300 leading-relaxed text-lg">{selected.description}</p>
+                  {/* IGN & Since - Premium Design */}
+                  <div className="flex items-center gap-3">
+                    {selected.ingameName && (
+                      <div className="flex-1 px-3 py-2 rounded-lg bg-primary-500/10 border border-primary-500/30">
+                        <p className="text-[10px] text-primary-400 font-bold uppercase tracking-wider">IGN</p>
+                        <p className="text-sm text-white font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.02em' }}>{selected.ingameName}</p>
+                      </div>
+                    )}
+                    {selected.since && (
+                      <div className="px-3 py-2 rounded-lg bg-primary-500/10 border border-primary-500/30">
+                        <p className="text-[10px] text-primary-400 font-bold uppercase tracking-wider">Since</p>
+                        <p className="text-sm text-white font-black">{selected.since}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="text-gray-300 leading-relaxed text-sm">{selected.popupDescription || selected.description}</p>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="glass-card p-4 rounded-xl border border-primary-500/30">
-                      <p className="text-xs text-gray-400 uppercase font-bold mb-2">Total Kills</p>
-                      <p className="text-3xl font-black gradient-text">{selected.kills}+</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="glass-card p-3 rounded-xl border border-primary-500/30">
+                      <p className="text-[10px] text-gray-400 uppercase font-bold mb-1">Total Kills</p>
+                      <p className="text-2xl font-black gradient-text">{selected.kills}+</p>
                     </div>
-                    <div className="glass-card p-4 rounded-xl border border-primary-500/30">
-                      <p className="text-xs text-gray-400 uppercase font-bold mb-2">Win Rate</p>
-                      <p className="text-3xl font-black gradient-text">{selected.winRate}%</p>
+                    <div className="glass-card p-3 rounded-xl border border-primary-500/30">
+                      <p className="text-[10px] text-gray-400 uppercase font-bold mb-1">Win Rate</p>
+                      <p className="text-2xl font-black gradient-text">{selected.winRate}%</p>
                     </div>
                   </div>
 
                   {/* Social Links */}
-                  <div className="space-y-3 pt-4 border-t border-dark-700">
-                    <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">Follow {selected.name}</p>
-                    <div className="flex items-center space-x-3">
+                  <div className="space-y-2 pt-2 border-t border-dark-700">
+                    <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Follow {selected.name}</p>
+                    <div className="flex items-center space-x-2">
                       {selected.socials?.instagram && (
                         <motion.a 
                           href={selected.socials.instagram} 
@@ -359,9 +381,9 @@ const Team = () => {
                           rel="noreferrer"
                           whileHover={{ scale: 1.15 }}
                           whileTap={{ scale: 0.9 }}
-                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                          className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
                         >
-                          <FaInstagram size={20} />
+                          <FaInstagram size={18} />
                         </motion.a>
                       )}
                       {selected.socials?.youtube && (
@@ -371,9 +393,9 @@ const Team = () => {
                           rel="noreferrer"
                           whileHover={{ scale: 1.15 }}
                           whileTap={{ scale: 0.9 }}
-                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                          className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
                         >
-                          <FaYoutube size={20} />
+                          <FaYoutube size={18} />
                         </motion.a>
                       )}
                       {selected.socials?.discord && (
@@ -383,9 +405,9 @@ const Team = () => {
                           rel="noreferrer"
                           whileHover={{ scale: 1.15 }}
                           whileTap={{ scale: 0.9 }}
-                          className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
+                          className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600/20 to-primary-700/20 border border-primary-500/30 hover:border-primary-500/70 flex items-center justify-center text-gray-400 hover:text-primary-300 transition-all"
                         >
-                          <FaDiscord size={20} />
+                          <FaDiscord size={18} />
                         </motion.a>
                       )}
                     </div>
@@ -396,7 +418,7 @@ const Team = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelected(null)}
-                    className="w-full mt-6 btn-secondary py-3"
+                    className="w-full mt-auto btn-secondary py-2 text-sm"
                   >
                     Close Profile
                   </motion.button>
@@ -406,8 +428,53 @@ const Team = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Team Closing Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center space-y-6"
+        >
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-display font-black">
+              One Clan. <span className="gradient-text">Seven Warriors.</span> Infinite Grind.
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Built from the ground up by Dev Patel's vision, Team VioLencE combines strategic brilliance with raw mechanical skill. Every member bleeds the colors, every round is a battle, and every victory is earned.
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4 pt-6">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="px-8 py-3 rounded-2xl bg-primary-500/15 border border-primary-500/40 text-primary-200 font-bold uppercase tracking-widest text-sm"
+            >
+              🏆 Tier-1 Scrims
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="px-8 py-3 rounded-2xl bg-primary-500/15 border border-primary-500/40 text-primary-200 font-bold uppercase tracking-widest text-sm"
+            >
+              🎯 Precision Rotations
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="px-8 py-3 rounded-2xl bg-primary-500/15 border border-primary-500/40 text-primary-200 font-bold uppercase tracking-widest text-sm"
+            >
+              ⚡ Clinical Execution
+            </motion.div>
+          </div>
+
+          <p className="text-gray-400 italic pt-4">
+            Join the grind. Follow the journey. This is Team VioLencE.
+          </p>
+        </motion.div>
+      </section>
     </div>
   )
 }
 
 export default Team
+
