@@ -22,7 +22,7 @@ const Team = () => {
       winRate: 77,
       description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
       popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
-      ingameName: '『VioLencE』乂',
+      ingameName: 'VioLencE X',
       since: 2019,
       image: '/uploads/team/Dev Patel.jpg',
       socials: { instagram: 'https://instagram.com/devpatel' }
@@ -35,7 +35,7 @@ const Team = () => {
       winRate: 73,
       description: 'Aggressive co-leader who blends IGL instincts with raw fragging power. Unpredictable rotations, ruthless decision-making, and the firepower to back every call. Keeps the team sharp and enemies on edge.',
       popupDescription: 'Aggressive co-leader with unpredictable IGL calls & raw firepower.',
-      ingameName: '『VioLencE』UB',
+      ingameName: 'VioLencE UB',
       since: 2019,
       image: '/uploads/team/Umang Rana.jpg',
       socials: { instagram: 'https://instagram.com/umangrana' }
@@ -48,7 +48,7 @@ const Team = () => {
       winRate: 69,
       description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
       popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
-      ingameName: '『VioLencE』DP',
+      ingameName: 'VioLencE DP',
       since: 2022,
       image: '/uploads/team/Aayush Panchal.webp',
       socials: { instagram: 'https://instagram.com/aayushpanchal' }
@@ -61,7 +61,7 @@ const Team = () => {
       winRate: 70,
       description: 'Legendary long-range specialist whose precision knocks open every engagement. Clutch DMR plays that shift momentum, ridiculous aim, and the poise to perform under pressure when it matters most.',
       popupDescription: 'Elite DMR specialist with precision knocks & clutch aim.',
-      ingameName: '『VioLencE』PV',
+      ingameName: 'VioLencE PV',
       since: 2023,
       image: '/uploads/team/Purvang Pandya.jpg',
       socials: { instagram: 'https://instagram.com/purvangpandya' }
@@ -74,7 +74,7 @@ const Team = () => {
       winRate: 72,
       description: 'Fearless entry specialist who cracks compound doors and creates the chaos that wins fights. Aggressive entries, flawless trades, and the aggression to control zones. The breach that breaks defenses.',
       popupDescription: 'Fearless entry fragger. Cracks compounds with flawless trades.',
-      ingameName: '『VioLencE』KP',
+      ingameName: 'VioLencE KP',
       since: 2020,
       image: '/uploads/team/Karan Patel.jpeg',
       socials: { instagram: 'https://instagram.com/karanpatel' }
@@ -87,7 +87,7 @@ const Team = () => {
       winRate: 71,
       description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
       popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
-      ingameName: '『VioLencE』MD',
+      ingameName: 'VioLencE MD',
       since: 2021,
       image: '/uploads/team/Mehul Darji.jpg',
       socials: { instagram: 'https://instagram.com/mehuldarji' }
@@ -100,7 +100,7 @@ const Team = () => {
       winRate: 74,
       description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
       popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
-      ingameName: '『VioLencE』HT',
+      ingameName: 'VioLencE HT',
       since: 2023,
       image: '/uploads/team/Harsh Thakor.jpg',
       socials: { instagram: 'https://instagram.com/harshthakor' }
@@ -157,7 +157,7 @@ const Team = () => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   className="flex items-center gap-4 px-4 py-3 rounded-2xl border border-primary-500/40 bg-primary-500/10 shadow-lg shadow-primary-900/30"
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-primary-500/50 bg-dark-900 flex items-center justify-center p-2">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary-500/60 bg-dark-900 flex items-center justify-center p-2 shadow-inner">
                     <img src={CLAN_LOGO} alt="Team VioLencE clan crest" className="w-full h-full object-contain" />
                   </div>
                   <div>
@@ -345,7 +345,7 @@ const Team = () => {
                     {selected.ingameName && (
                       <div className="flex-1 px-3 py-2 rounded-lg bg-primary-500/10 border border-primary-500/30">
                         <p className="text-[10px] text-primary-400 font-bold uppercase tracking-wider">IGN</p>
-                        <p className="text-sm text-white font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.02em' }}>{selected.ingameName}</p>
+                        <p className="text-sm text-primary-100 font-black tracking-[0.18em] uppercase font-mono">{selected.ingameName}</p>
                       </div>
                     )}
                     {selected.since && (

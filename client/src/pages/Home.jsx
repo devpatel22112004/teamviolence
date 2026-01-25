@@ -13,6 +13,8 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
+const CLAN_LOGO = encodeURI('/uploads/team/Clan Logo.png')
+
 const Home = () => {
   const stats = [
     { icon: FaTrophy, value: '50+', label: 'Tournaments Won' },
@@ -22,12 +24,13 @@ const Home = () => {
   ]
 
   const lineup = [
-    { name: 'Dev Patel', role: 'IGL / Assaulter', image: '/images/dev-patel.jpg', impact: 'Clutch calls. Relentless closes.' },
-    { name: 'Harsh Thakor', role: 'Entry Fragger', image: '/images/harsh-thakor.jpg', impact: 'First in. First knock.' },
-    { name: 'Karan Patel', role: 'Support', image: '/images/karan-patel.jpeg', impact: 'Anchor with unbreakable holds.' },
-    { name: 'Mehul Darji', role: 'Scout', image: '/images/mehul-darji.jpg', impact: 'Reads rotations before they happen.' },
-    { name: 'Purvang Pandya', role: 'Sniper', image: '/images/purvang-pandya.jpg', impact: 'DMR ice-cold openings.' },
-    { name: 'Umang Rana', role: 'Flex', image: '/images/umang-rana.jpg', impact: 'Adaptive win-condition player.' },
+    { name: 'Dev Patel', role: 'IGL / Founder', image: '/uploads/team/Dev Patel.jpg', impact: 'Calls rotations that break defenses and clutch closes.' },
+    { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/uploads/team/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
+    { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/uploads/team/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
+    { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/uploads/team/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
+    { name: 'Karan Patel', role: 'Entry Fragger', image: '/uploads/team/Karan Patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
+    { name: 'Mehul Darji', role: 'Aggressive Scout & Co-Leader', image: '/uploads/team/Mehul Darji.jpg', impact: 'Leads info plays and zone breaks with composure.' },
+    { name: 'Harsh Thakor', role: 'Support Anchor', image: '/uploads/team/Harsh Thakor.jpg', impact: 'Locks flanks and stabilizes every late circle.' },
   ]
 
   const slides = [
@@ -152,9 +155,9 @@ const Home = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <img
-                      src="/images/team-violence-logo.png"
+                      src={CLAN_LOGO}
                       alt="Team VioLencE"
-                      className="h-16 w-16 rounded-2xl border border-primary-500/50 shadow-lg shadow-primary-900/40"
+                      className="h-16 w-16 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 object-contain bg-dark-900 p-2"
                     />
                     <div>
                       <p className="text-xs text-gray-400 uppercase">Prime Clan</p>
@@ -196,55 +199,72 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <div className="mt-8 flex items-center gap-3">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveSlide(idx)}
-                className={`h-2.5 rounded-full transition-all ${idx === activeSlide ? 'w-10 bg-primary-400' : 'w-3 bg-gray-600'}`}
-                aria-label={`Slide ${idx + 1}`}
-              />
-            ))}
+          <div className="mt-8 flex items-center gap-2">
+            {slides.map((_, idx) => {
+              const isActive = idx === activeSlide
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveSlide(idx)}
+                  aria-label={`Slide ${idx + 1}`}
+                  aria-current={isActive}
+                  className={`h-3 rounded-full transition-all duration-300 border ${
+                    isActive
+                      ? 'w-12 bg-primary-400 border-primary-300 shadow-[0_0_0_3px_rgba(59,130,246,0.25)]'
+                      : 'w-3 bg-dark-800 border-dark-700 hover:border-primary-400'
+                  }`}
+                />
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Pillars + Stats */}
+      {/* Systems & Form */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 lg:gap-10">
-          <div className="space-y-4 sm:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Signature System</h2>
-              <span className="text-xs sm:text-sm text-primary-300 flex items-center"><FaShieldAlt className="mr-2" /> Anti-tilt protocols</span>
-            </div>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-              {pillars.map((pillar) => (
-                <div key={pillar.title} className="glass rounded-2xl p-5 border-primary-500/10 hover:border-primary-500/30 transition-all">
-                  <div className="w-12 h-12 rounded-xl bg-primary-500/15 text-primary-200 flex items-center justify-center mb-4">
-                    <pillar.icon />
+        <div className="relative overflow-hidden rounded-3xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-dark-950 to-black p-6 sm:p-8">
+          <div className="absolute -left-24 -top-24 w-72 h-72 bg-primary-500/15 blur-3xl" />
+          <div className="absolute right-0 bottom-0 w-80 h-80 bg-primary-700/10 blur-3xl" />
+          <div className="relative grid lg:grid-cols-[1.05fr_0.95fr] gap-6 sm:gap-8 items-start">
+            <div className="space-y-4 sm:space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Signature System</h2>
+                <span className="text-xs sm:text-sm text-primary-300 inline-flex items-center rounded-full px-3 py-1 bg-primary-500/10 border border-primary-500/30"><FaShieldAlt className="mr-2" /> Anti-tilt protocols</span>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                {pillars.map((pillar) => (
+                  <div key={pillar.title} className="flex items-start gap-3 rounded-2xl border border-primary-500/15 bg-dark-900/60 p-4 hover:border-primary-400/50 transition-all">
+                    <div className="w-11 h-11 rounded-xl bg-primary-500/15 text-primary-200 flex items-center justify-center shrink-0">
+                      <pillar.icon />
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-lg font-semibold text-gray-100">{pillar.title}</h3>
+                      <p className="text-gray-400 text-sm leading-relaxed">{pillar.desc}</p>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{pillar.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{pillar.desc}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="glass rounded-2xl p-6 border-primary-500/15">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-gray-100">Numbers that matter</h3>
-              <span className="text-xs text-gray-400 uppercase tracking-widest">Live form</span>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="bg-dark-900/80 rounded-xl p-3 sm:p-4 border border-dark-800">
-                  <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-500/15 text-primary-200 mb-2 text-sm sm:text-base">
-                    <stat.icon />
-                  </div>
-                  <div className="text-xl sm:text-2xl font-bold text-primary-200">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
+            <div className="rounded-2xl border border-primary-500/20 bg-dark-900/70 p-5 sm:p-6 shadow-lg shadow-primary-900/30">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-xs text-gray-400 uppercase tracking-widest">Live Form</p>
+                  <h3 className="text-xl sm:text-2xl font-display font-semibold text-gray-100">Numbers that matter</h3>
                 </div>
-              ))}
+                <span className="px-3 py-1 rounded-full text-xs bg-primary-500/15 text-primary-100 border border-primary-500/30">Updated</span>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="rounded-xl border border-dark-700 bg-gradient-to-br from-dark-800 to-dark-900 p-4">
+                    <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-500/15 text-primary-200 mb-3 text-base">
+                      <stat.icon />
+                    </div>
+                    <div className="text-2xl font-black text-primary-200">{stat.value}</div>
+                    <div className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -318,7 +338,7 @@ const Home = () => {
               className="relative overflow-hidden rounded-2xl border border-primary-500/20 bg-gradient-to-br from-dark-900 to-dark-950 hover:border-primary-500/40 transition-all group"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-primary-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all" />
-              <img src={player.image} alt={player.name} className="h-52 w-full object-cover" />
+              <img src={player.image} alt={player.name} className="h-56 sm:h-60 w-full object-cover" />
               <div className="p-5 space-y-2 relative z-10">
                 <div className="flex items-center justify-between">
                   <div>
