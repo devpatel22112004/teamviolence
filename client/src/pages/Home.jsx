@@ -111,12 +111,13 @@ const Home = () => {
   return (
     <div className="pt-20 space-y-24">
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[80vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[83vh] sm:min-h-[84vh] flex items-center">
         <div
-          className="absolute inset-0 bg-cover"
+          className="absolute inset-0 bg-cover transition-all duration-700"
           style={{
             backgroundImage: `linear-gradient(120deg, rgba(3,7,18,0.65), rgba(3,7,18,0.60)), url(${slides[activeSlide].image})`,
-            backgroundPosition: 'center bottom'
+            backgroundPosition: '20% bottom',
+            backgroundSize: 'cover'
           }}
         />
         <div className="absolute inset-0 grid-overlay opacity-20" />
@@ -214,78 +215,115 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <div className="mt-8 flex items-center gap-3">
+          <div className="mt-8 flex items-center gap-2">
             {slides.map((_, idx) => {
               const isActive = idx === activeSlide
               return (
-                <div key={idx} className="relative flex items-center justify-center">
-                  <motion.div
-                    animate={isActive ? { width: 36, backgroundColor: '#38bdf8' } : { width: 12, backgroundColor: '#1e293b' }}
-                    transition={{ duration: 0.5 }}
-                    className={`h-3 rounded-full border transition-all duration-300 ${isActive ? 'border-primary-300 shadow-[0_0_0_3px_rgba(59,130,246,0.25)]' : 'border-dark-700'}`}
-                    style={{ width: isActive ? 36 : 12 }}
-                  />
+                <button
+                  key={idx}
+                  onClick={() => setActiveSlide(idx)}
+                  className="group relative flex-1 max-w-[80px] h-1 rounded-full overflow-hidden"
+                  aria-label={`Go to slide ${idx + 1}`}
+                >
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-primary-600 to-primary-400' 
+                      : 'bg-dark-700 group-hover:bg-dark-600'
+                  }`} />
                   {isActive && (
                     <motion.div
-                      key={activeSlide}
+                      key={`progress-${activeSlide}`}
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
-                      transition={{ duration: 3.5, ease: 'linear' }}
-                      className="absolute left-0 top-0 h-3 rounded-full bg-white/30"
-                      style={{ width: 36, transformOrigin: 'left' }}
+                      transition={{ duration: 3.8, ease: 'linear' }}
+                      className="absolute inset-0 bg-gradient-to-r from-white/60 to-white/40"
+                      style={{ transformOrigin: 'left' }}
                     />
                   )}
-                </div>
+                </button>
               )
             })}
           </div>
         </div>
       </section>
 
-      {/* Systems & Form */}
+      {/* Team Performance Metrics */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-dark-950 to-black p-6 sm:p-8">
+        <div className="relative overflow-hidden rounded-3xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-dark-950 to-black p-6 sm:p-8 lg:p-10">
           <div className="absolute -left-24 -top-24 w-72 h-72 bg-primary-500/15 blur-3xl" />
           <div className="absolute right-0 bottom-0 w-80 h-80 bg-primary-700/10 blur-3xl" />
-          <div className="relative grid lg:grid-cols-[1.05fr_0.95fr] gap-6 sm:gap-8 items-start">
-            <div className="space-y-4 sm:space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Signature System</h2>
-                <span className="text-xs sm:text-sm text-primary-300 inline-flex items-center rounded-full px-3 py-1 bg-primary-500/10 border border-primary-500/30"><FaShieldAlt className="mr-2" /> Anti-tilt protocols</span>
+          <div className="relative space-y-6 sm:space-y-8">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 pb-4 border-b border-primary-500/20">
+              <div>
+                <p className="text-xs sm:text-sm text-primary-300 uppercase tracking-widest mb-2">Live Performance</p>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold bg-gradient-to-r from-primary-200 via-primary-300 to-primary-400 bg-clip-text text-transparent">Team Excellence Metrics</h2>
               </div>
-              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                {pillars.map((pillar) => (
-                  <div key={pillar.title} className="flex items-start gap-3 rounded-2xl border border-primary-500/15 bg-dark-900/60 p-4 hover:border-primary-400/50 transition-all">
-                    <div className="w-11 h-11 rounded-xl bg-primary-500/15 text-primary-200 flex items-center justify-center shrink-0">
-                      <pillar.icon />
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-lg font-semibold text-gray-100">{pillar.title}</h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">{pillar.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-primary-500/20 border border-emerald-500/30"
+              >
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs sm:text-sm font-semibold text-emerald-300">Live Tracking</span>
+              </motion.div>
             </div>
 
-            <div className="rounded-2xl border border-primary-500/20 bg-dark-900/70 p-5 sm:p-6 shadow-lg shadow-primary-900/30">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest">Live Form</p>
-                  <h3 className="text-xl sm:text-2xl font-display font-semibold text-gray-100">Numbers that matter</h3>
+            {/* Main Content Grid */}
+            <div className="grid lg:grid-cols-2 gap-6 sm:gap-8">
+              {/* Gameplay Pillars */}
+              <div className="space-y-4">
+                <h3 className="text-lg sm:text-xl font-display font-bold text-gray-100 flex items-center gap-2">
+                  <FaBolt className="text-primary-400" />
+                  Signature Playstyle
+                </h3>
+                <div className="grid gap-3">
+                  {pillars.map((pillar) => (
+                    <motion.div 
+                      key={pillar.title} 
+                      whileHover={{ x: 4 }}
+                      className="flex items-start gap-3 rounded-xl border border-primary-500/15 bg-gradient-to-br from-dark-800/80 to-dark-900/80 p-4 hover:border-primary-400/40 hover:shadow-lg hover:shadow-primary-500/10 transition-all backdrop-blur-sm"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500/20 to-primary-600/10 text-primary-300 flex items-center justify-center shrink-0 border border-primary-500/20">
+                        <pillar.icon className="text-lg" />
+                      </div>
+                      <div className="space-y-1 flex-1">
+                        <h4 className="text-base font-semibold text-gray-100">{pillar.title}</h4>
+                        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">{pillar.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-                <span className="px-3 py-1 rounded-full text-xs bg-primary-500/15 text-primary-100 border border-primary-500/30">Updated</span>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="rounded-xl border border-dark-700 bg-gradient-to-br from-dark-800 to-dark-900 p-4">
-                    <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary-500/15 text-primary-200 mb-3 text-base">
-                      <stat.icon />
-                    </div>
-                    <div className="text-2xl font-black text-primary-200">{stat.value}</div>
-                    <div className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
-                  </div>
-                ))}
+
+              {/* Stats Showcase */}
+              <div className="space-y-4">
+                <h3 className="text-lg sm:text-xl font-display font-bold text-gray-100 flex items-center gap-2">
+                  <FaTrophy className="text-amber-400" />
+                  Career Achievements
+                </h3>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {stats.map((stat, idx) => (
+                    <motion.div 
+                      key={stat.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      whileHover={{ y: -4, scale: 1.02 }}
+                      className="group relative rounded-xl border border-primary-500/20 bg-gradient-to-br from-dark-800 to-dark-900 p-4 sm:p-5 hover:border-primary-400/50 hover:shadow-xl hover:shadow-primary-500/20 transition-all overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="relative">
+                        <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-primary-500/20 to-primary-600/10 text-primary-300 mb-3 border border-primary-500/20 group-hover:scale-110 transition-transform">
+                          <stat.icon className="text-lg sm:text-xl" />
+                        </div>
+                        <div className="text-2xl sm:text-3xl font-black bg-gradient-to-br from-primary-200 to-primary-400 bg-clip-text text-transparent">{stat.value}</div>
+                        <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold mt-1">{stat.label}</div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -294,60 +332,77 @@ const Home = () => {
 
       {/* Featured Tournaments Rail */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
           <div>
-            <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">Live & upcoming</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Featured Tournaments</h2>
+            <p className="text-xs sm:text-sm text-primary-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+              <FaTrophy className="text-primary-500" />
+              Live & upcoming
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent">Featured Tournaments</h2>
+            <p className="text-sm sm:text-base text-gray-400 mt-2">Compete at the highest level. Register now.</p>
           </div>
-          <Link to="/tournaments" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-xs sm:text-sm">
-            See all <FaArrowRight className="ml-2" />
+          <Link to="/tournaments" className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-bold text-sm sm:text-base transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-105">
+            See all <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
-        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0">
-          {featuredTournaments.map((item) => (
-            <div
+        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+          {featuredTournaments.map((item, idx) => (
+            <motion.div
               key={item.title}
-              className="min-w-[260px] sm:min-w-[280px] md:min-w-[320px] snap-start glass-strong rounded-2xl p-4 sm:p-6 border-primary-500/25"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.15 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group min-w-[280px] sm:min-w-[300px] md:min-w-[340px] snap-start relative overflow-hidden rounded-2xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-dark-950 to-black p-5 sm:p-6 hover:border-primary-400/50 transition-all shadow-xl hover:shadow-2xl hover:shadow-primary-500/20"
             >
-              <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${item.accent} mb-4`}>
-                {item.type}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r ${item.accent} mb-4 shadow-lg`}>
+                  {item.type}
+                </div>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 text-gray-100 group-hover:text-primary-200 transition-colors">{item.title}</h3>
+                <p className="text-gray-400 text-sm mb-6 line-clamp-2">Join the action. Compete for glory and prizes in premium BGMI tournaments.</p>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 text-sm mb-6">
+                  <div className="p-3 rounded-lg bg-dark-800/60 border border-dark-700 group-hover:border-primary-500/30 transition-colors">
+                    <p className="text-gray-400 text-xs mb-1">Prize Pool</p>
+                    <p className="text-lg sm:text-xl font-bold text-primary-300">{item.pool}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-dark-800/60 border border-dark-700 group-hover:border-primary-500/30 transition-colors">
+                    <p className="text-gray-400 text-xs mb-1">Slots</p>
+                    <p className="text-lg sm:text-xl font-bold text-primary-300">{item.slots}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-dark-800/60 border border-dark-700 group-hover:border-primary-500/30 transition-colors">
+                    <p className="text-gray-400 text-xs mb-1">Date</p>
+                    <p className="text-base font-semibold text-gray-200">{item.date}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-dark-800/60 border border-dark-700 group-hover:border-primary-500/30 transition-colors">
+                    <p className="text-gray-400 text-xs mb-1">Format</p>
+                    <p className="text-base font-semibold text-gray-200">Squad TPP</p>
+                  </div>
+                </div>
+                <Link to="/tournaments" className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-bold text-sm transition-all shadow-lg group-hover:shadow-primary-500/40">
+                  Register now <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-              <h3 className="text-xl font-display font-bold mb-2">{item.title}</h3>
-              <p className="text-gray-400 text-sm mb-6">Prize pool, slots, and check-ins — all in one premium dashboard.</p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-400">Prize Pool</p>
-                  <p className="text-lg font-semibold text-primary-200">{item.pool}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Slots</p>
-                  <p className="text-lg font-semibold text-primary-200">{item.slots}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Date</p>
-                  <p className="text-lg font-semibold text-primary-200">{item.date}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Format</p>
-                  <p className="text-lg font-semibold text-primary-200">Squad TPP</p>
-                </div>
-              </div>
-              <Link to="/tournaments" className="mt-6 inline-flex items-center text-primary-200 font-semibold">Register now <FaArrowRight className="ml-2" /></Link>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Roster Spotlight - Teaser Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
           <div>
-            <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">Prime roster</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold">Faces behind the tag</h2>
+            <p className="text-xs sm:text-sm text-primary-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+              <FaCrown className="text-amber-400" />
+              Prime roster
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold bg-gradient-to-r from-gray-100 via-primary-200 to-primary-400 bg-clip-text text-transparent">Faces behind the tag</h2>
             <p className="text-sm sm:text-base text-gray-400 mt-2">Meet the legends. Click to unlock their full story.</p>
           </div>
-          <Link to="/team" className="text-primary-300 hover:text-primary-200 font-bold flex items-center text-sm sm:text-base transition-all hover:gap-3 gap-2">
-            View Full Lineup <FaArrowRight className="transition-transform group-hover:translate-x-1" />
+          <Link to="/team" className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-bold text-sm sm:text-base transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-105">
+            View Full Lineup <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
         
