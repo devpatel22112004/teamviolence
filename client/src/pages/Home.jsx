@@ -13,7 +13,13 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const CLAN_LOGO = encodeURI('/uploads/team/Clan Logo.png')
+const CLAN_LOGO = '/uploads/team/Clan Logo.png'
+
+const formatImagePath = (path) => {
+  if (!path) return ''
+  if (path.startsWith('http')) return path
+  return encodeURI(path)
+}
 
 const Home = () => {
   const stats = [
@@ -155,7 +161,7 @@ const Home = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <img
-                      src={CLAN_LOGO}
+                      src={formatImagePath(CLAN_LOGO)}
                       alt="Team VioLencE"
                       className="h-16 w-16 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 object-contain bg-dark-900 p-2"
                     />
@@ -338,7 +344,7 @@ const Home = () => {
               className="relative overflow-hidden rounded-2xl border border-primary-500/20 bg-gradient-to-br from-dark-900 to-dark-950 hover:border-primary-500/40 transition-all group"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-primary-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all" />
-              <img src={player.image} alt={player.name} className="h-56 sm:h-60 w-full object-cover" />
+                <img src={formatImagePath(player.image)} alt={player.name} className="h-56 sm:h-60 w-full object-cover" />
               <div className="p-5 space-y-2 relative z-10">
                 <div className="flex items-center justify-between">
                   <div>

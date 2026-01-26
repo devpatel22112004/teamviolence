@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaDiscord, FaInstagram, FaYoutube } from 'react-icons/fa'
 
-const CLAN_LOGO = encodeURI('/uploads/team/Clan Logo.png')
+const CLAN_LOGO = '/uploads/team/Clan Logo.png'
 
 const Team = () => {
   const [selected, setSelected] = useState(null)
@@ -22,7 +22,7 @@ const Team = () => {
       winRate: 77,
       description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
       popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
-      ingameName: 'VioLencE X',
+      ingameName: 'VioLencE 乂',
       since: 2019,
       image: '/uploads/team/Dev Patel.jpg',
       socials: { instagram: 'https://instagram.com/devpatel' }
@@ -31,8 +31,8 @@ const Team = () => {
       _id: 'umang-rana',
       name: 'Umang Rana',
       role: 'Co-Leader / Flex IGL',
-      kills: 4580,
-      winRate: 73,
+      kills: 5739,
+      winRate: 84,
       description: 'Aggressive co-leader who blends IGL instincts with raw fragging power. Unpredictable rotations, ruthless decision-making, and the firepower to back every call. Keeps the team sharp and enemies on edge.',
       popupDescription: 'Aggressive co-leader with unpredictable IGL calls & raw firepower.',
       ingameName: 'VioLencE UB',
@@ -45,7 +45,7 @@ const Team = () => {
       name: 'Aayush Panchal',
       role: 'Strategic Analyst',
       kills: 4120,
-      winRate: 69,
+      winRate: 75,
       description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
       popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
       ingameName: 'VioLencE DP',
@@ -57,8 +57,8 @@ const Team = () => {
       _id: 'purvang-pandya',
       name: 'Purvang Pandya',
       role: 'Elite DMR Specialist',
-      kills: 4435,
-      winRate: 70,
+      kills: 4999,
+      winRate: 72,
       description: 'Legendary long-range specialist whose precision knocks open every engagement. Clutch DMR plays that shift momentum, ridiculous aim, and the poise to perform under pressure when it matters most.',
       popupDescription: 'Elite DMR specialist with precision knocks & clutch aim.',
       ingameName: 'VioLencE PV',
@@ -70,7 +70,7 @@ const Team = () => {
       _id: 'karan-patel',
       name: 'Karan Patel',
       role: 'Entry Fragger',
-      kills: 4725,
+      kills: 5111,
       winRate: 72,
       description: 'Fearless entry specialist who cracks compound doors and creates the chaos that wins fights. Aggressive entries, flawless trades, and the aggression to control zones. The breach that breaks defenses.',
       popupDescription: 'Fearless entry fragger. Cracks compounds with flawless trades.',
@@ -84,7 +84,7 @@ const Team = () => {
       name: 'Mehul Darji',
       role: 'Aggressive Scout & Co-Leader',
       kills: 4510,
-      winRate: 71,
+      winRate: 73,
       description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
       popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
       ingameName: 'VioLencE MD',
@@ -96,8 +96,8 @@ const Team = () => {
       _id: 'harsh-thakor',
       name: 'Harsh Thakor',
       role: 'Support Anchor',
-      kills: 5060,
-      winRate: 74,
+      kills: 4269,
+      winRate: 69,
       description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
       popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
       ingameName: 'VioLencE HT',
@@ -158,7 +158,7 @@ const Team = () => {
                   className="flex items-center gap-4 px-4 py-3 rounded-2xl border border-primary-500/40 bg-primary-500/10 shadow-lg shadow-primary-900/30"
                 >
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary-500/60 bg-dark-900 flex items-center justify-center p-2 shadow-inner">
-                    <img src={CLAN_LOGO} alt="Team VioLencE clan crest" className="w-full h-full object-contain" />
+                    <img src={formatImagePath(CLAN_LOGO)} alt="Team VioLencE clan crest" className="w-full h-full object-contain" />
                   </div>
                   <div>
                     <p className="text-xs text-primary-300 uppercase tracking-[0.2em] font-bold">Clan Crest</p>
