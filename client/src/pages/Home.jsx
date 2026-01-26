@@ -13,12 +13,18 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const CLAN_LOGO = '/uploads/team/Clan Logo.png'
+const CLAN_LOGO = '/Line_up/Clan Logo.png'
 
 const formatImagePath = (path) => {
   if (!path) return ''
   if (path.startsWith('http')) return path
-  return encodeURI(path)
+  // Split path, encode each part, then rejoin to handle spaces properly
+  return path.split('/').map(part => part ? encodeURIComponent(part) : part).join('/')
+}
+
+// Fallback image for loading errors
+const handleImageError = (e) => {
+  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%231f2937" width="400" height="400"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="%236b7280"%3EImage Loading%3C/text%3E%3C/svg%3E'
 }
 
 const Home = () => {
@@ -30,33 +36,33 @@ const Home = () => {
   ]
 
   const lineup = [
-    { name: 'Dev Patel', role: 'IGL / Founder', image: '/uploads/team/Dev Patel.jpg', impact: 'Calls rotations that break defenses and clutch closes.' },
-    { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/uploads/team/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
-    { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/uploads/team/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
-    { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/uploads/team/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
-    { name: 'Karan Patel', role: 'Entry Fragger', image: '/uploads/team/Karan Patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
-    { name: 'Mehul Darji', role: 'Aggressive Scout & Co-Leader', image: '/uploads/team/Mehul Darji.jpg', impact: 'Leads info plays and zone breaks with composure.' },
-    { name: 'Harsh Thakor', role: 'Support Anchor', image: '/uploads/team/Harsh Thakor.jpg', impact: 'Locks flanks and stabilizes every late circle.' },
+    { name: 'Dev Patel', role: 'IGL / Founder', image: '/Line_up/Dev Patel.jpg', impact: 'Calls rotations that break defenses and clutch closes.' },
+    { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/Line_up/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
+    { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/Line_up/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
+    { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/Line_up/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
+    { name: 'Karan Patel', role: 'Entry Fragger', image: '/Line_up/karan-patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
+    { name: 'Mehul Darji', role: 'Aggressive Scout & Co-Leader', image: '/Line_up/Mehul Darji.jpg', impact: 'Leads info plays and zone breaks with composure.' },
+    { name: 'Harsh Thakor', role: 'Support Anchor', image: '/Line_up/Harsh Thakor.jpg', impact: 'Locks flanks and stabilizes every late circle.' },
   ]
 
   const slides = [
     {
-      tag: 'Prime Drop',
-      title: 'Cinematic esports built for BGMI.',
-      subtitle: 'Rotations, clutches, and finishes presented like a premium series. Dive into every call and frag.',
-      image: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1600&q=80'
+      tag: 'Swipe Layout 1',
+      title: 'Modern Esports Experience',
+      subtitle: 'Premium, cinematic, and built for the next generation.',
+      image: formatImagePath('/Line_up/Home_Swipe_Layout.webp')
     },
     {
-      tag: 'LAN Ready',
-      title: 'Tier-1 execution with fearless entries.',
-      subtitle: 'Aggro takes, perfect refrags, and late-game ice. Made for stage lights and streams.',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80'
+      tag: 'Swipe Layout 2',
+      title: 'Elite Teamwork',
+      subtitle: 'Synergy, strategy, and relentless execution.',
+      image: formatImagePath('/Line_up/Home_Swipe_Layout2.webp')
     },
     {
-      tag: 'Community First',
-      title: 'Scrims, watch parties, and prime drops.',
-      subtitle: 'Queue with us, learn our systems, and experience a high-gloss esports platform built for fans.',
-      image: 'https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?auto=format&fit=crop&w=1600&q=80'
+      tag: 'Swipe Layout 3',
+      title: 'Victory Awaits',
+      subtitle: 'Join the journey. Witness greatness.',
+      image: formatImagePath('/Line_up/Home_Swipe_Layout3.webp')
     },
   ]
 
@@ -107,12 +113,13 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[80vh] flex items-center">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover"
           style={{
-            backgroundImage: `linear-gradient(120deg, rgba(3,7,18,0.92), rgba(3,7,18,0.88)), url(${slides[activeSlide].image})`
+            backgroundImage: `linear-gradient(120deg, rgba(3,7,18,0.65), rgba(3,7,18,0.60)), url(${slides[activeSlide].image})`,
+            backgroundPosition: 'center bottom'
           }}
         />
-        <div className="absolute inset-0 grid-overlay opacity-40" />
+        <div className="absolute inset-0 grid-overlay opacity-20" />
         <div className="absolute -left-32 -top-32 w-96 h-96 bg-primary-500/20 blur-3xl" />
         <div className="absolute right-0 top-24 w-80 h-80 bg-primary-700/20 blur-3xl" />
 
@@ -163,7 +170,8 @@ const Home = () => {
                     <img
                       src={formatImagePath(CLAN_LOGO)}
                       alt="Team VioLencE"
-                      className="h-16 w-16 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 object-contain bg-dark-900 p-2"
+                      onError={handleImageError}
+                      className="h-14 w-14 sm:h-16 sm:w-16 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 object-contain bg-dark-900 p-2"
                     />
                     <div>
                       <p className="text-xs text-gray-400 uppercase">Prime Clan</p>
@@ -187,9 +195,10 @@ const Home = () => {
                     {lineup.slice(0, 5).map((player) => (
                       <img
                         key={player.name}
-                        src={player.image}
+                        src={formatImagePath(player.image)}
                         alt={player.name}
-                        className="h-12 w-12 rounded-full border-2 border-primary-500/60 shadow-lg shadow-primary-900/40 object-cover"
+                        onError={handleImageError}
+                        className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-primary-500/60 shadow-lg shadow-primary-900/40 object-cover"
                       />
                     ))}
                     <div className="h-12 w-12 rounded-full bg-primary-600 text-white flex items-center justify-center text-sm font-semibold border-2 border-primary-500/60">
@@ -205,21 +214,28 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <div className="mt-8 flex items-center gap-2">
+          <div className="mt-8 flex items-center gap-3">
             {slides.map((_, idx) => {
               const isActive = idx === activeSlide
               return (
-                <button
-                  key={idx}
-                  onClick={() => setActiveSlide(idx)}
-                  aria-label={`Slide ${idx + 1}`}
-                  aria-current={isActive}
-                  className={`h-3 rounded-full transition-all duration-300 border ${
-                    isActive
-                      ? 'w-12 bg-primary-400 border-primary-300 shadow-[0_0_0_3px_rgba(59,130,246,0.25)]'
-                      : 'w-3 bg-dark-800 border-dark-700 hover:border-primary-400'
-                  }`}
-                />
+                <div key={idx} className="relative flex items-center justify-center">
+                  <motion.div
+                    animate={isActive ? { width: 36, backgroundColor: '#38bdf8' } : { width: 12, backgroundColor: '#1e293b' }}
+                    transition={{ duration: 0.5 }}
+                    className={`h-3 rounded-full border transition-all duration-300 ${isActive ? 'border-primary-300 shadow-[0_0_0_3px_rgba(59,130,246,0.25)]' : 'border-dark-700'}`}
+                    style={{ width: isActive ? 36 : 12 }}
+                  />
+                  {isActive && (
+                    <motion.div
+                      key={activeSlide}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 3.5, ease: 'linear' }}
+                      className="absolute left-0 top-0 h-3 rounded-full bg-white/30"
+                      style={{ width: 36, transformOrigin: 'left' }}
+                    />
+                  )}
+                </div>
               )
             })}
           </div>
@@ -322,41 +338,140 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Roster Spotlight */}
+      {/* Roster Spotlight - Teaser Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <div>
             <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">Prime roster</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Faces behind the tag</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold">Faces behind the tag</h2>
+            <p className="text-sm sm:text-base text-gray-400 mt-2">Meet the legends. Click to unlock their full story.</p>
           </div>
-          <Link to="/team" className="text-primary-300 hover:text-primary-200 font-semibold flex items-center text-xs sm:text-sm">
-            Full lineup <FaArrowRight className="ml-2" />
+          <Link to="/team" className="text-primary-300 hover:text-primary-200 font-bold flex items-center text-sm sm:text-base transition-all hover:gap-3 gap-2">
+            View Full Lineup <FaArrowRight className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {lineup.map((player, idx) => (
-            <motion.div
+        
+        {/* Show only first 3 players as teaser on mobile, all on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          {lineup.slice(0, 3).map((player, idx) => (
+            <Link 
+              to="/team"
               key={player.name}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-primary-500/20 bg-gradient-to-br from-dark-900 to-dark-950 hover:border-primary-500/60 transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-primary-500/25"
+              >
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-500/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                
+                {/* Image with blur on hover for suspense */}
+                <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 overflow-hidden">
+                  <img 
+                    src={formatImagePath(player.image)} 
+                    alt={player.name} 
+                    onError={handleImageError} 
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" 
+                  />
+                  {/* Suspense overlay hint */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                </div>
+                
+                {/* Limited info to create suspense */}
+                <div className="p-4 sm:p-5 space-y-2 sm:space-y-3 relative z-10">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl font-bold truncate group-hover:text-primary-300 transition-colors">{player.name}</h3>
+                      <p className="text-primary-400 text-xs sm:text-sm font-semibold uppercase tracking-wider">{player.role}</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <motion.div 
+                        whileHover={{ rotate: 45, scale: 1.2 }}
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary-500/20 border border-primary-500/40 flex items-center justify-center group-hover:bg-primary-500/30 group-hover:border-primary-500/60 transition-all"
+                      >
+                        <FaArrowRight className="text-primary-300 text-sm" />
+                      </motion.div>
+                    </div>
+                  </div>
+                  
+                  {/* Teaser text - short version */}
+                  <p className="text-gray-400 text-xs sm:text-sm line-clamp-2 group-hover:text-gray-300 transition-colors">
+                    {player.impact.split('.')[0]}...
+                  </p>
+                  
+                  {/* Call to action hint */}
+                  <div className="flex items-center gap-2 text-primary-300 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse"></span>
+                    Click to see full stats & story
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          ))}
+          
+          {/* Mystery card for remaining players - creates suspense */}
+          <Link to="/team">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="relative overflow-hidden rounded-2xl border border-primary-500/20 bg-gradient-to-br from-dark-900 to-dark-950 hover:border-primary-500/40 transition-all group"
+              transition={{ delay: 0.24 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-primary-500/30 bg-gradient-to-br from-dark-900 via-dark-950 to-primary-950/30 hover:border-primary-500/60 transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-primary-500/25 h-full min-h-[300px] sm:min-h-[340px] md:min-h-[360px] lg:min-h-[380px]"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all" />
-                <img src={formatImagePath(player.image)} alt={player.name} className="h-56 sm:h-60 w-full object-cover" />
-              <div className="p-5 space-y-2 relative z-10">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-semibold">{player.name}</h3>
-                    <p className="text-primary-300 text-sm">{player.role}</p>
-                  </div>
-                  <span className="px-3 py-1 rounded-full text-xs bg-primary-500/15 text-primary-100 border border-primary-500/30">Core</span>
+              {/* Animated background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-primary-900/20 opacity-50 group-hover:opacity-70 transition-opacity" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.1),transparent_70%)] animate-pulse" />
+              
+              {/* Content */}
+              <div className="relative h-full flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary-500/20 border-2 border-primary-500/40 flex items-center justify-center group-hover:bg-primary-500/30 group-hover:border-primary-500/60 transition-all"
+                >
+                  <FaUsers className="text-2xl sm:text-3xl text-primary-300" />
+                </motion.div>
+                
+                <div className="space-y-1 sm:space-y-2">
+                  <p className="text-xl sm:text-2xl font-display font-bold text-white">+{lineup.length - 3} More</p>
+                  <p className="text-sm sm:text-base text-primary-300 font-semibold">Elite Players</p>
                 </div>
-                <p className="text-gray-400 text-sm">{player.impact}</p>
+                
+                <p className="text-xs sm:text-sm text-gray-400 max-w-[200px]">
+                  Discover the full roster with detailed stats, roles, and impact analysis
+                </p>
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-auto px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 text-white text-xs sm:text-sm font-bold hover:from-primary-500 hover:to-primary-600 transition-all shadow-lg hover:shadow-primary-500/50 flex items-center gap-2"
+                >
+                  <span>View Full Lineup</span>
+                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </motion.button>
               </div>
             </motion.div>
-          ))}
+          </Link>
+        </div>
+        
+        {/* Mobile: Show teaser for remaining players */}
+        <div className="mt-6 sm:hidden">
+          <Link to="/team">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 text-white font-bold hover:from-primary-500 hover:to-primary-600 transition-all shadow-lg hover:shadow-primary-500/50 flex items-center justify-center gap-3"
+            >
+              <FaUsers className="text-xl" />
+              <span>View All {lineup.length} Players</span>
+              <FaArrowRight />
+            </motion.button>
+          </Link>
         </div>
       </section>
 

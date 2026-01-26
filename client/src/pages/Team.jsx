@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaDiscord, FaInstagram, FaYoutube } from 'react-icons/fa'
 
-const CLAN_LOGO = '/uploads/team/Clan Logo.png'
+const CLAN_LOGO = '/Line_up/Clan Logo.png'
 
 const Team = () => {
   const [selected, setSelected] = useState(null)
@@ -10,7 +10,12 @@ const Team = () => {
   const formatImagePath = (path) => {
     if (!path) return ''
     if (path.startsWith('http')) return path
-    return encodeURI(path)
+    // Split path, encode each part, then rejoin
+    return path.split('/').map(part => part ? encodeURIComponent(part) : part).join('/')
+  }
+
+  const handleImageError = (e) => {
+    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%231f2937" width="400" height="400"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="%236b7280"%3EImage Loading%3C/text%3E%3C/svg%3E'
   }
 
   const defaultMembers = [
@@ -24,7 +29,7 @@ const Team = () => {
       popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
       ingameName: 'VioLencE 乂',
       since: 2019,
-      image: '/uploads/team/Dev Patel.jpg',
+      image: '/Line_up/Dev Patel.jpg',
       socials: { instagram: 'https://instagram.com/devpatel' }
     },
     {
@@ -37,7 +42,7 @@ const Team = () => {
       popupDescription: 'Aggressive co-leader with unpredictable IGL calls & raw firepower.',
       ingameName: 'VioLencE UB',
       since: 2019,
-      image: '/uploads/team/Umang Rana.jpg',
+      image: '/Line_up/Umang Rana.jpg',
       socials: { instagram: 'https://instagram.com/umangrana' }
     },
     {
@@ -50,7 +55,7 @@ const Team = () => {
       popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
       ingameName: 'VioLencE DP',
       since: 2022,
-      image: '/uploads/team/Aayush Panchal.webp',
+      image: '/Line_up/Aayush Panchal.webp',
       socials: { instagram: 'https://instagram.com/aayushpanchal' }
     },
     {
@@ -63,7 +68,7 @@ const Team = () => {
       popupDescription: 'Elite DMR specialist with precision knocks & clutch aim.',
       ingameName: 'VioLencE PV',
       since: 2023,
-      image: '/uploads/team/Purvang Pandya.jpg',
+      image: '/Line_up/Purvang Pandya.jpg',
       socials: { instagram: 'https://instagram.com/purvangpandya' }
     },
     {
@@ -76,7 +81,7 @@ const Team = () => {
       popupDescription: 'Fearless entry fragger. Cracks compounds with flawless trades.',
       ingameName: 'VioLencE KP',
       since: 2020,
-      image: '/uploads/team/Karan Patel.jpeg',
+      image: '/Line_up/karan-patel.jpeg',
       socials: { instagram: 'https://instagram.com/karanpatel' }
     },
     {
@@ -89,7 +94,7 @@ const Team = () => {
       popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
       ingameName: 'VioLencE MD',
       since: 2021,
-      image: '/uploads/team/Mehul Darji.jpg',
+      image: '/Line_up/Mehul Darji.jpg',
       socials: { instagram: 'https://instagram.com/mehuldarji' }
     },
     {
@@ -102,23 +107,24 @@ const Team = () => {
       popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
       ingameName: 'VioLencE HT',
       since: 2023,
-      image: '/uploads/team/Harsh Thakor.jpg',
+      image: '/Line_up/Harsh Thakor.jpg',
       socials: { instagram: 'https://instagram.com/harshthakor' }
     },
   ]
 
   const displayMembers = defaultMembers.map((member) => ({
     ...member,
-    image: member.image ? formatImagePath(member.image) : formatImagePath(CLAN_LOGO),
+    // Keep raw path here to avoid double-encoding; encode once at render time
+    image: member.image ? member.image : CLAN_LOGO,
     kills: member.kills || 0,
     winRate: member.winRate || 0,
     description: member.description || 'Locked-in competitor ready to punish any misplay in the late circles.'
   }))
 
   return (
-    <div className="pt-20 pb-20">
+    <div className="pt-16 sm:pt-20 pb-12 sm:pb-20">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/15 via-dark-950 to-dark-950" />
         <div className="absolute inset-0 grid-overlay opacity-30" />
         <div className="absolute -left-32 -top-32 w-96 h-96 bg-primary-500/20 blur-3xl" />
@@ -129,13 +135,13 @@ const Team = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="space-y-8"
+            className="space-y-4 sm:space-y-6 md:space-y-8"
           >
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-4 md:space-y-6">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/40 text-primary-100 text-sm font-bold"
+                className="inline-flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary-500/15 border border-primary-500/40 text-primary-100 text-xs sm:text-sm font-bold"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75"></span>
@@ -143,36 +149,36 @@ const Team = () => {
                 </span>
                 Prime Lineup
               </motion.div>
-              <h1 className="text-5xl md:text-7xl font-display font-black leading-tight max-w-3xl">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black leading-tight max-w-3xl">
                 Team VIOLENCE <span className="gradient-text">Lineup</span>
               </h1>
-              <p className="text-xl text-gray-300 leading-relaxed max-w-3xl">
+              <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl">
                 Aggressive pushes, perfect coordination, and icy clutch factor. This is Team VioLencE.
               </p>
-              <p className="text-gray-400 leading-relaxed max-w-3xl">
+              <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-3xl">
                 A roster of sharpshooters, shot-callers, and utility masters forged to dominate every lobby. Click any player to unlock their premium stat card and role impact analysis.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="flex items-center gap-4 px-4 py-3 rounded-2xl border border-primary-500/40 bg-primary-500/10 shadow-lg shadow-primary-900/30"
+                  className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-primary-500/40 bg-primary-500/10 shadow-lg shadow-primary-900/30"
                 >
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary-500/60 bg-dark-900 flex items-center justify-center p-2 shadow-inner">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-primary-500/60 bg-dark-900 flex items-center justify-center p-1.5 sm:p-2 shadow-inner">
                     <img src={formatImagePath(CLAN_LOGO)} alt="Team VioLencE clan crest" className="w-full h-full object-contain" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary-300 uppercase tracking-[0.2em] font-bold">Clan Crest</p>
-                    <p className="text-lg font-display font-black text-white">Team VIOLENCE</p>
-                    <p className="text-gray-400 text-sm">Locked, loaded, and LAN ready.</p>
+                    <p className="text-[10px] sm:text-xs text-primary-300 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold">Clan Crest</p>
+                    <p className="text-base sm:text-lg font-display font-black text-white">Team VIOLENCE</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">Locked, loaded, and LAN ready.</p>
                   </div>
                 </motion.div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {['🔥 Clutch DNA', '🎮 LAN ready', '⚡ Tier-1 scrims'].map((tag) => (
                     <motion.span 
                       key={tag} 
                       whileHover={{ scale: 1.05 }}
-                      className="pill text-sm font-bold tracking-wide"
+                      className="pill text-xs sm:text-sm font-bold tracking-wide"
                     >
                       {tag}
                     </motion.span>
@@ -185,12 +191,12 @@ const Team = () => {
       </section>
 
       {/* Team Members Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {displayMembers.map((member, index) => (
             <motion.div
@@ -208,8 +214,9 @@ const Team = () => {
                 <div className="aspect-video bg-gradient-to-br from-primary-600/20 to-primary-800/20 flex items-center justify-center border border-primary-500/30 group-hover:border-primary-500/60 transition-all">
                   {member.image ? (
                     <img
-                      src={member.image}
+                      src={formatImagePath(member.image)}
                       alt={member.name}
+                      onError={handleImageError}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   ) : (
@@ -325,7 +332,12 @@ const Team = () => {
                   animate={{ opacity: 1, x: 0 }}
                   className="overflow-hidden rounded-2xl border-2 border-primary-500/40 h-64 sm:h-72 md:h-[400px]"
                 >
-                  <img src={selected.image} alt={selected.name} className="w-full h-full object-cover object-center" />
+                  <img 
+                    src={formatImagePath(selected.image)} 
+                    alt={selected.name} 
+                    onError={handleImageError}
+                    className="w-full h-full object-cover object-center" 
+                  />
                 </motion.div>
 
                 {/* Info */}
