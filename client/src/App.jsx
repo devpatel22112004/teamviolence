@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import { MusicProvider } from './context/MusicContext'
 import Navbar from './components/Navbar'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
+import MusicPlayer from './components/MusicPlayer'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
@@ -19,15 +21,16 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          {/* Ensure every route starts at the top */}
-          <ScrollToTop behavior="smooth" />
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
+    <MusicProvider>
+      <AuthProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col">
+            {/* Ensure every route starts at the top */}
+            <ScrollToTop behavior="smooth" />
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/team" element={<Team />} />
               <Route path="/tournaments" element={<Tournaments />} />
@@ -80,9 +83,11 @@ function App() {
               }
             }}
           />
+          <MusicPlayer />
         </div>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </MusicProvider>
   )
 }
 

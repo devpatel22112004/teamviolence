@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaBars, FaTimes, FaTrophy, FaUsers, FaHome, FaUser, FaGamepad, FaSignOutAlt, FaCompass } from 'react-icons/fa'
+import { FaBars, FaTimes, FaTrophy, FaUsers, FaHome, FaUser, FaGamepad, FaSignOutAlt, FaCompass, FaChevronDown } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
@@ -9,7 +9,9 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isInsideNav, setIsInsideNav] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const navRef = useRef(null)
+  const dropdownRef = useRef(null)
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
@@ -33,11 +35,19 @@ const Navbar = () => {
       }
     }
 
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false)
+      }
+    }
+
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
 
@@ -225,43 +235,70 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
               {user ? (
                 <>
-                  {/* Dashboard Links - XL screens only */}
-                  <div className={`hidden xl:flex items-center gap-2 transition-colors duration-300 border-l pl-4 ${
-                    isHomePage && !scrolled ? 'border-white/20' : 'border-dark-700'
-                  }`}>
-                    {dashboardLinks.map((link) => (
-                      <Link key={link.path} to={link.path}>
+                  {/* Dashboard Dropdown Button */}
+                  <div className="relative" ref={dropdownRef}>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className={`relative px-4 py-2.5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 font-bold text-sm group ${
+                        isHomePage && !scrolled
+                          ? 'bg-white/10 text-white border border-white/30 hover:bg-white/15'
+                          : 'bg-dark-800/50 text-gray-300 border border-dark-700 hover:border-primary-500/50 hover:text-primary-300'
+                      }`}
+                    >
+                      <FaUser className="text-base" />
+                      <span>Account</span>
+                      <motion.div
+                        animate={{ rotate: dropdownOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaChevronDown className="text-xs" />
+                      </motion.div>
+                    </motion.button>
+
+                    {/* Dropdown Menu */}
+                    <AnimatePresence>
+                      {dropdownOpen && (
                         <motion.div
-                          whileHover={{ scale: 1.08, y: -2 }}
-                          whileTap={{ scale: 0.96 }}
-                          className={`relative px-3 py-2 rounded-lg transition-all duration-300 text-xs font-bold inline-flex items-center justify-center gap-1.5 flex-shrink-0 group ${
-                            isActive(link.path)
-                              ? isHomePage && !scrolled
-                                ? 'text-white'
-                                : 'text-primary-300'
-                              : isHomePage && !scrolled
-                              ? 'text-gray-200'
-                              : 'text-gray-400'
+                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className={`absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border backdrop-blur-xl overflow-hidden z-50 ${
+                            isHomePage && !scrolled
+                              ? 'bg-black/80 border-white/20'
+                              : 'bg-dark-900/95 border-primary-500/20'
                           }`}
                         >
-                          {isActive(link.path) && (
-                            <motion.div
-                              layoutId={`dash-pill-${link.path}`}
-                              className={`absolute inset-0 rounded-lg ${
-                                isHomePage && !scrolled
-                                  ? 'bg-white/20 shadow-lg shadow-white/20'
-                                  : 'bg-primary-500/15 shadow-lg shadow-primary-500/25'
-                              }`}
-                              transition={{ type: 'spring', stiffness: 200 }}
-                            />
-                          )}
-                          <motion.div whileHover={{ rotate: 12 }} className="relative z-10 flex-shrink-0">
-                            <link.icon className="text-xs" />
-                          </motion.div>
-                          <span className="relative z-10 whitespace-nowrap text-xs">{link.name}</span>
+                          <div className="py-2">
+                            {dashboardLinks.map((link, index) => (
+                              <Link
+                                key={link.path}
+                                to={link.path}
+                                onClick={() => setDropdownOpen(false)}
+                              >
+                                <motion.div
+                                  whileHover={{ x: 4 }}
+                                  className={`flex items-center gap-3 px-4 py-3 transition-all duration-200 ${
+                                    isActive(link.path)
+                                      ? isHomePage && !scrolled
+                                        ? 'bg-white/15 text-white'
+                                        : 'bg-primary-500/10 text-primary-400'
+                                      : isHomePage && !scrolled
+                                      ? 'text-gray-300 hover:bg-white/10 hover:text-white'
+                                      : 'text-gray-400 hover:bg-dark-800 hover:text-primary-300'
+                                  } ${index !== dashboardLinks.length - 1 ? 'border-b border-dark-700/30' : ''}`}
+                                >
+                                  <link.icon className="text-sm flex-shrink-0" />
+                                  <span className="text-sm font-semibold">{link.name}</span>
+                                </motion.div>
+                              </Link>
+                            ))}
+                          </div>
                         </motion.div>
-                      </Link>
-                    ))}
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Logout Button - Pill Shape */}

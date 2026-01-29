@@ -13,7 +13,7 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const CLAN_LOGO = '/Line_up/Clan Logo.png'
+const CLAN_LOGO = '/Line_up/logo.png'
 
 const formatImagePath = (path) => {
   if (!path) return ''
@@ -132,10 +132,6 @@ const Home = () => {
             className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center"
           >
             <div className="space-y-6">
-              <div className="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-100 text-sm font-semibold">
-                <FaBolt className="text-primary-400" />
-                <span>{slides[activeSlide].tag}</span>
-              </div>
               <div>
                 <p className="text-gray-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] text-xs mb-3">Team VioLencE</p>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black leading-tight sm:leading-[1.05]">
@@ -168,12 +164,14 @@ const Home = () => {
               <div className="relative space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <img
-                      src={formatImagePath(CLAN_LOGO)}
-                      alt="Team VioLencE"
-                      onError={handleImageError}
-                      className="h-14 w-14 sm:h-16 sm:w-16 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 object-contain bg-dark-900 p-2"
-                    />
+                    <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full border border-primary-500/60 shadow-lg shadow-primary-900/40 bg-dark-900 flex items-center justify-center overflow-hidden flex-shrink-0">
+                      <img
+                        src={formatImagePath(CLAN_LOGO)}
+                        alt="Team VioLencE"
+                        onError={handleImageError}
+                        className="h-14 w-14 sm:h-18 sm:w-18 object-contain scale-110"
+                      />
+                    </div>
                     <div>
                       <p className="text-xs text-gray-400 uppercase">Prime Clan</p>
                       <p className="text-2xl font-display font-bold text-primary-200">VioLencE Collective</p>
@@ -215,35 +213,7 @@ const Home = () => {
             </div>
           </motion.div>
 
-          <div className="mt-8 flex items-center gap-2">
-            {slides.map((_, idx) => {
-              const isActive = idx === activeSlide
-              return (
-                <button
-                  key={idx}
-                  onClick={() => setActiveSlide(idx)}
-                  className="group relative flex-1 max-w-[80px] h-1 rounded-full overflow-hidden"
-                  aria-label={`Go to slide ${idx + 1}`}
-                >
-                  <div className={`absolute inset-0 transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-gradient-to-r from-primary-600 to-primary-400' 
-                      : 'bg-dark-700 group-hover:bg-dark-600'
-                  }`} />
-                  {isActive && (
-                    <motion.div
-                      key={`progress-${activeSlide}`}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 3.8, ease: 'linear' }}
-                      className="absolute inset-0 bg-gradient-to-r from-white/60 to-white/40"
-                      style={{ transformOrigin: 'left' }}
-                    />
-                  )}
-                </button>
-              )
-            })}
-          </div>
+
         </div>
       </section>
 

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaDiscord, FaInstagram, FaYoutube, FaTwitch, FaTrophy, FaGamepad, FaArrowRight } from 'react-icons/fa'
+import { FaDiscord, FaInstagram, FaYoutube, FaTwitch, FaTrophy, FaGamepad, FaArrowRight, FaWhatsapp } from 'react-icons/fa'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: FaDiscord, label: 'Discord', href: '#' },
+    { icon: FaDiscord, label: 'Discord', href: 'https://discord.gg/AmezSUbP' },
     { icon: FaInstagram, label: 'Instagram', href: '#' },
     { icon: FaYoutube, label: 'YouTube', href: '#' },
-    { icon: FaTwitch, label: 'Twitch', href: '#' },
+    { icon: FaWhatsapp, label: 'WhatsApp', href: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' },
   ]
 
   const quickLinks = [
@@ -148,11 +148,15 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-primary-400 font-semibold mb-1">Discord</p>
-                  <p>TeamVioLencE#0001</p>
+                  <a href="https://discord.gg/AmezSUbP" className="hover:text-primary-400 transition-colors">
+                    Join Our Server
+                  </a>
                 </div>
                 <div>
-                  <p className="text-primary-400 font-semibold mb-1">Location</p>
-                  <p>India, BGMI Champions</p>
+                  <p className="text-primary-400 font-semibold mb-1">WhatsApp</p>
+                  <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" className="hover:text-primary-400 transition-colors">
+                    Join Channel
+                  </a>
                 </div>
               </div>
             </motion.div>
