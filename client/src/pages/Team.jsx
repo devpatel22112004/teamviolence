@@ -198,216 +198,241 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Premium Two-Column Layout */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Left Sidebar - Category & Member List */}
-          <div className="lg:col-span-1 space-y-4">
-            {/* Category Tabs */}
-            <div className="space-y-3">
-              {categories.map((category, idx) => (
-                <motion.button
-                  key={category.title}
-                  onClick={() => {
-                    setSelectedCategory(idx)
-                    setSelectedMember(null)
-                  }}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full text-left p-4 rounded-2xl border-2 transition-all ${
-                    selectedCategory === idx
-                      ? `bg-gradient-to-br ${category.color} border-primary-500/60 shadow-2xl`
-                      : `${category.bgColor} ${category.borderColor} border-opacity-30 hover:border-opacity-60`
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center flex-shrink-0`}>
-                      <category.icon className="text-white text-lg" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className={`font-bold text-sm sm:text-base ${selectedCategory === idx ? 'text-white' : 'text-gray-200'}`}>
-                        {category.title}
-                      </h3>
-                      <p className={`text-xs ${selectedCategory === idx ? 'text-white/80' : 'text-gray-400'}`}>
-                        {category.members.length} members
-                      </p>
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
+      {/* Premium Category Grid with Modal */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="space-y-12">
+          {categories.map((category, catIdx) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: catIdx * 0.1 }}
+              className="space-y-6"
+            >
+              {/* Category Header */}
+              <div className="flex items-center gap-4 pb-6 border-b border-primary-500/20">
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                  <category.icon className="text-white text-2xl" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-3xl md:text-4xl font-display font-black gradient-text">
+                    {category.title}
+                  </h2>
+                  <p className="text-gray-400 text-sm">{category.description}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-3xl font-bold text-primary-400">{category.members.length}</p>
+                  <p className="text-xs text-gray-400 uppercase font-bold">Members</p>
+                </div>
+              </div>
 
-            {/* Member List for Selected Category */}
-            <div className="space-y-2 mt-6">
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 px-2">Members</p>
-              <div className="space-y-2">
-                {currentCategory.members.map((member, idx) => (
+              {/* Members Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {category.members.map((member, idx) => (
                   <motion.button
                     key={member._id}
                     onClick={() => setSelectedMember(member)}
-                    whileHover={{ x: 5 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.05 }}
+                    whileHover={{ scale: 1.05, y: -5 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
-                      selectedMember?._id === member._id || (!selectedMember && idx === 0)
-                        ? `bg-gradient-to-br ${currentCategory.color} border-primary-500/40 shadow-lg`
-                        : `border-dark-700 hover:border-primary-500/40 bg-dark-800/50`
-                    }`}
+                    className={`group relative overflow-hidden rounded-2xl border-2 transition-all cursor-pointer ${
+                      category.borderColor
+                    } ${category.bgColor} backdrop-blur-sm hover:shadow-2xl hover:shadow-primary-500/30`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 border border-dark-600">
-                        <img 
-                          src={formatImagePath(member.image)} 
-                          alt={member.name}
-                          className="w-full h-full object-cover"
-                          onError={handleImageError}
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-bold text-xs sm:text-sm text-white truncate">
-                          {member.name}
-                        </p>
-                        <p className={`text-xs truncate ${
-                          selectedMember?._id === member._id || (!selectedMember && idx === 0)
-                            ? 'text-white/80'
-                            : 'text-gray-400'
-                        }`}>
-                          {member.role.split('/')[0]}
-                        </p>
+                    {/* Member Image */}
+                    <div className="aspect-square overflow-hidden relative">
+                      <img
+                        src={formatImagePath(member.image)}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={handleImageError}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+
+                    {/* Info Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-white font-bold text-sm">{member.name}</p>
+                      <p className="text-primary-300 text-xs">{member.role.split('/')[0]}</p>
+                    </div>
+
+                    {/* Static Info */}
+                    <div className="p-4 space-y-2">
+                      <h3 className="font-bold text-white text-sm line-clamp-1">{member.name}</h3>
+                      <p className="text-primary-300 text-xs font-bold uppercase">{member.role.split('/')[0]}</p>
+                      <div className="flex gap-2 pt-2">
+                        <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
+                          <div className="text-sm font-bold gradient-text">{member.kills}+</div>
+                          <div className="text-xs text-gray-400">Kills</div>
+                        </div>
+                        <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
+                          <div className="text-sm font-bold gradient-text">{member.winRate}%</div>
+                          <div className="text-xs text-gray-400">WR</div>
+                        </div>
                       </div>
                     </div>
                   </motion.button>
                 ))}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-          {/* Right Side - Member Profile Detail */}
-          <div className="lg:col-span-3">
-            <AnimatePresence mode="wait">
+      {/* Premium Member Profile Modal */}
+      <AnimatePresence>
+        {selectedMember && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedMember(null)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+            />
+
+            {/* Modal */}
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
               <motion.div
-                key={displayMember._id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className={`rounded-3xl border-2 ${currentCategory.borderColor} ${currentCategory.bgColor} backdrop-blur-sm overflow-hidden`}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border-2 border-primary-500/30 bg-gradient-to-br from-dark-900 to-dark-950 shadow-2xl pointer-events-auto"
               >
-                {/* Member Image Header */}
-                <div className="relative h-48 sm:h-60 md:h-72 overflow-hidden group">
-                  <img 
-                    src={formatImagePath(displayMember.image)} 
-                    alt={displayMember.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                {/* Close Button */}
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedMember(null)}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-dark-800 border border-dark-700 hover:bg-primary-600 hover:border-primary-500 text-gray-300 hover:text-white flex items-center justify-center transition-all"
+                >
+                  ✕
+                </motion.button>
+
+                {/* Hero Image */}
+                <div className="relative h-64 sm:h-80 overflow-hidden">
+                  <img
+                    src={formatImagePath(selectedMember.image)}
+                    alt={selectedMember.name}
+                    className="w-full h-full object-cover"
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent" />
-                  
-                  {/* Category Badge */}
-                  <div className="absolute top-4 right-4">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className={`px-4 py-2 rounded-full bg-gradient-to-br ${currentCategory.color} text-white font-bold text-sm flex items-center gap-2 shadow-lg`}
-                    >
-                      <currentCategory.icon size={16} />
-                      {displayMember.category}
-                    </motion.div>
-                  </div>
-
-                  {/* Member Name Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white mb-2">
-                      {displayMember.name}
-                    </h2>
-                    <p className="text-primary-300 font-bold uppercase tracking-widest text-sm sm:text-base">
-                      {displayMember.role}
-                    </p>
-                  </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="p-4 sm:p-5 md:p-6 space-y-4">
-                  {/* In-Game Info */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-                    <div className="glass-card p-2.5 sm:p-3 rounded-lg text-center">
-                      <div className="text-xl sm:text-2xl font-bold gradient-text">{displayMember.kills}+</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
+                {/* Content */}
+                <div className="p-6 sm:p-8 space-y-6">
+                  {/* Header */}
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h2 className="text-4xl sm:text-5xl font-display font-black text-white mb-2">
+                          {selectedMember.name}
+                        </h2>
+                        <p className="text-primary-300 font-bold uppercase tracking-widest text-sm sm:text-base">
+                          {selectedMember.role}
+                        </p>
+                      </div>
+                      <div className="flex-shrink-0 px-4 py-2 rounded-full bg-primary-500/20 border border-primary-500/40">
+                        <p className="text-xs font-bold text-primary-300 uppercase">
+                          {selectedMember.category}
+                        </p>
+                      </div>
                     </div>
-                    <div className="glass-card p-2.5 sm:p-3 rounded-lg text-center">
-                      <div className="text-xl sm:text-2xl font-bold gradient-text">{displayMember.winRate}%</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-1">Win Rate</div>
+                  </div>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="glass-card p-4 rounded-xl text-center">
+                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.kills}+</div>
+                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Kills</div>
                     </div>
-                    <div className="glass-card p-2.5 sm:p-3 rounded-lg text-center">
-                      <div className="text-xl sm:text-2xl font-bold gradient-text">#{displayMember.since}</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
+                    <div className="glass-card p-4 rounded-xl text-center">
+                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.winRate}%</div>
+                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Win Rate</div>
                     </div>
-                    <div className="glass-card p-2.5 sm:p-3 rounded-lg text-center">
-                      <div className="text-sm sm:text-lg font-bold gradient-text truncate">{displayMember.ingameName}</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-1">IGN</div>
+                    <div className="glass-card p-4 rounded-xl text-center">
+                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.since}</div>
+                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Since</div>
+                    </div>
+                    <div className="glass-card p-4 rounded-xl text-center">
+                      <div className="text-xl sm:text-2xl font-bold gradient-text truncate">{selectedMember.ingameName}</div>
+                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">IGN</div>
                     </div>
                   </div>
 
                   {/* Bio */}
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-display font-bold text-white">About</h3>
-                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base line-clamp-3">
-                      {displayMember.description}
+                  <div className="space-y-3 pt-4 border-t border-primary-500/20">
+                    <h3 className="text-xl font-display font-bold text-white">About the Player</h3>
+                    <p className="text-gray-300 leading-relaxed text-base">
+                      {selectedMember.description}
                     </p>
                   </div>
 
                   {/* Social Links */}
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {displayMember.socials?.discord && (
+                  <div className="flex flex-wrap gap-3 pt-4">
+                    <p className="w-full text-xs font-bold text-gray-400 uppercase">Connect</p>
+                    {selectedMember.socials?.discord && (
                       <motion.a
-                        href={displayMember.socials.discord}
+                        href={selectedMember.socials.discord}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.15, y: -2 }}
-                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 shadow-lg"
+                        whileHover={{ scale: 1.2, y: -3 }}
+                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
                       >
-                        <FaDiscord size={20} />
+                        <FaDiscord size={18} />
+                        Discord
                       </motion.a>
                     )}
-                    {displayMember.socials?.instagram && (
+                    {selectedMember.socials?.instagram && (
                       <motion.a
-                        href={displayMember.socials.instagram}
+                        href={selectedMember.socials.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.15, y: -2 }}
-                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 shadow-lg"
+                        whileHover={{ scale: 1.2, y: -3 }}
+                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
                       >
-                        <FaInstagram size={20} />
+                        <FaInstagram size={18} />
+                        Instagram
                       </motion.a>
                     )}
-                    {displayMember.socials?.youtube && (
+                    {selectedMember.socials?.youtube && (
                       <motion.a
-                        href={displayMember.socials.youtube}
+                        href={selectedMember.socials.youtube}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.15, y: -2 }}
-                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 shadow-lg"
+                        whileHover={{ scale: 1.2, y: -3 }}
+                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
                       >
-                        <FaYoutube size={20} />
+                        <FaYoutube size={18} />
+                        YouTube
                       </motion.a>
                     )}
-                    {displayMember.socials?.whatsapp && (
+                    {selectedMember.socials?.whatsapp && (
                       <motion.a
-                        href={displayMember.socials.whatsapp}
+                        href={selectedMember.socials.whatsapp}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.15, y: -2 }}
-                        className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 shadow-lg"
+                        whileHover={{ scale: 1.2, y: -3 }}
+                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
                       >
-                        <FaWhatsapp size={20} />
+                        <FaWhatsapp size={18} />
+                        WhatsApp
                       </motion.a>
                     )}
                   </div>
                 </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Clan Story Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
