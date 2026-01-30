@@ -95,37 +95,6 @@ const Team = () => {
     },
   ]
 
-  const editors = [
-    {
-      _id: 'aayush-panchal',
-      name: 'Aayush Panchal',
-      role: 'Strategic Analyst / Editor',
-      category: 'Editor',
-      kills: 4120,
-      winRate: 75,
-      description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
-      popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
-      ingameName: 'VioLencE DP',
-      since: 2022,
-      image: '/Line_up/Aayush Panchal.webp',
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
-    },
-    {
-      _id: 'harsh-thakor',
-      name: 'Harsh Thakor',
-      role: 'Support Anchor / Editor',
-      category: 'Editor',
-      kills: 4269,
-      winRate: 69,
-      description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
-      popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
-      ingameName: 'VioLencE HT',
-      since: 2023,
-      image: '/Line_up/Harsh Thakor.jpg',
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
-    },
-  ]
-
   const categories = [
     { 
       title: 'Organizers', 
@@ -143,16 +112,7 @@ const Team = () => {
       color: 'from-purple-500 to-pink-600',
       bgColor: 'bg-purple-500/10',
       borderColor: 'border-purple-500/30',
-      description: 'Content creators bringing VioLencE to the community'
-    },
-    { 
-      title: 'Editors', 
-      members: editors, 
-      icon: FaEdit,
-      color: 'from-blue-500 to-cyan-600',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      description: 'Production team crafting premium visual content'
+      description: 'Creators bringing VioLencE to the community'
     },
   ]
 
@@ -299,133 +259,124 @@ const Team = () => {
             {/* Modal */}
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.85, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border-2 border-primary-500/30 bg-gradient-to-br from-dark-900 to-dark-950 shadow-2xl pointer-events-auto"
+                exit={{ opacity: 0, scale: 0.85, y: 30 }}
+                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                className="relative w-full max-w-2xl rounded-3xl border-2 border-primary-500/50 bg-gradient-to-br from-dark-850 via-dark-900 to-dark-950 shadow-2xl pointer-events-auto overflow-hidden"
               >
+                {/* Background Glow Effect */}
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl pointer-events-none" />
+                
                 {/* Close Button */}
                 <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.15, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => setSelectedMember(null)}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-dark-800 border border-dark-700 hover:bg-primary-600 hover:border-primary-500 text-gray-300 hover:text-white flex items-center justify-center transition-all"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-gradient-to-br from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white flex items-center justify-center transition-all shadow-lg font-bold text-lg"
                 >
                   ✕
                 </motion.button>
 
-                {/* Hero Image */}
-                <div className="relative h-64 sm:h-80 overflow-hidden">
-                  <img
-                    src={formatImagePath(selectedMember.image)}
-                    alt={selectedMember.name}
-                    className="w-full h-full object-cover"
-                    onError={handleImageError}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent" />
-                </div>
+                {/* Main Content - Square Layout */}
+                <div className="relative z-10 flex flex-col sm:flex-row">
+                  {/* Left Side - Image */}
+                  <div className="w-full sm:w-2/5 h-80 relative overflow-hidden">
+                    <img
+                      src={formatImagePath(selectedMember.image)}
+                      alt={selectedMember.name}
+                      className="w-full h-full object-cover"
+                      onError={handleImageError}
+                    />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-dark-950" />
+                    {/* Category Badge */}
+                    <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-sm uppercase shadow-lg">
+                      {selectedMember.category}
+                    </div>
+                  </div>
 
-                {/* Content */}
-                <div className="p-6 sm:p-8 space-y-6">
-                  {/* Header */}
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between gap-4">
+                  {/* Right Side - Info */}
+                  <div className="w-full sm:w-3/5 p-6 sm:p-8 flex flex-col justify-between">
+                    {/* Header */}
+                    <div className="space-y-4">
                       <div>
-                        <h2 className="text-4xl sm:text-5xl font-display font-black text-white mb-2">
+                        <h2 className="text-3xl font-display font-black text-white leading-tight">
                           {selectedMember.name}
                         </h2>
-                        <p className="text-primary-300 font-bold uppercase tracking-widest text-sm sm:text-base">
+                        <p className="text-primary-400 font-bold uppercase tracking-widest text-xs mt-2">
                           {selectedMember.role}
                         </p>
                       </div>
-                      <div className="flex-shrink-0 px-4 py-2 rounded-full bg-primary-500/20 border border-primary-500/40">
-                        <p className="text-xs font-bold text-primary-300 uppercase">
-                          {selectedMember.category}
-                        </p>
+
+                      {/* Quick Stats - Horizontal */}
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
+                          <div className="text-2xl font-bold gradient-text">{selectedMember.kills}+</div>
+                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
+                        </div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
+                          <div className="text-2xl font-bold gradient-text">{selectedMember.winRate}%</div>
+                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Win</div>
+                        </div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
+                          <div className="text-2xl font-bold gradient-text">{selectedMember.since}</div>
+                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="glass-card p-4 rounded-xl text-center">
-                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.kills}+</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Kills</div>
-                    </div>
-                    <div className="glass-card p-4 rounded-xl text-center">
-                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.winRate}%</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Win Rate</div>
-                    </div>
-                    <div className="glass-card p-4 rounded-xl text-center">
-                      <div className="text-2xl sm:text-3xl font-bold gradient-text">{selectedMember.since}</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">Since</div>
-                    </div>
-                    <div className="glass-card p-4 rounded-xl text-center">
-                      <div className="text-xl sm:text-2xl font-bold gradient-text truncate">{selectedMember.ingameName}</div>
-                      <div className="text-xs text-gray-400 uppercase font-bold mt-2">IGN</div>
-                    </div>
-                  </div>
+                    {/* IGN and Social */}
+                    <div className="space-y-3">
+                      {/* IGN */}
+                      <div className="bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg p-3 border border-primary-500/30">
+                        <p className="text-xs text-gray-400 uppercase font-bold mb-1">In-Game Name</p>
+                        <p className="text-lg font-bold text-primary-300">{selectedMember.ingameName}</p>
+                      </div>
 
-                  {/* Bio */}
-                  <div className="space-y-3 pt-4 border-t border-primary-500/20">
-                    <h3 className="text-xl font-display font-bold text-white">About the Player</h3>
-                    <p className="text-gray-300 leading-relaxed text-base">
-                      {selectedMember.description}
-                    </p>
-                  </div>
-
-                  {/* Social Links */}
-                  <div className="flex flex-wrap gap-3 pt-4">
-                    <p className="w-full text-xs font-bold text-gray-400 uppercase">Connect</p>
-                    {selectedMember.socials?.discord && (
-                      <motion.a
-                        href={selectedMember.socials.discord}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.2, y: -3 }}
-                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
-                      >
-                        <FaDiscord size={18} />
-                        Discord
-                      </motion.a>
-                    )}
-                    {selectedMember.socials?.instagram && (
-                      <motion.a
-                        href={selectedMember.socials.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.2, y: -3 }}
-                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
-                      >
-                        <FaInstagram size={18} />
-                        Instagram
-                      </motion.a>
-                    )}
-                    {selectedMember.socials?.youtube && (
-                      <motion.a
-                        href={selectedMember.socials.youtube}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.2, y: -3 }}
-                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
-                      >
-                        <FaYoutube size={18} />
-                        YouTube
-                      </motion.a>
-                    )}
-                    {selectedMember.socials?.whatsapp && (
-                      <motion.a
-                        href={selectedMember.socials.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.2, y: -3 }}
-                        className="flex items-center gap-2 px-4 py-3 rounded-xl bg-dark-800 hover:bg-primary-600 text-primary-400 hover:text-white transition-all border border-dark-700 hover:border-primary-500 font-bold text-sm"
-                      >
-                        <FaWhatsapp size={18} />
-                        WhatsApp
-                      </motion.a>
-                    )}
+                      {/* Social Links */}
+                      <div className="flex gap-2">
+                        {selectedMember.socials?.discord && (
+                          <motion.a
+                            href={selectedMember.socials.discord}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.08, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600/40 to-blue-500/40 hover:from-blue-600 hover:to-blue-500 text-blue-300 hover:text-white transition-all border border-blue-500/30 font-bold text-xs"
+                          >
+                            <FaDiscord size={14} />
+                            Discord
+                          </motion.a>
+                        )}
+                        {selectedMember.socials?.instagram && (
+                          <motion.a
+                            href={selectedMember.socials.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.08, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-pink-600/40 to-pink-500/40 hover:from-pink-600 hover:to-pink-500 text-pink-300 hover:text-white transition-all border border-pink-500/30 font-bold text-xs"
+                          >
+                            <FaInstagram size={14} />
+                            Instagram
+                          </motion.a>
+                        )}
+                        {selectedMember.socials?.whatsapp && (
+                          <motion.a
+                            href={selectedMember.socials.whatsapp}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.08, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-green-600/40 to-green-500/40 hover:from-green-600 hover:to-green-500 text-green-300 hover:text-white transition-all border border-green-500/30 font-bold text-xs"
+                          >
+                            <FaWhatsapp size={14} />
+                            WhatsApp
+                          </motion.a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
