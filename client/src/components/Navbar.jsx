@@ -201,14 +201,16 @@ const Navbar = () => {
                       ? 'bg-gradient-to-r from-white to-gray-300'
                       : 'bg-gradient-to-r from-primary-600 to-primary-500'
                   }`} />
-                  <div className={`relative rounded-lg p-2.5 border transition-all duration-300 ${
+                  <div className={`relative rounded-lg overflow-hidden border transition-all duration-300 ${
                     isHomePage && !scrolled
                       ? 'bg-white/5 border-white/30 group-hover:border-white/60'
                       : 'bg-dark-950 border-primary-500/40 group-hover:border-primary-500/80'
                   }`}>
-                    <FaGamepad className={`text-xl transition-colors duration-300 ${
-                      isHomePage && !scrolled ? 'text-white' : 'text-primary-500'
-                    }`} />
+                    <img 
+                      src="/Line_up/logo.png" 
+                      alt="Team VioLencE Logo" 
+                      className="w-14 h-14 object-contain p-1"
+                    />
                   </div>
                 </motion.div>
                 <div className="flex flex-col min-w-fit">

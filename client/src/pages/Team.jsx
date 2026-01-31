@@ -134,7 +134,7 @@ const Team = () => {
       description: 'Leadership team managing clan operations and strategies'
     },
     { 
-      title: 'Creators', 
+      title: 'Content Creators', 
       members: creators, 
       icon: FaVideo,
       color: 'from-purple-500 to-pink-600',
