@@ -281,22 +281,22 @@ const Team = () => {
 
                     {/* Info Overlay */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <p className="text-white font-bold text-[10px] sm:text-[11px]">{member.name}</p>
-                      <p className="text-primary-300 text-[9px] sm:text-[10px]">{member.role.split('/')[0]}</p>
+                      <p className="text-white font-bold text-[9px] sm:text-[10px]">{member.name}</p>
+                      <p className="text-primary-300 text-[8px] sm:text-[9px]">{member.role.split('/')[0]}</p>
                     </div>
 
                     {/* Static Info */}
                     <div className="p-4 space-y-2">
-                      <h3 className="font-bold text-white text-[10px] sm:text-[11px] line-clamp-1">{member.name}</h3>
-                      <p className="text-primary-300 text-[9px] sm:text-[10px] font-bold uppercase">{member.role.split('/')[0]}</p>
+                      <h3 className="font-bold text-white text-[9px] sm:text-[10px] line-clamp-1">{member.name}</h3>
+                      <p className="text-primary-300 text-[8px] sm:text-[9px] font-bold uppercase">{member.role.split('/')[0]}</p>
                       <div className="flex gap-2 pt-2">
                         <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
-                          <div className="text-[11px] sm:text-xs font-bold gradient-text">{member.kills}+</div>
-                          <div className="text-[8px] sm:text-[9px] text-gray-400">Kills</div>
+                          <div className="text-[10px] sm:text-[11px] font-bold gradient-text">{member.kills}+</div>
+                          <div className="text-[7px] sm:text-[8px] text-gray-400">Kills</div>
                         </div>
                         <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
-                          <div className="text-[11px] sm:text-xs font-bold gradient-text">{member.winRate}%</div>
-                          <div className="text-[8px] sm:text-[9px] text-gray-400">WR</div>
+                          <div className="text-[10px] sm:text-[11px] font-bold gradient-text">{member.winRate}%</div>
+                          <div className="text-[7px] sm:text-[8px] text-gray-400">WR</div>
                         </div>
                       </div>
                     </div>
@@ -372,10 +372,10 @@ const Team = () => {
                   <div className="w-full md:w-3/5 p-2.5 sm:p-4 md:p-5 flex flex-col space-y-2 sm:space-y-2.5 overflow-y-auto">
                     {/* Header */}
                     <div>
-                      <h2 className="text-base sm:text-lg font-display font-black text-white leading-tight">
+                      <h2 className="text-sm sm:text-base font-display font-black text-white leading-tight">
                         {selectedMember.name}
                       </h2>
-                      <p className="text-primary-400 font-bold uppercase tracking-widest text-[9px] sm:text-[10px] mt-1">
+                      <p className="text-primary-400 font-bold uppercase tracking-widest text-[8px] sm:text-[9px] mt-1">
                         {selectedMember.role}
                       </p>
                     </div>

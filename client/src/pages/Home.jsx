@@ -36,9 +36,9 @@ const Home = () => {
   ]
 
   const lineup = [
-    { name: 'Dev Patel', role: 'IGL / Founder', image: '/Line_up/Dev Patel.jpg', impact: 'Calls rotations that break defenses and clutch closes.' },
-    { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/Line_up/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
+    { name: 'Karan Patel', role: 'Entry Fragger', image: '/Line_up/karan-patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
     { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/Line_up/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
+    { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/Line_up/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
     { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/Line_up/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
     { name: 'Karan Patel', role: 'Entry Fragger', image: '/Line_up/karan-patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
     { name: 'Mehul Darji', role: 'Aggressive Scout & Co-Leader', image: '/Line_up/Mehul Darji.jpg', impact: 'Leads info plays and zone breaks with composure.' },
