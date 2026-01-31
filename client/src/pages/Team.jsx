@@ -281,22 +281,22 @@ const Team = () => {
 
                     {/* Info Overlay */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <p className="text-white font-bold text-sm">{member.name}</p>
-                      <p className="text-primary-300 text-xs">{member.role.split('/')[0]}</p>
+                      <p className="text-white font-bold text-[11px] sm:text-xs">{member.name}</p>
+                      <p className="text-primary-300 text-[10px] sm:text-xs">{member.role.split('/')[0]}</p>
                     </div>
 
                     {/* Static Info */}
                     <div className="p-4 space-y-2">
-                      <h3 className="font-bold text-white text-sm line-clamp-1">{member.name}</h3>
-                      <p className="text-primary-300 text-xs font-bold uppercase">{member.role.split('/')[0]}</p>
+                      <h3 className="font-bold text-white text-[11px] sm:text-xs line-clamp-1">{member.name}</h3>
+                      <p className="text-primary-300 text-[10px] sm:text-xs font-bold uppercase">{member.role.split('/')[0]}</p>
                       <div className="flex gap-2 pt-2">
                         <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
-                          <div className="text-sm font-bold gradient-text">{member.kills}+</div>
-                          <div className="text-xs text-gray-400">Kills</div>
+                          <div className="text-xs sm:text-sm font-bold gradient-text">{member.kills}+</div>
+                          <div className="text-[9px] sm:text-[10px] text-gray-400">Kills</div>
                         </div>
                         <div className="text-center flex-1 bg-dark-900/50 rounded-lg p-2">
-                          <div className="text-sm font-bold gradient-text">{member.winRate}%</div>
-                          <div className="text-xs text-gray-400">WR</div>
+                          <div className="text-xs sm:text-sm font-bold gradient-text">{member.winRate}%</div>
+                          <div className="text-[9px] sm:text-[10px] text-gray-400">WR</div>
                         </div>
                       </div>
                     </div>
@@ -348,7 +348,7 @@ const Team = () => {
                   {/* Left Side - Image + IGN */}
                   <div className="w-full md:w-2/5 flex-shrink-0 flex flex-col">
                     {/* Member Photo */}
-                    <div className="h-64 sm:h-72 md:h-80 relative overflow-hidden">
+                    <div className="h-56 sm:h-64 md:h-72 relative overflow-hidden">
                       <img
                         src={formatImagePath(selectedMember.image)}
                         alt={selectedMember.name}
@@ -362,50 +362,50 @@ const Team = () => {
                     </div>
                     
                     {/* IGN Section Below Photo */}
-                    <div className="bg-gradient-to-r from-primary-500/30 to-primary-600/30 p-4 border-t border-primary-500/50">
-                      <p className="text-xs text-gray-300 uppercase font-bold mb-1.5">In-Game Name</p>
-                      <p className="text-xl font-bold text-white">{selectedMember.ingameName}</p>
+                    <div className="bg-gradient-to-r from-primary-500/30 to-primary-600/30 p-3 border-t border-primary-500/50">
+                      <p className="text-xs text-gray-300 uppercase font-bold mb-1">In-Game Name</p>
+                      <p className="text-lg font-bold text-white">{selectedMember.ingameName}</p>
                     </div>
                   </div>
 
                   {/* Right Side - Info */}
-                  <div className="w-full md:w-3/5 p-4 sm:p-6 md:p-8 flex flex-col space-y-3 sm:space-y-4 overflow-y-auto">
+                  <div className="w-full md:w-3/5 p-2.5 sm:p-4 md:p-5 flex flex-col space-y-2 sm:space-y-2.5 overflow-y-auto">
                     {/* Header */}
                     <div>
-                      <h2 className="text-2xl sm:text-3xl font-display font-black text-white leading-tight">
+                      <h2 className="text-lg sm:text-xl font-display font-black text-white leading-tight">
                         {selectedMember.name}
                       </h2>
-                      <p className="text-primary-400 font-bold uppercase tracking-widest text-xs mt-2">
+                      <p className="text-primary-400 font-bold uppercase tracking-widest text-[10px] sm:text-xs mt-1">
                         {selectedMember.role}
                       </p>
                     </div>
 
                     {/* Quick Stats - Horizontal */}
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
-                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.kills}+</div>
-                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-1.5 sm:p-2 border border-primary-500/20">
+                          <div className="text-lg sm:text-xl font-bold gradient-text">{selectedMember.kills}+</div>
+                          <div className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold mt-0.5">Kills</div>
                         </div>
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
-                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.winRate}%</div>
-                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Win</div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-1.5 sm:p-2 border border-primary-500/20">
+                          <div className="text-lg sm:text-xl font-bold gradient-text">{selectedMember.winRate}%</div>
+                          <div className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold mt-0.5">Win</div>
                         </div>
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
-                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.since}</div>
-                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-1.5 sm:p-2 border border-primary-500/20">
+                          <div className="text-lg sm:text-xl font-bold gradient-text">{selectedMember.since}</div>
+                          <div className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold mt-0.5">Since</div>
                         </div>
                       </div>
 
                       {/* Description */}
-                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-3 sm:p-4 border border-primary-500/20">
-                        <p className="text-[11px] sm:text-xs text-gray-300 leading-relaxed">{selectedMember.description}</p>
+                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
+                        <p className="text-[10px] sm:text-[11px] text-gray-300 leading-relaxed">{selectedMember.description}</p>
                       </div>
 
                     {/* Game Screenshots Section */}
                     {selectedMember.additionalImages && selectedMember.additionalImages.length > 0 && (
-                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-3 sm:p-4 border border-primary-500/20">
-                        <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-3">Game Screenshots</p>
-                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
+                        <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold mb-2">Game Screenshots</p>
+                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                           {selectedMember.additionalImages.map((img, idx) => (
                             <motion.button
                               key={idx}
@@ -437,52 +437,6 @@ const Team = () => {
                         </div>
                       </div>
                     )}
-
-                    {/* Social Links */}
-                    <div>
-                      <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-2">Connect</p>
-                      <div className="flex gap-1.5 sm:gap-2">
-                        {selectedMember.socials?.discord && (
-                          <motion.a
-                            href={selectedMember.socials.discord}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.08, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-blue-600/40 to-blue-500/40 hover:from-blue-600 hover:to-blue-500 text-blue-300 hover:text-white transition-all border border-blue-500/30 font-bold text-[10px] sm:text-xs"
-                          >
-                            <FaDiscord size={12} className="sm:w-3.5 sm:h-3.5" />
-                            <span className="hidden xs:inline">Discord</span>
-                          </motion.a>
-                        )}
-                        {selectedMember.socials?.instagram && (
-                          <motion.a
-                            href={selectedMember.socials.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.08, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-pink-600/40 to-pink-500/40 hover:from-pink-600 hover:to-pink-500 text-pink-300 hover:text-white transition-all border border-pink-500/30 font-bold text-[10px] sm:text-xs"
-                          >
-                            <FaInstagram size={12} className="sm:w-3.5 sm:h-3.5" />
-                            <span className="hidden xs:inline">Instagram</span>
-                          </motion.a>
-                        )}
-                        {selectedMember.socials?.whatsapp && (
-                          <motion.a
-                            href={selectedMember.socials.whatsapp}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.08, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-green-600/40 to-green-500/40 hover:from-green-600 hover:to-green-500 text-green-300 hover:text-white transition-all border border-green-500/30 font-bold text-[10px] sm:text-xs"
-                          >
-                            <FaWhatsapp size={12} className="sm:w-3.5 sm:h-3.5" />
-                            <span className="hidden xs:inline">WhatsApp</span>
-                          </motion.a>
-                        )}
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
