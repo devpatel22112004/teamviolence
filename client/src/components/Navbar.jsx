@@ -209,7 +209,7 @@ const Navbar = () => {
                     <img 
                       src="/Line_up/logo.png" 
                       alt="Team VioLencE Logo" 
-                      className="w-14 h-14 object-contain p-1"
+                      className="w-14 h-14 object-cover scale-150"
                     />
                   </div>
                 </motion.div>

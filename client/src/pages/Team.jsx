@@ -21,20 +21,6 @@ const Team = () => {
   // All members data
   const organizers = [
     {
-      _id: 'dev-patel',
-      name: 'Dev Patel',
-      role: 'IGL / Founder',
-      category: 'Organizer',
-      kills: 5320,
-      winRate: 77,
-      description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
-      popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
-      ingameName: 'VioLencE 乂',
-      since: 2019,
-      image: '/Line_up/Dev Patel.jpg',
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/devpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
-    },
-    {
       _id: 'umang-rana',
       name: 'Umang Rana',
       role: 'Co-Leader / Flex IGL',
@@ -49,27 +35,10 @@ const Team = () => {
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/umangrana', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
-      _id: 'mehul-darji',
-      name: 'Mehul Darji',
-      role: 'Aggressive Scout & Co-Leader',
-      category: 'Organizer',
-      kills: 4510,
-      winRate: 73,
-      description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
-      popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
-      ingameName: 'VioLencE MD',
-      since: 2021,
-      image: '/Line_up/Mehul Darji.jpg',
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/mehuldarji', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
-    },
-  ]
-
-  const creators = [
-    {
       _id: 'karan-patel',
       name: 'Karan Patel',
-      role: 'Entry Fragger / Creator',
-      category: 'Creator',
+      role: 'Entry Fragger / Organizer',
+      category: 'Organizer',
       kills: 5111,
       winRate: 72,
       description: 'Fearless entry specialist who cracks compound doors and creates the chaos that wins fights. Aggressive entries, flawless trades, and the aggression to control zones. The breach that breaks defenses.',
@@ -82,8 +51,8 @@ const Team = () => {
     {
       _id: 'purvang-pandya',
       name: 'Purvang Pandya',
-      role: 'Elite DMR Specialist / Creator',
-      category: 'Creator',
+      role: 'Elite DMR Specialist / Organizer',
+      category: 'Organizer',
       kills: 4999,
       winRate: 72,
       description: 'Legendary long-range specialist whose precision knocks open every engagement. Clutch DMR plays that shift momentum, ridiculous aim, and the poise to perform under pressure when it matters most.',
@@ -96,8 +65,8 @@ const Team = () => {
     {
       _id: 'aayush-panchal',
       name: 'Aayush Panchal',
-      role: 'Strategic Analyst / Creator',
-      category: 'Creator',
+      role: 'Strategic Analyst / Organizer',
+      category: 'Organizer',
       kills: 4120,
       winRate: 75,
       description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
@@ -106,6 +75,23 @@ const Team = () => {
       since: 2022,
       image: '/Line_up/Aayush Panchal.webp',
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
+  ]
+
+  const creators = [
+    {
+      _id: 'dev-patel',
+      name: 'Dev Patel',
+      role: 'IGL / Founder / Creator',
+      category: 'Creator',
+      kills: 5320,
+      winRate: 77,
+      description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
+      popupDescription: 'Clan founder & IGL. Strategic mastermind with clutch plays.',
+      ingameName: 'VioLencE 乂',
+      since: 2019,
+      image: '/Line_up/Dev Patel.jpg',
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/devpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'harsh-thakor',
@@ -120,6 +106,20 @@ const Team = () => {
       since: 2023,
       image: '/Line_up/Harsh Thakor.jpg',
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
+    {
+      _id: 'mehul-darji',
+      name: 'Mehul Darji',
+      role: 'Aggressive Scout / Creator',
+      category: 'Creator',
+      kills: 4510,
+      winRate: 73,
+      description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
+      popupDescription: 'Tactical scout & co-leader. Aggressive zone control expert.',
+      ingameName: 'VioLencE MD',
+      since: 2021,
+      image: '/Line_up/Mehul Darji.jpg',
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/mehuldarji', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
   ]
 
@@ -216,7 +216,7 @@ const Team = () => {
               </div>
 
               {/* Members Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4">
                 {category.members.map((member, idx) => (
                   <motion.button
                     key={member._id}
@@ -284,13 +284,13 @@ const Team = () => {
             />
 
             {/* Modal */}
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 pointer-events-none">
               <motion.div
                 initial={{ opacity: 0, scale: 0.85, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.85, y: 30 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-                className="relative w-full max-w-2xl rounded-3xl border-2 border-primary-500/50 bg-gradient-to-br from-dark-850 via-dark-900 to-dark-950 shadow-2xl pointer-events-auto overflow-hidden"
+                className="relative w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-2xl sm:rounded-3xl border-2 border-primary-500/50 bg-gradient-to-br from-dark-850 via-dark-900 to-dark-950 shadow-2xl pointer-events-auto overflow-hidden max-h-[90vh] sm:max-h-[85vh]"
               >
                 {/* Background Glow Effect */}
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -306,9 +306,9 @@ const Team = () => {
                 </motion.button>
 
                 {/* Main Content - Square Layout */}
-                <div className="relative z-10 flex flex-col sm:flex-row">
+                <div className="relative z-10 flex flex-col sm:flex-col md:flex-row overflow-y-auto max-h-[85vh] sm:max-h-[80vh] md:max-h-none">
                   {/* Left Side - Image */}
-                  <div className="w-full sm:w-2/5 h-80 relative overflow-hidden">
+                  <div className="w-full md:w-2/5 h-64 sm:h-72 md:h-80 relative overflow-hidden flex-shrink-0">
                     <img
                       src={formatImagePath(selectedMember.image)}
                       alt={selectedMember.name}
@@ -322,7 +322,7 @@ const Team = () => {
                   </div>
 
                   {/* Right Side - Info */}
-                  <div className="w-full sm:w-3/5 p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="w-full md:w-3/5 p-4 sm:p-6 md:p-8 flex flex-col justify-between space-y-4 sm:space-y-0">
                     {/* Header */}
                     <div className="space-y-4">
                       <div>
@@ -335,37 +335,37 @@ const Team = () => {
                       </div>
 
                       {/* Quick Stats - Horizontal */}
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
-                          <div className="text-2xl font-bold gradient-text">{selectedMember.kills}+</div>
-                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
+                      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
+                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.kills}+</div>
+                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
                         </div>
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
-                          <div className="text-2xl font-bold gradient-text">{selectedMember.winRate}%</div>
-                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Win</div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
+                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.winRate}%</div>
+                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Win</div>
                         </div>
-                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-3 border border-primary-500/20">
-                          <div className="text-2xl font-bold gradient-text">{selectedMember.since}</div>
-                          <div className="text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
+                        <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
+                          <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.since}</div>
+                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
                         </div>
                       </div>
 
                       {/* Description */}
-                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-4 border border-primary-500/20">
-                        <p className="text-xs text-gray-300 leading-relaxed">{selectedMember.description}</p>
+                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-3 sm:p-4 border border-primary-500/20">
+                        <p className="text-[11px] sm:text-xs text-gray-300 leading-relaxed">{selectedMember.description}</p>
                       </div>
                     </div>
 
                     {/* IGN and Social */}
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                       {/* IGN */}
-                      <div className="bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg p-3 border border-primary-500/30">
-                        <p className="text-xs text-gray-400 uppercase font-bold mb-1">In-Game Name</p>
-                        <p className="text-lg font-bold text-primary-300">{selectedMember.ingameName}</p>
+                      <div className="bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg p-2.5 sm:p-3 border border-primary-500/30">
+                        <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-1">In-Game Name</p>
+                        <p className="text-base sm:text-lg font-bold text-primary-300">{selectedMember.ingameName}</p>
                       </div>
 
                       {/* Social Links */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-1.5 sm:gap-2">
                         {selectedMember.socials?.discord && (
                           <motion.a
                             href={selectedMember.socials.discord}
@@ -373,10 +373,10 @@ const Team = () => {
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.08, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600/40 to-blue-500/40 hover:from-blue-600 hover:to-blue-500 text-blue-300 hover:text-white transition-all border border-blue-500/30 font-bold text-xs"
+                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-blue-600/40 to-blue-500/40 hover:from-blue-600 hover:to-blue-500 text-blue-300 hover:text-white transition-all border border-blue-500/30 font-bold text-[10px] sm:text-xs"
                           >
-                            <FaDiscord size={14} />
-                            Discord
+                            <FaDiscord size={12} className="sm:w-3.5 sm:h-3.5" />
+                            <span className="hidden xs:inline">Discord</span>
                           </motion.a>
                         )}
                         {selectedMember.socials?.instagram && (
@@ -386,10 +386,10 @@ const Team = () => {
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.08, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-pink-600/40 to-pink-500/40 hover:from-pink-600 hover:to-pink-500 text-pink-300 hover:text-white transition-all border border-pink-500/30 font-bold text-xs"
+                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-pink-600/40 to-pink-500/40 hover:from-pink-600 hover:to-pink-500 text-pink-300 hover:text-white transition-all border border-pink-500/30 font-bold text-[10px] sm:text-xs"
                           >
-                            <FaInstagram size={14} />
-                            Instagram
+                            <FaInstagram size={12} className="sm:w-3.5 sm:h-3.5" />
+                            <span className="hidden xs:inline">Instagram</span>
                           </motion.a>
                         )}
                         {selectedMember.socials?.whatsapp && (
@@ -399,10 +399,10 @@ const Team = () => {
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.08, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gradient-to-r from-green-600/40 to-green-500/40 hover:from-green-600 hover:to-green-500 text-green-300 hover:text-white transition-all border border-green-500/30 font-bold text-xs"
+                            className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-green-600/40 to-green-500/40 hover:from-green-600 hover:to-green-500 text-green-300 hover:text-white transition-all border border-green-500/30 font-bold text-[10px] sm:text-xs"
                           >
-                            <FaWhatsapp size={14} />
-                            WhatsApp
+                            <FaWhatsapp size={12} className="sm:w-3.5 sm:h-3.5" />
+                            <span className="hidden xs:inline">WhatsApp</span>
                           </motion.a>
                         )}
                       </div>

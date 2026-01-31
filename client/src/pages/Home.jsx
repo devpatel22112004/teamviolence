@@ -169,7 +169,7 @@ const Home = () => {
                         src={formatImagePath(CLAN_LOGO)}
                         alt="Team VioLencE"
                         onError={handleImageError}
-                        className="h-14 w-14 sm:h-18 sm:w-18 object-contain scale-110"
+                        className="h-14 w-14 sm:h-18 sm:w-18 object-cover scale-150"
                       />
                     </div>
                     <div>
