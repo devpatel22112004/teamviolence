@@ -93,6 +93,34 @@ const Team = () => {
       image: '/Line_up/Purvang Pandya.jpg',
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/purvangpandya', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
+    {
+      _id: 'aayush-panchal',
+      name: 'Aayush Panchal',
+      role: 'Strategic Analyst / Creator',
+      category: 'Creator',
+      kills: 4120,
+      winRate: 75,
+      description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
+      popupDescription: 'Strategic analyst. VOD breakdown specialist & mental coach.',
+      ingameName: 'VioLencE DP',
+      since: 2022,
+      image: '/Line_up/Aayush Panchal.webp',
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
+    {
+      _id: 'harsh-thakor',
+      name: 'Harsh Thakor',
+      role: 'Support Anchor / Creator',
+      category: 'Creator',
+      kills: 4269,
+      winRate: 69,
+      description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
+      popupDescription: 'Support anchor. Locks flanks with reliable utility & composure.',
+      ingameName: 'VioLencE HT',
+      since: 2023,
+      image: '/Line_up/Harsh Thakor.jpg',
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
   ]
 
   const categories = [
@@ -201,7 +229,7 @@ const Team = () => {
                     whileTap={{ scale: 0.95 }}
                     className={`group relative overflow-hidden rounded-2xl border-2 transition-all cursor-pointer ${
                       category.borderColor
-                    } ${category.bgColor} backdrop-blur-sm hover:shadow-2xl hover:shadow-primary-500/30`}
+                    } ${category.bgColor} backdrop-blur-sm`}
                   >
                     {/* Member Image */}
                     <div className="aspect-square overflow-hidden relative">
@@ -211,7 +239,6 @@ const Team = () => {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         onError={handleImageError}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
 
                     {/* Info Overlay */}
@@ -288,8 +315,6 @@ const Team = () => {
                       className="w-full h-full object-cover"
                       onError={handleImageError}
                     />
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-dark-950" />
                     {/* Category Badge */}
                     <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-sm uppercase shadow-lg">
                       {selectedMember.category}
@@ -323,6 +348,11 @@ const Team = () => {
                           <div className="text-2xl font-bold gradient-text">{selectedMember.since}</div>
                           <div className="text-xs text-gray-400 uppercase font-bold mt-1">Since</div>
                         </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-4 border border-primary-500/20">
+                        <p className="text-xs text-gray-300 leading-relaxed">{selectedMember.description}</p>
                       </div>
                     </div>
 
