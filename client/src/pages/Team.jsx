@@ -7,6 +7,7 @@ const CLAN_LOGO = '/Line_up/logo.png'
 const Team = () => {
   const [selectedMember, setSelectedMember] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(0)
+  const [viewingImage, setViewingImage] = useState(null)
 
   const formatImagePath = (path) => {
     if (!path) return ''
@@ -16,6 +17,15 @@ const Team = () => {
 
   const handleImageError = (e) => {
     e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%231f2937" width="400" height="400"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="%236b7280"%3EImage Loading%3C/text%3E%3C/svg%3E'
+  }
+
+  const handleMemberClick = (member) => {
+    setSelectedMember(member)
+  }
+
+  const handleCloseModal = () => {
+    setSelectedMember(null)
+    setViewingImage(null)
   }
 
   // All members data
@@ -32,6 +42,10 @@ const Team = () => {
       ingameName: 'VioLencE UB',
       since: 2019,
       image: '/Line_up/Umang Rana.jpg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/UMANG_rana_BASIC_INFO.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Umang Rana _LOBBY.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/umangrana', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
@@ -46,6 +60,10 @@ const Team = () => {
       ingameName: 'VioLencE KP',
       since: 2020,
       image: '/Line_up/karan-patel.jpeg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Karan_patel_basic_info.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Karan_patel_lobby.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/karanpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
@@ -60,6 +78,10 @@ const Team = () => {
       ingameName: 'VioLencE PV',
       since: 2023,
       image: '/Line_up/Purvang Pandya.jpg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Purvang_pandya_basic_ino.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Purvang_pandya_lobby.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/purvangpandya', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
@@ -74,6 +96,10 @@ const Team = () => {
       ingameName: 'VioLencE DP',
       since: 2022,
       image: '/Line_up/Aayush Panchal.webp',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Aayush_panchal_basic_info.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Aayush_panchal_lobby.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
   ]
@@ -91,6 +117,10 @@ const Team = () => {
       ingameName: 'VioLencE 乂',
       since: 2019,
       image: '/Line_up/Dev Patel.jpg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Dev_patel_basic_info1.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Dev_patel_lobby1.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/devpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
@@ -105,6 +135,10 @@ const Team = () => {
       ingameName: 'VioLencE HT',
       since: 2023,
       image: '/Line_up/Harsh Thakor.jpg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Harsh_thakor_basic_info.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Harsh_thakor_lobby.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
@@ -119,6 +153,10 @@ const Team = () => {
       ingameName: 'VioLencE MD',
       since: 2021,
       image: '/Line_up/Mehul Darji.jpg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Mehul_darji_basic_info.jpg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Mehul_darji_lobby.jpg' }
+      ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/mehuldarji', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
   ]
@@ -220,7 +258,7 @@ const Team = () => {
                 {category.members.map((member, idx) => (
                   <motion.button
                     key={member._id}
-                    onClick={() => setSelectedMember(member)}
+                    onClick={() => handleMemberClick(member)}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -279,7 +317,7 @@ const Team = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedMember(null)}
+              onClick={handleCloseModal}
               className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
             />
 
@@ -299,7 +337,7 @@ const Team = () => {
                 <motion.button
                   whileHover={{ scale: 1.15, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => setSelectedMember(null)}
+                  onClick={handleCloseModal}
                   className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-gradient-to-br from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white flex items-center justify-center transition-all shadow-lg font-bold text-lg"
                 >
                   ✕
@@ -307,35 +345,43 @@ const Team = () => {
 
                 {/* Main Content - Square Layout */}
                 <div className="relative z-10 flex flex-col sm:flex-col md:flex-row overflow-y-auto max-h-[85vh] sm:max-h-[80vh] md:max-h-none">
-                  {/* Left Side - Image */}
-                  <div className="w-full md:w-2/5 h-64 sm:h-72 md:h-80 relative overflow-hidden flex-shrink-0">
-                    <img
-                      src={formatImagePath(selectedMember.image)}
-                      alt={selectedMember.name}
-                      className="w-full h-full object-cover"
-                      onError={handleImageError}
-                    />
-                    {/* Category Badge */}
-                    <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-sm uppercase shadow-lg">
-                      {selectedMember.category}
+                  {/* Left Side - Image + IGN */}
+                  <div className="w-full md:w-2/5 flex-shrink-0 flex flex-col">
+                    {/* Member Photo */}
+                    <div className="h-64 sm:h-72 md:h-80 relative overflow-hidden">
+                      <img
+                        src={formatImagePath(selectedMember.image)}
+                        alt={selectedMember.name}
+                        className="w-full h-full object-cover"
+                        onError={handleImageError}
+                      />
+                      {/* Category Badge */}
+                      <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-sm uppercase shadow-lg">
+                        {selectedMember.category}
+                      </div>
+                    </div>
+                    
+                    {/* IGN Section Below Photo */}
+                    <div className="bg-gradient-to-r from-primary-500/30 to-primary-600/30 p-4 border-t border-primary-500/50">
+                      <p className="text-xs text-gray-300 uppercase font-bold mb-1.5">In-Game Name</p>
+                      <p className="text-xl font-bold text-white">{selectedMember.ingameName}</p>
                     </div>
                   </div>
 
                   {/* Right Side - Info */}
-                  <div className="w-full md:w-3/5 p-4 sm:p-6 md:p-8 flex flex-col justify-between space-y-4 sm:space-y-0">
+                  <div className="w-full md:w-3/5 p-4 sm:p-6 md:p-8 flex flex-col space-y-3 sm:space-y-4 overflow-y-auto">
                     {/* Header */}
-                    <div className="space-y-4">
-                      <div>
-                        <h2 className="text-3xl font-display font-black text-white leading-tight">
-                          {selectedMember.name}
-                        </h2>
-                        <p className="text-primary-400 font-bold uppercase tracking-widest text-xs mt-2">
-                          {selectedMember.role}
-                        </p>
-                      </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-display font-black text-white leading-tight">
+                        {selectedMember.name}
+                      </h2>
+                      <p className="text-primary-400 font-bold uppercase tracking-widest text-xs mt-2">
+                        {selectedMember.role}
+                      </p>
+                    </div>
 
-                      {/* Quick Stats - Horizontal */}
-                      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                    {/* Quick Stats - Horizontal */}
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3">
                         <div className="bg-dark-800/60 backdrop-blur rounded-lg p-2 sm:p-3 border border-primary-500/20">
                           <div className="text-xl sm:text-2xl font-bold gradient-text">{selectedMember.kills}+</div>
                           <div className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mt-1">Kills</div>
@@ -354,17 +400,47 @@ const Team = () => {
                       <div className="bg-dark-800/40 backdrop-blur rounded-lg p-3 sm:p-4 border border-primary-500/20">
                         <p className="text-[11px] sm:text-xs text-gray-300 leading-relaxed">{selectedMember.description}</p>
                       </div>
-                    </div>
 
-                    {/* IGN and Social */}
-                    <div className="space-y-2 sm:space-y-3">
-                      {/* IGN */}
-                      <div className="bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg p-2.5 sm:p-3 border border-primary-500/30">
-                        <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-1">In-Game Name</p>
-                        <p className="text-base sm:text-lg font-bold text-primary-300">{selectedMember.ingameName}</p>
+                    {/* Game Screenshots Section */}
+                    {selectedMember.additionalImages && selectedMember.additionalImages.length > 0 && (
+                      <div className="bg-dark-800/40 backdrop-blur rounded-lg p-3 sm:p-4 border border-primary-500/20">
+                        <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-3">Game Screenshots</p>
+                        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                          {selectedMember.additionalImages.map((img, idx) => (
+                            <motion.button
+                              key={idx}
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setViewingImage(img)}
+                              className="relative group overflow-hidden rounded-lg border-2 border-primary-500/30 hover:border-primary-400 transition-all bg-dark-900/50"
+                            >
+                              <div className="aspect-[16/9] relative overflow-hidden">
+                                <img
+                                  src={formatImagePath(img.url)}
+                                  alt={img.type}
+                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                  onError={handleImageError}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute bottom-0 left-0 right-0 p-2 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <span className="text-[10px] sm:text-xs font-bold text-white uppercase">
+                                    {img.type === 'basic_info' ? 'Basic Info' : 'Lobby'}
+                                  </span>
+                                </div>
+                              </div>
+                              {/* Expand Icon */}
+                              <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-primary-500/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span className="text-white text-xs">🔍</span>
+                              </div>
+                            </motion.button>
+                          ))}
+                        </div>
                       </div>
+                    )}
 
-                      {/* Social Links */}
+                    {/* Social Links */}
+                    <div>
+                      <p className="text-[10px] sm:text-xs text-gray-400 uppercase font-bold mb-2">Connect</p>
                       <div className="flex gap-1.5 sm:gap-2">
                         {selectedMember.socials?.discord && (
                           <motion.a
@@ -408,6 +484,60 @@ const Team = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Premium Image Viewer Popup */}
+      <AnimatePresence>
+        {viewingImage && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setViewingImage(null)}
+              className="fixed inset-0 bg-black/95 backdrop-blur-md z-[60]"
+            />
+
+            {/* Image Viewer */}
+            <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                className="relative max-w-5xl w-full"
+              >
+                {/* Close Button */}
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setViewingImage(null)}
+                  className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white flex items-center justify-center transition-all shadow-lg font-bold text-lg z-10"
+                >
+                  ✕
+                </motion.button>
+
+                {/* Image Type Badge */}
+                <div className="absolute -top-12 left-0 px-4 py-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold text-sm uppercase shadow-lg">
+                  {viewingImage.type === 'basic_info' ? '📊 Basic Info' : '🎮 Lobby'}
+                </div>
+
+                {/* Image Container */}
+                <div className="relative bg-gradient-to-br from-dark-850 via-dark-900 to-dark-950 rounded-2xl border-2 border-primary-500/50 overflow-hidden shadow-2xl">
+                  <img
+                    src={formatImagePath(viewingImage.url)}
+                    alt={viewingImage.type}
+                    className="w-full h-auto max-h-[80vh] object-contain"
+                    onError={handleImageError}
+                  />
+                  {/* Glow Effect */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 blur-xl -z-10" />
                 </div>
               </motion.div>
             </div>
