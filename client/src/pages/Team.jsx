@@ -102,9 +102,45 @@ const Team = () => {
       ],
       socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
+    {
+      _id: 'rinkesh-rajput',
+      name: 'Rinkesh Rajput',
+      role: 'Assaulter / Organizer',
+      category: 'Organizer',
+      kills: 4895,
+      winRate: 72,
+      description: 'Explosive assaulter who breaks defenses with fast entries and relentless pressure. Reads timing windows, commits to duels, and clears space for the squad to dominate zones.',
+      popupDescription: 'Explosive assaulter with fast entries and relentless pressure.',
+      ingameName: 'VioLencE RR',
+      since: 2020,
+      image: '/Line_up/Rinkesh Rajput.jpeg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Rinkesh_rajput_basic_info.jpeg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Rinkesh_rajput_lobby.jpeg' }
+      ],
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/rinkeshrajput', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
   ]
 
   const creators = [
+    {
+      _id: 'jainish-soni',
+      name: 'Jainish Soni',
+      role: 'Video Editor / Content Creator',
+      category: 'Creator',
+      kills: 4136,
+      winRate: 71,
+      description: 'Creative mastermind behind VioLencE content and brand presence. Master video editor crafting cinematic highlights, managing all social media channels, and driving promotional strategies. Transforms raw gameplay into viral moments while building the clan\'s digital empire.',
+      popupDescription: 'Video editor & content creator. Social media & promotion specialist.',
+      ingameName: 'VioLencE JS',
+      since: 2021,
+      image: '/Line_up/Jainish_Soni.jpeg',
+      additionalImages: [
+        { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/jainish_soni_Basic_info.jpeg' },
+        { type: 'lobby', url: '/Line_up/Lobby_Basic_info/jainish_soni_Lobby.jpeg' }
+      ],
+      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/jainishsoni', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+    },
     {
       _id: 'dev-patel',
       name: 'Dev Patel',

@@ -26,7 +26,7 @@ const TeamManagement = () => {
       const res = await axios.get('/api/users/registrations')
       setRegistrations(res.data)
     } catch (error) {
-      console.error('Error fetching registrations:', error)
+      // Error loading registrations
       toast.error('Failed to load registrations')
     } finally {
       setLoading(false)

@@ -63,7 +63,6 @@ router.put('/profile', authMiddleware, async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Profile update error:', error)
     res.status(500).json({ message: 'Error updating profile' })
   }
 })
@@ -103,7 +102,6 @@ router.put('/change-password', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Password changed successfully' })
   } catch (error) {
-    console.error('Change password error:', error)
     res.status(500).json({ message: 'Error changing password' })
   }
 })

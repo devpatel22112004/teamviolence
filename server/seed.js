@@ -123,7 +123,39 @@ const seedData = async () => {
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
       },
+      {
+        name: 'Rinkesh Rajput',
+        role: 'Assaulter / Organizer',
+        kills: 4895,
+        winRate: 72,
+        description: 'Explosive assaulter who breaks defenses with fast entries and relentless pressure. Reads timing windows, commits to duels, and clears space for the squad to dominate zones.',
+        ingameName: 'VioLencE RR',
+        since: 2020,
+        category: 'Organizer',
+        image: '/Line_up/Rinkesh Rajput.jpeg',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
       // Content Creators
+      {
+        name: 'Jainish Soni',
+        role: 'Video Editor / Content Creator',
+        kills: 4136,
+        winRate: 71,
+        description: 'Creative mastermind behind VioLencE content and brand presence. Master video editor crafting cinematic highlights, managing all social media channels, and driving promotional strategies. Transforms raw gameplay into viral moments while building the clan\'s digital empire.',
+        ingameName: 'VioLencE JS',
+        since: 2021,
+        category: 'Creator',
+        image: '/Line_up/Jainish_Soni.jpeg',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
       {
         name: 'Dev Patel',
         role: 'IGL / Founder / Creator',
@@ -202,6 +234,82 @@ const seedData = async () => {
           'Team leader must be present 30 mins before match'
         ],
         prizeBreakdown: {
+      {
+        title: 'TDM Blitz Cup',
+        description: 'Fast-paced TDM showdowns with tight rotations and nonstop action. Perfect for fraggers and clutch players.',
+        mode: 'TDM 4v4',
+        type: 'free',
+        entryFee: 0,
+        prizePool: 1200,
+        totalSlots: 64,
+        registeredTeams: 18,
+        date: new Date('2026-02-12'),
+        status: 'open',
+        badge: '⚡ TDM Special',
+        specialNote: '🔥 High-intensity TDM battles with instant matchmaking!',
+        prizeBreakdown: {
+          first: 600,
+          second: 350,
+          third: 150,
+          highestKiller: 100
+        },
+        rules: [
+          'TDM 4v4 only',
+          'Single elimination',
+          'No emulators or third-party tools',
+          'Match check-in 15 minutes before start'
+        ]
+      },
+      {
+        title: 'Rookie Duo Rumble',
+        description: 'Duo-focused tournament built for rising talent. Quick rotations, compact zones, and aggressive play.',
+        mode: 'Duo TPP',
+        type: 'free',
+        entryFee: 0,
+        prizePool: 800,
+        totalSlots: 50,
+        registeredTeams: 21,
+        date: new Date('2026-02-16'),
+        status: 'open',
+        badge: '🎯 Rising Stars',
+        prizeBreakdown: {
+          first: 400,
+          second: 250,
+          third: 100,
+          highestKiller: 50
+        },
+        rules: [
+          'Duo must have 2 players',
+          'TPP mode only',
+          'No teaming with other duos',
+          'Match check-in 20 minutes before start'
+        ]
+      },
+      {
+        title: 'Nightfall Solo Showdown',
+        description: 'One v all. Prove your game sense and mechanics in a high-stakes solo FPP showdown.',
+        mode: 'Solo FPP',
+        type: 'paid',
+        entryFee: 30,
+        prizePool: 2000,
+        totalSlots: 80,
+        registeredTeams: 34,
+        date: new Date('2026-02-22'),
+        status: 'open',
+        badge: '🌙 Prime Night',
+        prizeBreakdown: {
+          first: 1000,
+          second: 600,
+          third: 250,
+          highestKiller: 150
+        },
+        rules: [
+          'Solo only',
+          'FPP mode only',
+          'No teaming or stream sniping',
+          'Match check-in 25 minutes before start'
+        ]
+      },
           first: 2000,
           second: 1000,
           third: 500,

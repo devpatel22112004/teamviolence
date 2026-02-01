@@ -20,7 +20,7 @@ const MyRegistrations = () => {
       const res = await axios.get('/api/tournaments/my/registrations')
       setRegistrations(res.data)
     } catch (error) {
-      console.error('Error fetching registrations:', error)
+      // Error loading registrations
       toast.error('Unable to load your registrations')
     } finally {
       setLoading(false)

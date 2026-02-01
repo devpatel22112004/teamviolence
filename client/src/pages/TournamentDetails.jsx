@@ -19,13 +19,16 @@ const TournamentDetails = () => {
     players: ['', '', '', '']
   })
 
+  const apiBase = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const apiUrl = (path) => (apiBase ? `${apiBase}${path}` : path)
+
   useEffect(() => {
     fetchTournament()
   }, [id])
 
   const fetchTournament = async () => {
     try {
-      const res = await axios.get(`/api/tournaments/${id}`)
+      const res = await axios.get(apiUrl(`/api/tournaments/${id}`))
       setTournament(res.data)
     } catch (error) {
       toast.error('Tournament not found')
@@ -48,7 +51,7 @@ const TournamentDetails = () => {
     try {
       if (tournament.type === 'paid') {
         // Initiate Razorpay payment
-        const orderRes = await axios.post(`/api/tournaments/${id}/register`, teamData)
+        const orderRes = await axios.post(apiUrl(`/api/tournaments/${id}/register`), teamData)
         
         const options = {
           key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -59,7 +62,7 @@ const TournamentDetails = () => {
           order_id: orderRes.data.orderId,
           handler: async (response) => {
             try {
-              await axios.post(`/api/tournaments/${id}/verify-payment`, {
+              await axios.post(apiUrl(`/api/tournaments/${id}/verify-payment`), {
                 ...response,
                 teamData
               })
@@ -78,7 +81,7 @@ const TournamentDetails = () => {
         razorpay.open()
       } else {
         // Free tournament registration
-        await axios.post(`/api/tournaments/${id}/register`, teamData)
+        await axios.post(apiUrl(`/api/tournaments/${id}/register`), teamData)
         toast.success('Registration successful!')
         navigate('/dashboard')
       }

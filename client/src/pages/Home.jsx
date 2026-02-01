@@ -36,11 +36,13 @@ const Home = () => {
   ]
 
   const lineup = [
-    { name: 'Karan Patel', role: 'Entry Fragger', image: '/Line_up/karan-patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
-    { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/Line_up/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
     { name: 'Umang Rana', role: 'Co-Leader / Flex IGL', image: '/Line_up/Umang Rana.jpg', impact: 'Unpredictable IGL instincts with raw fragging power.' },
-    { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/Line_up/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
     { name: 'Karan Patel', role: 'Entry Fragger', image: '/Line_up/karan-patel.jpeg', impact: 'Cracks compounds and forces flawless trades.' },
+    { name: 'Purvang Pandya', role: 'Elite DMR Specialist', image: '/Line_up/Purvang Pandya.jpg', impact: 'Precision long-range knocks that swing momentum instantly.' },
+    { name: 'Aayush Panchal', role: 'Strategic Analyst', image: '/Line_up/Aayush Panchal.webp', impact: 'Reads patterns, mid-round adjustments, and mental fortitude.' },
+    { name: 'Rinkesh Rajput', role: 'Assaulter', image: '/Line_up/Rinkesh Rajput.jpeg', impact: 'Explosive entries and relentless close-range pressure.' },
+    { name: 'Dev Patel', role: 'IGL / Founder', image: '/Line_up/Dev Patel.jpg', impact: 'Visionary shot-calling and championship-level clutches.' },
+    { name: 'Jainish Soni', role: 'Video Editor / Creator', image: '/Line_up/Jainish_Soni.jpeg', impact: 'Turns highlights into cinematic moments and brand impact.' },
     { name: 'Mehul Darji', role: 'Aggressive Scout & Co-Leader', image: '/Line_up/Mehul Darji.jpg', impact: 'Leads info plays and zone breaks with composure.' },
     { name: 'Harsh Thakor', role: 'Support Anchor', image: '/Line_up/Harsh Thakor.jpg', impact: 'Locks flanks and stabilizes every late circle.' },
   ]

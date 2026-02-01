@@ -11,6 +11,7 @@ const Tournaments = () => {
   const [tournaments, setTournaments] = useState([])
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
+  const [usingDemo, setUsingDemo] = useState(false)
   const [selectedTournament, setSelectedTournament] = useState(null)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
   const [registering, setRegistering] = useState(false)
@@ -24,13 +25,17 @@ const Tournaments = () => {
     fetchTournaments()
   }, [])
 
+  const apiBase = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const apiUrl = (path) => (apiBase ? `${apiBase}${path}` : path)
+
   const fetchTournaments = async () => {
     try {
-      const res = await axios.get('/api/tournaments')
+      const res = await axios.get(apiUrl('/api/tournaments'))
       setTournaments(res.data)
+      setUsingDemo(false)
     } catch (error) {
-      console.error('Error fetching tournaments:', error)
-      toast.error('Unable to load tournaments. Using demo data.')
+      // Fallback to demo data when API is unavailable
+      setUsingDemo(true)
       setTournaments(defaultTournaments)
     } finally {
       setLoading(false)
@@ -60,13 +65,77 @@ const Tournaments = () => {
       freeEntrySlotsAvailable: 7,
       specialNote: '🎉 First 7 registered teams get FREE ENTRY!'
     },
+    {
+      _id: 'tdm-blitz-cup',
+      title: 'TDM Blitz Cup',
+      mode: 'TDM 4v4',
+      type: 'free',
+      entryFee: 0,
+      prizePool: 1200,
+      totalSlots: 64,
+      registeredTeams: 18,
+      date: '2026-02-12',
+      status: 'open',
+      description: 'Fast-paced TDM showdowns with tight rotations and nonstop action. Perfect for fraggers and clutch players.',
+      badge: '⚡ TDM Special',
+      prizeBreakdown: {
+        first: 600,
+        second: 350,
+        third: 150,
+        highestKiller: 100
+      },
+      specialNote: '🔥 High-intensity TDM battles with instant matchmaking!'
+    },
+    {
+      _id: 'rookie-duo-rumble',
+      title: 'Rookie Duo Rumble',
+      mode: 'Duo TPP',
+      type: 'free',
+      entryFee: 0,
+      prizePool: 800,
+      totalSlots: 50,
+      registeredTeams: 21,
+      date: '2026-02-16',
+      status: 'open',
+      description: 'Duo-focused tournament built for rising talent. Quick rotations, compact zones, and aggressive play.',
+      badge: '🎯 Rising Stars',
+      prizeBreakdown: {
+        first: 400,
+        second: 250,
+        third: 100,
+        highestKiller: 50
+      }
+    },
+    {
+      _id: 'nightfall-solo-showdown',
+      title: 'Nightfall Solo Showdown',
+      mode: 'Solo FPP',
+      type: 'paid',
+      entryFee: 30,
+      prizePool: 2000,
+      totalSlots: 80,
+      registeredTeams: 34,
+      date: '2026-02-22',
+      status: 'open',
+      description: 'One v all. Prove your game sense and mechanics in a high-stakes solo FPP showdown.',
+      badge: '🌙 Prime Night',
+      prizeBreakdown: {
+        first: 1000,
+        second: 600,
+        third: 250,
+        highestKiller: 150
+      }
+    },
   ]
 
-  const filteredTournaments = tournaments.length ? tournaments.filter(t => 
-    filter === 'all' ? true : t.type === filter
-  ) : defaultTournaments.filter(t => 
+  const activeTournaments = tournaments.length ? tournaments : defaultTournaments
+  const filteredTournaments = activeTournaments.filter(t => 
     filter === 'all' ? true : t.type === filter
   )
+
+  const totalPrizePool = activeTournaments.reduce((sum, t) => sum + (t.prizePool || 0), 0)
+  const totalSlots = activeTournaments.reduce((sum, t) => sum + (t.totalSlots || 0), 0)
+  const liveCount = activeTournaments.filter(t => t.status === 'open').length
 
   if (loading) {
     return (
@@ -114,12 +183,43 @@ const Tournaments = () => {
               <span>Live Tournaments</span>
             </motion.div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-black leading-tight">
-              Join <span className="gradient-text">Tournaments</span>
+              Discover <span className="gradient-text">Tournaments</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-2">
-              Compete in exciting BGMI tournaments with incredible prize pools. Free and paid options available for all skill levels!
+              Explore premium BGMI events, from high-stakes championships to fast TDM clashes. Pick your mode and own the lobby.
             </p>
+            {usingDemo && (
+              <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/50 text-amber-300 text-xs sm:text-sm font-bold">
+                Demo data active — connect the server to load live tournaments
+              </div>
+            )}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Discovery Highlights */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 mb-10 sm:mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="card-premium p-4 sm:p-5 border border-primary-500/20">
+            <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Live Events</p>
+            <p className="text-2xl sm:text-3xl font-black gradient-text mt-2">{liveCount}</p>
+            <p className="text-xs text-gray-400 mt-1">Open for registration</p>
+          </div>
+          <div className="card-premium p-4 sm:p-5 border border-primary-500/20">
+            <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Total Prize Pool</p>
+            <p className="text-2xl sm:text-3xl font-black gradient-text mt-2">₹{totalPrizePool.toLocaleString()}</p>
+            <p className="text-xs text-gray-400 mt-1">Across all events</p>
+          </div>
+          <div className="card-premium p-4 sm:p-5 border border-primary-500/20">
+            <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Total Slots</p>
+            <p className="text-2xl sm:text-3xl font-black gradient-text mt-2">{totalSlots}</p>
+            <p className="text-xs text-gray-400 mt-1">Squad, duo, solo & TDM</p>
+          </div>
+          <div className="card-premium p-4 sm:p-5 border border-primary-500/20">
+            <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Entry Types</p>
+            <p className="text-2xl sm:text-3xl font-black gradient-text mt-2">Free + Paid</p>
+            <p className="text-xs text-gray-400 mt-1">Choose your grind</p>
+          </div>
         </div>
       </section>
 
@@ -308,15 +408,17 @@ const Tournaments = () => {
 
                   {/* Register Button */}
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: usingDemo ? 1 : 1.02 }}
+                    whileTap={{ scale: usingDemo ? 1 : 0.98 }}
                     onClick={() => {
+                      if (usingDemo) return
                       setSelectedTournament(tournament)
                       setShowRegisterModal(true)
                     }}
-                    className="btn-modern w-full text-center text-lg font-bold py-4 flex items-center justify-center group/btn"
+                    disabled={usingDemo}
+                    className={`btn-modern w-full text-center text-lg font-bold py-4 flex items-center justify-center group/btn ${usingDemo ? 'opacity-60 cursor-not-allowed' : ''}`}
                   >
-                    Register Now
+                    {usingDemo ? 'Demo Mode' : 'Register Now'}
                     <FaArrowRight className="ml-3 group-hover/btn:translate-x-2 transition-transform" />
                   </motion.button>
                 </div>
@@ -562,7 +664,7 @@ const Tournaments = () => {
 
     setRegistering(true)
     try {
-      const res = await axios.post(`/api/tournaments/${selectedTournament._id}/register`, {
+      const res = await axios.post(apiUrl(`/api/tournaments/${selectedTournament._id}/register`), {
         teamName: formData.teamName.trim(),
         teamLeader: formData.leaderName.trim(),
         players: players
@@ -577,7 +679,7 @@ const Tournaments = () => {
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || 'Registration failed'
       toast.error(errorMsg)
-      console.error('Registration error:', error)
+      // Registration error logged internally
     } finally {
       setRegistering(false)
     }

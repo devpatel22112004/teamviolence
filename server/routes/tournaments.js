@@ -118,7 +118,6 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
       res.status(201).json({ message: 'Registration successful', registration })
     }
   } catch (error) {
-    console.error(error)
     res.status(500).json({ message: 'Error registering for tournament', error: error.message })
   }
 })
@@ -169,7 +168,6 @@ router.post('/:id/verify-payment', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Payment verified and registration complete', registration })
   } catch (error) {
-    console.error(error)
     res.status(500).json({ message: 'Error verifying payment' })
   }
 })
@@ -242,7 +240,6 @@ router.put('/registrations/:id', authMiddleware, async (req, res) => {
       registration
     })
   } catch (error) {
-    console.error('Update registration error:', error)
     res.status(500).json({ message: 'Error updating registration' })
   }
 })
@@ -273,7 +270,6 @@ router.delete('/registrations/:id', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Registration cancelled successfully' })
   } catch (error) {
-    console.error('Cancel registration error:', error)
     res.status(500).json({ message: 'Error cancelling registration' })
   }
 })
@@ -287,7 +283,6 @@ router.get('/my/registrations', authMiddleware, async (req, res) => {
     
     res.json(registrations)
   } catch (error) {
-    console.error('Error fetching registrations:', error)
     res.status(500).json({ message: 'Error fetching registrations' })
   }
 })

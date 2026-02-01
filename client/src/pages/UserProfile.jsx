@@ -41,7 +41,7 @@ const UserProfile = () => {
       const res = await axios.get('/api/tournaments/my/registrations')
       setRegistrations(res.data)
     } catch (error) {
-      console.error('Error fetching registrations:', error)
+      // Error fetching user registrations
     } finally {
       setFetchingReg(false)
     }

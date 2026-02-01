@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     // Only set timer if user is logged in
     if (user) {
       sessionTimeoutRef.current = setTimeout(() => {
-        console.log('Session expired due to inactivity')
+        // Session expired due to inactivity
         logoutDueToTimeout()
       }, SESSION_TIMEOUT)
     }

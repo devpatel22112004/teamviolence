@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
-// import { GoogleLogin } from '@react-oauth/google' // TODO: Enable later
 
 const Login = () => {
   const navigate = useNavigate()
@@ -30,20 +29,6 @@ const Login = () => {
     }
   }
 
-  // TODO: Enable Google login later
-  // const handleGoogleLogin = async (token) => {
-  //   try {
-  //     setLoading(true)
-  //     await loginWithGoogle(token)
-  //     toast.success('Google login successful!')
-  //     navigate('/dashboard')
-  //   } catch (error) {
-  //     toast.error(error.response?.data?.message || 'Google login failed')
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
-
   return (
     <div className="min-h-screen flex items-center justify-center pt-20 pb-20 px-4 sm:px-6">
       <motion.div
@@ -58,42 +43,6 @@ const Login = () => {
             </h1>
             <p className="text-gray-300 text-xs sm:text-sm">Login to your Team VioLencE account</p>
           </div>
-
-          {/* TODO: Google Sign-In Button - Enable later */}
-          {/* <div className="mb-6">
-            <GoogleLogin
-              onSuccess={async (credentialResponse) => {
-                try {
-                  setLoading(true)
-                  await loginWithGoogle(credentialResponse.credential)
-                  toast.success('🎉 Google login successful!')
-                  navigate('/dashboard')
-                } catch (error) {
-                  toast.error(error.response?.data?.message || 'Google login failed')
-                } finally {
-                  setLoading(false)
-                }
-              }}
-              onError={() => {
-                toast.error('❌ Google login failed')
-              }}
-              theme="filled_blue"
-              size="large"
-              width="100%"
-              text="signin_with"
-              shape="rectangular"
-            />
-          </div>
-
-          {/* Divider */}
-          {/* <div className="relative mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-600"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-transparent text-gray-400">Or continue with email</span>
-            </div>
-          </div> */}
 
           {/* Email/Password Form */}
           <form onSubmit={handleSubmit} className="space-y-6">

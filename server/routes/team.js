@@ -69,7 +69,6 @@ router.post('/', authMiddleware, adminMiddleware, upload.single('image'), async 
     await member.save()
     res.status(201).json(member)
   } catch (error) {
-    console.error(error)
     res.status(500).json({ message: 'Error creating team member' })
   }
 })

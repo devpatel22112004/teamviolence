@@ -45,7 +45,6 @@ router.post('/register', async (req, res) => {
       }
     })
   } catch (error) {
-    console.error(error)
     res.status(500).json({ message: 'Server error during registration' })
   }
 })
@@ -82,7 +81,6 @@ router.post('/login', async (req, res) => {
       }
     })
   } catch (error) {
-    console.error(error)
     res.status(500).json({ message: 'Server error during login' })
   }
 })
@@ -158,7 +156,6 @@ router.post('/google', async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Google OAuth error:', error)
     res.status(500).json({ message: 'Server error during Google login' })
   }
 })

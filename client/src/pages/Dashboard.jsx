@@ -51,7 +51,7 @@ const Dashboard = () => {
         completedTournaments: completed
       })
     } catch (error) {
-      console.error('Error fetching registrations:', error)
+      // Error fetching registration stats
     } finally {
       setLoading(false)
     }
