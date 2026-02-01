@@ -7,8 +7,8 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: FaDiscord, label: 'Discord', href: 'https://discord.gg/AmezSUbP' },
-    { icon: FaInstagram, label: 'Instagram', href: '#' },
-    { icon: FaYoutube, label: 'YouTube', href: '#' },
+    { icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==' },
+    { icon: FaYoutube, label: 'YouTube', href: 'https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w' },
     { icon: FaWhatsapp, label: 'WhatsApp', href: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' },
   ]
 
@@ -142,8 +142,8 @@ const Footer = () => {
               <div className="space-y-4 text-sm text-gray-400">
                 <div>
                   <p className="text-primary-400 font-semibold mb-1">Email</p>
-                  <a href="mailto:teamviolence@gmail.com" className="hover:text-primary-400 transition-colors">
-                    teamviolence@gmail.com
+                  <a href="mailto:esportsteamviolence@gmail.com" className="hover:text-primary-400 transition-colors">
+                    esportsteamviolence@gmail.com
                   </a>
                 </div>
                 <div>

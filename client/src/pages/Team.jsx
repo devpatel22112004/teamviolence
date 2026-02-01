@@ -499,6 +499,100 @@ const Team = () => {
         )}
       </AnimatePresence>
 
+      {/* Connect & Register Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-strong rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border-primary-500/25 space-y-8"
+        >
+          <div className="text-center space-y-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-black">
+              Connect With <span className="gradient-text">Team VioLencE</span>
+            </h2>
+            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+              Follow our journey, watch our gameplay, and join the community
+            </p>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex flex-wrap justify-center gap-4">
+            <motion.a
+              href="https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold transition-all shadow-lg hover:shadow-pink-500/50"
+            >
+              <FaInstagram className="text-xl" />
+              <span>Follow on Instagram</span>
+            </motion.a>
+
+            <motion.a
+              href="https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold transition-all shadow-lg hover:shadow-red-500/50"
+            >
+              <FaYoutube className="text-xl" />
+              <span>Subscribe on YouTube</span>
+            </motion.a>
+
+            <motion.a
+              href="https://discord.gg/AmezSUbP"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold transition-all shadow-lg hover:shadow-indigo-500/50"
+            >
+              <FaDiscord className="text-xl" />
+              <span>Join Discord</span>
+            </motion.a>
+
+            <motion.a
+              href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-bold transition-all shadow-lg hover:shadow-green-500/50"
+            >
+              <FaWhatsapp className="text-xl" />
+              <span>Join WhatsApp</span>
+            </motion.a>
+          </div>
+
+          {/* Registration Form CTA */}
+          <div className="border-t border-primary-500/20 pt-8">
+            <div className="text-center space-y-4">
+              <h3 className="text-xl sm:text-2xl font-display font-bold">
+                Want to <span className="gradient-text">Join the Team</span>?
+              </h3>
+              <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
+                Fill out our registration form to get started with your journey in Team VioLencE
+              </p>
+              <motion.a
+                href="https://forms.gle/z6Vj1eJXtg8RQGfz7"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-bold text-lg transition-all shadow-lg hover:shadow-primary-500/50"
+              >
+                <FaEdit className="text-xl" />
+                <span>Registration Form</span>
+                <FaArrowRight className="text-sm" />
+              </motion.a>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Clan Story Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <motion.div

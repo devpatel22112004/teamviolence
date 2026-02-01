@@ -520,6 +520,14 @@ const Home = () => {
               <Link to="/tournaments" className="btn-primary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center">
                 <FaTrophy className="mr-2" /> <span>View tournaments</span>
               </Link>
+              <a
+                href="https://forms.gle/z6Vj1eJXtg8RQGfz7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600"
+              >
+                <FaPlay className="mr-2" /> <span>Register Now</span>
+              </a>
               <Link to="/about" className="btn-secondary text-sm sm:text-base lg:text-lg inline-flex items-center justify-center">
                 <FaGamepad className="mr-2" /> <span>Learn the story</span>
               </Link>
