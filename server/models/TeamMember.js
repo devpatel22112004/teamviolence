@@ -23,12 +23,23 @@ const teamMemberSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  ingameName: {
+    type: String
+  },
+  since: {
+    type: Number
+  },
+  category: {
+    type: String,
+    enum: ['Organizer', 'Creator', 'Player']
+  },
   image: String,
   socials: {
     discord: String,
     instagram: String,
     youtube: String,
-    twitch: String
+    twitch: String,
+    whatsapp: String
   },
   isActive: {
     type: Boolean,

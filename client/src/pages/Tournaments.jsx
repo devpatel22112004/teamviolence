@@ -39,60 +39,26 @@ const Tournaments = () => {
 
   const defaultTournaments = [
     {
-      _id: '1',
-      title: 'Weekly Squad Championship',
-      mode: 'Squad TPP',
-      type: 'free',
-      entryFee: 0,
-      prizePool: 5000,
-      totalSlots: 100,
-      registeredTeams: 45,
-      date: '2026-01-25',
-      status: 'open',
-      description: 'Free weekly tournament for all skill levels. Prove your worth!',
-      badge: '🎮 Weekly'
-    },
-    {
-      _id: '2',
-      title: 'Pro League - Season 1',
-      mode: 'Squad TPP',
-      type: 'paid',
-      entryFee: 30,
-      prizePool: 10000,
-      totalSlots: 50,
-      registeredTeams: 28,
-      date: '2026-01-28',
-      status: 'open',
-      description: 'Compete with the best teams for massive prizes!',
-      badge: '🔥 Hot'
-    },
-    {
-      _id: '3',
-      title: 'TDM Showdown',
-      mode: 'TDM 4v4',
-      type: 'free',
-      entryFee: 0,
-      prizePool: 3000,
-      totalSlots: 32,
-      registeredTeams: 20,
-      date: '2026-01-27',
-      status: 'open',
-      description: 'Fast-paced TDM action. Show your gunplay skills!',
-      badge: '⚡ Fast'
-    },
-    {
-      _id: '4',
-      title: 'Elite Masters Cup',
+      _id: 'tvs-pro-championship-feb',
+      title: 'Team VioLencE Pro Championship',
       mode: 'Squad TPP',
       type: 'paid',
       entryFee: 50,
-      prizePool: 25000,
-      totalSlots: 25,
-      registeredTeams: 18,
-      date: '2026-02-05',
+      prizePool: 4000,
+      totalSlots: 100,
+      registeredTeams: 12,
+      date: '2026-02-27',
       status: 'open',
-      description: 'Premium tournament with the biggest prize pool!',
-      badge: '👑 Elite'
+      description: 'Official Team VioLencE Championship with massive prize pool! First 7 teams get FREE entry!',
+      badge: '👑 Featured',
+      prizeBreakdown: {
+        first: 2000,
+        second: 1000,
+        third: 500,
+        highestKiller: 500
+      },
+      freeEntrySlotsAvailable: 7,
+      specialNote: '🎉 First 7 registered teams get FREE ENTRY!'
     },
   ]
 
@@ -236,7 +202,46 @@ const Tournaments = () => {
                     {tournament.description}
                   </p>
 
-                  {/* Type Badge */}
+                  {/* Special Note for Featured Tournament */}
+                  {tournament.specialNote && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="px-4 py-3 rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/50 text-center"
+                    >
+                      <p className="text-amber-300 font-bold text-sm sm:text-base">
+                        {tournament.specialNote}
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {/* Prize Breakdown */}
+                  {tournament.prizeBreakdown && (
+                    <div className="bg-gradient-to-br from-dark-800/60 to-dark-900/60 rounded-lg p-3 border border-primary-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <FaTrophy className="text-primary-400 text-sm" />
+                        <p className="text-primary-300 font-bold text-xs uppercase">Prize Pool</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="flex items-center justify-between p-2 rounded bg-amber-500/15 border border-amber-500/30">
+                          <span className="text-xs text-gray-300">🥇 1st</span>
+                          <span className="font-bold text-sm text-amber-400">₹{tournament.prizeBreakdown.first}</span>
+                        </div>
+                        <div className="flex items-center justify-between p-2 rounded bg-gray-500/15 border border-gray-500/30">
+                          <span className="text-xs text-gray-300">🥈 2nd</span>
+                          <span className="font-bold text-sm text-gray-300">₹{tournament.prizeBreakdown.second}</span>
+                        </div>
+                        <div className="flex items-center justify-between p-2 rounded bg-orange-500/15 border border-orange-500/30">
+                          <span className="text-xs text-gray-300">🥉 3rd</span>
+                          <span className="font-bold text-sm text-orange-400">₹{tournament.prizeBreakdown.third}</span>
+                        </div>
+                        <div className="flex items-center justify-between p-2 rounded bg-red-500/15 border border-red-500/30">
+                          <span className="text-xs text-gray-300">🔥 Killer</span>
+                          <span className="font-bold text-sm text-red-400">₹{tournament.prizeBreakdown.highestKiller}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <div>
                     {tournament.type === 'free' ? (
                       <motion.span 
@@ -391,7 +396,7 @@ const Tournaments = () => {
               </div>
 
               {/* Modal Body */}
-              <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
+              <div className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
                 {/* Tournament Info */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="bg-dark-700/50 p-3 rounded-lg">
@@ -413,6 +418,41 @@ const Tournaments = () => {
                     <p className="text-white text-lg font-bold">{new Date(selectedTournament.date).toLocaleDateString()}</p>
                   </div>
                 </div>
+
+                {/* Prize Breakdown in Modal */}
+                {selectedTournament.prizeBreakdown && (
+                  <div className="bg-gradient-to-br from-dark-800/60 to-dark-900/60 rounded-lg p-4 border border-primary-500/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <FaTrophy className="text-primary-400" />
+                      <p className="text-primary-300 font-bold text-sm uppercase">Prize Distribution</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-amber-500/20 border border-amber-500/40">
+                        <span className="text-sm text-gray-200">🥇 1st</span>
+                        <span className="font-black text-base text-amber-400">₹{selectedTournament.prizeBreakdown.first}</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-gray-500/20 border border-gray-500/40">
+                        <span className="text-sm text-gray-200">🥈 2nd</span>
+                        <span className="font-black text-base text-gray-300">₹{selectedTournament.prizeBreakdown.second}</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-orange-500/20 border border-orange-500/40">
+                        <span className="text-sm text-gray-200">🥉 3rd</span>
+                        <span className="font-black text-base text-orange-400">₹{selectedTournament.prizeBreakdown.third}</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-red-500/20 border border-red-500/40">
+                        <span className="text-sm text-gray-200">🔥 Killer</span>
+                        <span className="font-black text-base text-red-400">₹{selectedTournament.prizeBreakdown.highestKiller}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Special Note */}
+                {selectedTournament.specialNote && (
+                  <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-3">
+                    <p className="text-amber-300 font-bold text-center text-sm">{selectedTournament.specialNote}</p>
+                  </div>
+                )}
 
                 {/* Registration Form */}
                 {user ? (

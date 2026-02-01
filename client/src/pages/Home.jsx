@@ -191,7 +191,7 @@ const Home = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="flex -space-x-3">
-                    {lineup.slice(0, 5).map((player) => (
+                    {lineup.slice(0, 4).map((player) => (
                       <img
                         key={player.name}
                         src={formatImagePath(player.image)}
@@ -200,8 +200,8 @@ const Home = () => {
                         className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-primary-500/60 shadow-lg shadow-primary-900/40 object-cover"
                       />
                     ))}
-                    <div className="h-12 w-12 rounded-full bg-primary-600 text-white flex items-center justify-center text-sm font-semibold border-2 border-primary-500/60">
-                      +{Math.max(lineup.length - 5, 0)}
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold border-2 border-primary-500/60 shadow-lg">
+                      +{lineup.length - 4}
                     </div>
                   </div>
                   <div className="text-right">

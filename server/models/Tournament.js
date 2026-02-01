@@ -45,6 +45,22 @@ const tournamentSchema = new mongoose.Schema({
     enum: ['open', 'closed', 'ongoing', 'completed'],
     default: 'open'
   },
+  badge: {
+    type: String
+  },
+  specialNote: {
+    type: String
+  },
+  freeEntrySlotsAvailable: {
+    type: Number,
+    default: 0
+  },
+  prizeBreakdown: {
+    first: Number,
+    second: Number,
+    third: Number,
+    highestKiller: Number
+  },
   rules: [String],
   prizes: [{
     position: String,

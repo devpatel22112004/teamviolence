@@ -21,7 +21,7 @@ const seedData = async () => {
     // Create admin user
     const adminPassword = await bcrypt.hash('admin123', 10)
     const admin = await User.create({
-      name: 'Admin',
+      name: 'Team VioLencE Admin',
       email: 'admin@teamviolence.com',
       phone: '9876543210',
       password: adminPassword,
@@ -29,62 +29,147 @@ const seedData = async () => {
     })
     console.log('✅ Admin user created (email: admin@teamviolence.com, password: admin123)')
 
-    // Create test user
+    // Create test users with realistic data
     const userPassword = await bcrypt.hash('user123', 10)
     await User.create({
-      name: 'Test User',
-      email: 'user@test.com',
+      name: 'Dev Patel',
+      email: 'devpatel@teamviolence.com',
       phone: '9876543211',
       password: userPassword,
       role: 'user'
     })
-    console.log('✅ Test user created (email: user@test.com, password: user123)')
+    
+    await User.create({
+      name: 'Karan Patel',
+      email: 'karanpatel@teamviolence.com',
+      phone: '9876543212',
+      password: userPassword,
+      role: 'user'
+    })
+    
+    await User.create({
+      name: 'Test Player',
+      email: 'user@test.com',
+      phone: '9876543213',
+      password: userPassword,
+      role: 'user'
+    })
+    console.log('✅ Test users created')
 
     // Create team members
     const teamMembers = [
+      // Organizers
       {
-        name: 'VioLencE | Shadow',
-        role: 'IGL / Assaulter',
-        kills: 5200,
-        winRate: 76,
-        description: 'In-game leader with exceptional strategic thinking and aggressive fragging ability. Known for clutch moments.',
+        name: 'Umang Rana',
+        role: 'Co-Leader / Flex IGL',
+        kills: 5739,
+        winRate: 84,
+        description: 'Aggressive co-leader who blends IGL instincts with raw fragging power. Unpredictable rotations, ruthless decision-making, and the firepower to back every call. Keeps the team sharp and enemies on edge.',
+        ingameName: 'VioLencE UB',
+        since: 2019,
+        category: 'Organizer',
+        image: '/Line_up/Umang Rana.jpg',
         socials: {
-          discord: 'Shadow#1234',
-          instagram: 'https://instagram.com/shadow',
-          youtube: 'https://youtube.com/@shadow'
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
       },
       {
-        name: 'VioLencE | Phoenix',
-        role: 'Assaulter',
-        kills: 4900,
-        winRate: 74,
-        description: 'Aggressive entry fragger with incredible aim. Master of close-quarters combat and quick rotations.',
-        socials: {
-          discord: 'Phoenix#5678',
-          instagram: 'https://instagram.com/phoenix'
-        }
-      },
-      {
-        name: 'VioLencE | Ghost',
-        role: 'Support / Sniper',
-        kills: 4500,
+        name: 'Karan Patel',
+        role: 'Entry Fragger / Organizer',
+        kills: 5111,
         winRate: 72,
-        description: 'Expert marksman providing long-range cover fire. Tactical support player with excellent game sense.',
+        description: 'Fearless entry specialist who cracks compound doors and creates the chaos that wins fights. Aggressive entries, flawless trades, and the aggression to control zones. The breach that breaks defenses.',
+        ingameName: 'VioLencE KP',
+        since: 2020,
+        category: 'Organizer',
+        image: '/Line_up/karan-patel.jpeg',
         socials: {
-          discord: 'Ghost#9012',
-          youtube: 'https://youtube.com/@ghost'
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
       },
       {
-        name: 'VioLencE | Thunder',
-        role: 'Flex Player',
-        kills: 4700,
-        winRate: 73,
-        description: 'Versatile player adapting to any situation. Can play any role and excels in teamwork coordination.',
+        name: 'Purvang Pandya',
+        role: 'Elite DMR Specialist / Organizer',
+        kills: 4999,
+        winRate: 72,
+        description: 'Legendary long-range specialist whose precision knocks open every engagement. Clutch DMR plays that shift momentum, ridiculous aim, and the poise to perform under pressure when it matters most.',
+        ingameName: 'VioLencE PV',
+        since: 2023,
+        category: 'Organizer',
+        image: '/Line_up/Purvang Pandya.jpg',
         socials: {
-          instagram: 'https://instagram.com/thunder',
-          youtube: 'https://youtube.com/@thunder'
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
+      {
+        name: 'Aayush Panchal',
+        role: 'Strategic Analyst / Organizer',
+        kills: 4120,
+        winRate: 75,
+        description: 'Strategic mind who decodes enemy patterns and optimizes team plays. Deep VOD breakdowns, mid-round adjustments, and mental fortitude coaching keep VioLencE one step ahead in every engagement.',
+        ingameName: 'VioLencE DP',
+        since: 2022,
+        category: 'Organizer',
+        image: '/Line_up/Aayush Panchal.webp',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
+      // Content Creators
+      {
+        name: 'Dev Patel',
+        role: 'IGL / Founder / Creator',
+        kills: 5320,
+        winRate: 77,
+        description: 'Visionary founder and in-game leader of Team VioLencE. Built the clan from the ground up with strategic genius and unwavering determination. Calls rotations that break defenses and clutches that win championships.',
+        ingameName: 'VioLencE 乂',
+        since: 2019,
+        category: 'Creator',
+        image: '/Line_up/Dev Patel.jpg',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
+      {
+        name: 'Harsh Thakor',
+        role: 'Support Anchor / Creator',
+        kills: 4269,
+        winRate: 69,
+        description: 'Steady support anchor who locks down flanks and stabilizes every round. Reliable utility, smart positioning, and the composure to hold zones under fire. The silent protector of VioLencE.',
+        ingameName: 'VioLencE HT',
+        since: 2023,
+        category: 'Creator',
+        image: '/Line_up/Harsh Thakor.jpg',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
+        }
+      },
+      {
+        name: 'Mehul Darji',
+        role: 'Aggressive Scout / Co-Leader / Creator',
+        kills: 4510,
+        winRate: 73,
+        description: 'Second co-leader and tactical scout who leads aggressive zone pushes and info plays. Rotations that catch teams off-guard, discipline mixed with aggression, and the leadership to hold composure.',
+        ingameName: 'VioLencE MD',
+        since: 2021,
+        category: 'Creator',
+        image: '/Line_up/Mehul Darji.jpg',
+        socials: {
+          discord: 'https://discord.gg/AmezSUbP',
+          instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
+          whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
       }
     ]
@@ -95,124 +180,38 @@ const seedData = async () => {
     // Create tournaments
     const tournaments = [
       {
-        title: 'Weekly Squad Championship',
-        description: 'Free weekly tournament for all skill levels. Show your skills and compete for prizes! Best teams will be featured on our social media.',
-        mode: 'Squad TPP',
-        type: 'free',
-        entryFee: 0,
-        prizePool: 5000,
-        totalSlots: 100,
-        registeredTeams: 45,
-        date: new Date('2026-01-25'),
-        status: 'open',
-        rules: [
-          'Squad must have 4 players',
-          'TPP mode only',
-          'No hacking or cheating',
-          'Fair play required',
-          'Team leader must be present 30 mins before match'
-        ],
-        prizes: [
-          { position: '1st Place', amount: 2500 },
-          { position: '2nd Place', amount: 1500 },
-          { position: '3rd Place', amount: 1000 }
-        ]
-      },
-      {
-        title: 'Pro League - Season 1',
-        description: 'Compete with the best teams for massive prizes! This is a paid tournament with bigger prize pool and better competition.',
-        mode: 'Squad TPP',
-        type: 'paid',
-        entryFee: 30,
-        prizePool: 10000,
-        totalSlots: 50,
-        registeredTeams: 28,
-        date: new Date('2026-01-28'),
-        status: 'open',
-        rules: [
-          'Entry fee: ₹30 per team',
-          'Squad must have 4 players',
-          'TPP mode only',
-          'No hacking - instant ban',
-          'Payment required before registration'
-        ],
-        prizes: [
-          { position: '1st Place', amount: 5000 },
-          { position: '2nd Place', amount: 3000 },
-          { position: '3rd Place', amount: 2000 }
-        ]
-      },
-      {
-        title: 'TDM Showdown - Free Entry',
-        description: 'Fast-paced TDM action! Show your gunplay skills in intense 4v4 battles. Perfect for practicing aim and reflexes.',
-        mode: 'TDM 4v4',
-        type: 'free',
-        entryFee: 0,
-        prizePool: 3000,
-        totalSlots: 32,
-        registeredTeams: 20,
-        date: new Date('2026-01-27'),
-        status: 'open',
-        rules: [
-          'TDM mode only',
-          'First to 50 kills wins',
-          'Best of 3 matches',
-          'Warehouse map',
-          'No camping rules'
-        ],
-        prizes: [
-          { position: '1st Place', amount: 1500 },
-          { position: '2nd Place', amount: 1000 },
-          { position: '3rd Place', amount: 500 }
-        ]
-      },
-      {
-        title: 'Elite Masters Cup',
-        description: 'Premium tournament with the biggest prize pool! Only for serious competitive teams. Registration limited.',
+        title: 'Team VioLencE Pro Championship',
+        description: 'Official Team VioLencE Championship with massive prize pool! First 7 teams get FREE entry!',
         mode: 'Squad TPP',
         type: 'paid',
         entryFee: 50,
-        prizePool: 25000,
-        totalSlots: 25,
-        registeredTeams: 18,
-        date: new Date('2026-02-05'),
-        status: 'open',
-        rules: [
-          'Entry fee: ₹50 per team',
-          'Minimum rank: Crown',
-          'Squad must have 4 players',
-          'Multiple rounds',
-          'Professional referee present'
-        ],
-        prizes: [
-          { position: '1st Place', amount: 12000 },
-          { position: '2nd Place', amount: 7000 },
-          { position: '3rd Place', amount: 4000 },
-          { position: '4th-5th Place', amount: 1000 }
-        ]
-      },
-      {
-        title: 'Duo Madness',
-        description: 'Test your duo coordination! Perfect for partners who play well together. Free entry with decent prizes.',
-        mode: 'Duo TPP',
-        type: 'free',
-        entryFee: 0,
         prizePool: 4000,
-        totalSlots: 50,
-        registeredTeams: 15,
-        date: new Date('2026-02-01'),
+        totalSlots: 100,
+        registeredTeams: 12,
+        date: new Date('2026-02-27'),
         status: 'open',
+        badge: '👑 Featured',
+        specialNote: '🎉 First 7 registered teams get FREE ENTRY!',
+        freeEntrySlotsAvailable: 7,
         rules: [
-          'Duo must have 2 players',
+          'Squad must have 4 players',
           'TPP mode only',
-          'Communication required',
-          'No team switching',
-          'Fair play mandatory'
+          'First 7 teams get FREE entry',
+          'No hacking or cheating',
+          'Professional matches with live commentary',
+          'Team leader must be present 30 mins before match'
         ],
+        prizeBreakdown: {
+          first: 2000,
+          second: 1000,
+          third: 500,
+          highestKiller: 500
+        },
         prizes: [
           { position: '1st Place', amount: 2000 },
-          { position: '2nd Place', amount: 1200 },
-          { position: '3rd Place', amount: 800 }
+          { position: '2nd Place', amount: 1000 },
+          { position: '3rd Place', amount: 500 },
+          { position: 'Highest Killer', amount: 500 }
         ]
       }
     ]

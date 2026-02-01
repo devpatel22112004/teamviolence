@@ -19,13 +19,6 @@ const Footer = () => {
     { name: 'Tournaments', path: '/tournaments' },
   ]
 
-  const company = [
-    { name: 'Contact Us', path: '#' },
-    { name: 'Careers', path: '#' },
-    { name: 'Privacy Policy', path: '#' },
-    { name: 'Terms of Service', path: '#' },
-  ]
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,7 +53,7 @@ const Footer = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12"
           >
             {/* Brand Section */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
@@ -112,28 +105,7 @@ const Footer = () => {
               </ul>
             </motion.div>
 
-            {/* Company */}
-            <motion.div variants={itemVariants}>
-              <h4 className="text-lg font-semibold mb-6 flex items-center">
-                <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-3" />
-                Company
-              </h4>
-              <ul className="space-y-3">
-                {company.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.path}
-                      className="text-gray-400 hover:text-primary-400 transition-colors flex items-center group text-sm"
-                    >
-                      <span>{link.name}</span>
-                      <FaArrowRight className="ml-2 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all text-xs" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Newsletter */}
+            {/* Contact Info */}
             <motion.div variants={itemVariants}>
               <h4 className="text-lg font-semibold mb-6 flex items-center">
                 <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-3" />
@@ -176,11 +148,6 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <FaTrophy className="text-primary-500 text-lg" />
               <p>&copy; {currentYear} Team VioLencE. All rights reserved.</p>
-            </div>
-            <div className="flex items-center space-x-6">
-              <a href="#" className="hover:text-primary-400 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-primary-400 transition-colors">Terms</a>
-              <a href="#" className="hover:text-primary-400 transition-colors">Sitemap</a>
             </div>
           </motion.div>
         </div>
