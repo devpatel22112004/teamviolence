@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
+const nodemailer = require('nodemailer')
 const User = require('../models/User')
 const { authMiddleware } = require('../middleware/auth')
 
@@ -142,8 +143,6 @@ router.post('/forgot-password', async (req, res) => {
 
     // Send email with OTP
     try {
-      const nodemailer = require('nodemailer')
-      
       // Configure email transporter
       const transporter = nodemailer.createTransporter({
         service: process.env.EMAIL_SERVICE || 'gmail',
