@@ -14,7 +14,9 @@ import {
   FaInstagram,
   FaTwitch,
   FaMapMarkerAlt,
-  FaMedal
+  FaMedal,
+  FaFire,
+  FaCrown
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 

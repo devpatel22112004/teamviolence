@@ -12,6 +12,9 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const navRef = useRef(null)
   const dropdownRef = useRef(null)
+  const mouseRaf = useRef(null)
+  const lastMousePos = useRef({ x: 0, y: 0 })
+  const lastInside = useRef(false)
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
@@ -22,17 +25,29 @@ const Navbar = () => {
     }
     
     const handleMouseMove = (e) => {
-      if (navRef.current) {
+      if (mouseRaf.current) return
+      mouseRaf.current = requestAnimationFrame(() => {
+        mouseRaf.current = null
+        if (!navRef.current) return
         const rect = navRef.current.getBoundingClientRect()
         const inX = e.clientX >= rect.left && e.clientX <= rect.right
         const inY = e.clientY >= rect.top && e.clientY <= rect.bottom
         const isInside = inX && inY
-        setIsInsideNav(isInside)
+        if (isInside !== lastInside.current) {
+          lastInside.current = isInside
+          setIsInsideNav(isInside)
+        }
 
         if (isInside) {
-          setMousePos({ x: e.clientX, y: e.clientY - rect.top })
+          const nextPos = { x: e.clientX, y: e.clientY - rect.top }
+          const dx = Math.abs(nextPos.x - lastMousePos.current.x)
+          const dy = Math.abs(nextPos.y - lastMousePos.current.y)
+          if (dx > 2 || dy > 2) {
+            lastMousePos.current = nextPos
+            setMousePos(nextPos)
+          }
         }
-      }
+      })
     }
 
     const handleClickOutside = (event) => {
@@ -48,6 +63,10 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mousedown', handleClickOutside)
+      if (mouseRaf.current) {
+        cancelAnimationFrame(mouseRaf.current)
+        mouseRaf.current = null
+      }
     }
   }, [])
 
@@ -55,7 +74,7 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: FaHome },
     { name: 'Lineup', path: '/team', icon: FaUsers },
     { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
-    { name: 'Discover', path: '/about', icon: FaCompass },
+    { name: 'Discover', path: '/discovery', icon: FaCompass },
   ]
 
   const dashboardLinks = [

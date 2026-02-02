@@ -264,10 +264,6 @@ const Tournaments = () => {
     members: ''
   })
 
-  useEffect(() => {
-    fetchTournaments()
-  }, [])
-
   const apiBase = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
   const apiUrl = useCallback((path) => (apiBase ? `${apiBase}${path}` : path), [apiBase])
 
@@ -282,6 +278,10 @@ const Tournaments = () => {
       setLoading(false)
     }
   }, [apiUrl])
+
+  useEffect(() => {
+    fetchTournaments()
+  }, [fetchTournaments])
 
   // Memoized filtered and sorted tournaments
   const filteredTournaments = useMemo(() => {

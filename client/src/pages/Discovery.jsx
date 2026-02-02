@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaFire, FaTrophy, FaUsers, FaRocket, FaChartLine, FaStar, FaCheck, FaArrowRight, FaGamepad, FaMedal, FaHeartbeat, FaCrown } from 'react-icons/fa'
+import { FaFire, FaTrophy, FaUsers, FaRocket, FaChartLine, FaStar, FaCheck, FaArrowRight, FaGamepad, FaMedal } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 const Discovery = () => {
   const [activeYear, setActiveYear] = useState('2025')
-  const [expandedValue, setExpandedValue] = useState(0)
+  const [expandedValue, setExpandedValue] = useState(-1)
 
   const journey = [
     {

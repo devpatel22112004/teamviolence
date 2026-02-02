@@ -143,14 +143,26 @@ router.post('/forgot-password', async (req, res) => {
 
     // Send email with OTP
     try {
+      const emailUser = process.env.EMAIL_USER
+      const emailPass = process.env.EMAIL_PASSWORD
+        ? process.env.EMAIL_PASSWORD.replace(/\s+/g, '')
+        : ''
+
+      if (!emailUser || !emailPass) {
+        console.error('Email credentials missing: set EMAIL_USER and EMAIL_PASSWORD')
+        return res.status(500).json({ message: 'Email service is not configured' })
+      }
+
       // Configure email transporter
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE || 'gmail',
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD
+          user: emailUser,
+          pass: emailPass
         }
       })
+
+      await transporter.verify()
 
       // Premium email template
       const emailHTML = `
@@ -228,8 +240,7 @@ router.post('/forgot-password', async (req, res) => {
       await transporter.sendMail(mailOptions)
     } catch (emailError) {
       console.error('Email sending failed:', emailError)
-      // Still return success but log error
-      // In production, you might want to handle this differently
+      return res.status(500).json({ message: 'Failed to send reset email. Please try again later.' })
     }
 
     res.json({
