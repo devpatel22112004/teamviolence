@@ -4,9 +4,7 @@ import {
   FaTrophy,
   FaGamepad,
   FaUsers,
-  FaFire,
   FaPlay,
-  FaCrown,
   FaBolt,
   FaShieldAlt,
   FaArrowRight,
@@ -16,11 +14,7 @@ import {
   FaInstagram,
   FaTwitch,
   FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaStar,
-  FaRocket,
-  FaMedal,
-  FaChartLine
+  FaMedal
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
@@ -51,49 +45,6 @@ const Home = () => {
     { icon: FaDiscord, value: '12K+', label: 'Discord Members', color: 'from-indigo-500 to-purple-600' },
     { icon: FaYoutube, value: '25K+', label: 'YouTube Subs', color: 'from-red-500 to-red-600' },
     { icon: FaTwitch, value: '8.5K+', label: 'Twitch Followers', color: 'from-purple-500 to-purple-700' },
-  ]
-
-  const historyTimeline = [
-    {
-      year: '2019',
-      title: 'The Struggle Begins',
-      description: 'Started from a basement dream. No sponsors, no budget, only passion and a vision to build a real esports community.',
-      icon: FaFire,
-      color: 'from-orange-500 to-red-500',
-      achievements: ['Zero budget start', 'First scrims', 'Core team formed']
-    },
-    {
-      year: '2020',
-      title: 'The Grind Years',
-      description: 'The pandemic became our turning point. We organized online tournaments with personal savings and built trust in the community.',
-      icon: FaRocket,
-      color: 'from-yellow-500 to-orange-600',
-      achievements: ['Online tournaments', 'Growing credibility', 'Community growth']
-    },
-    {
-      year: '2021-2022',
-      title: 'Breakthrough Phase',
-      description: 'Recognition arrived. Sponsors started noticing, prize pools increased, and professional management took shape.',
-      icon: FaChartLine,
-      color: 'from-emerald-500 to-teal-600',
-      achievements: ['First major prize pools', 'Sponsor interest', 'Infrastructure upgrade']
-    },
-    {
-      year: '2023-2024',
-      title: 'Premium Era',
-      description: 'From grassroots to premium. Large-scale tournaments, professional streaming, and brand partnerships defined this era.',
-      icon: FaCrown,
-      color: 'from-purple-500 to-pink-600',
-      achievements: ['Premium tournaments', 'Professional streams', 'Brand partnerships']
-    },
-    {
-      year: '2025',
-      title: 'The Present Glory',
-      description: 'Today we stand as a premier esports organizer with world-class tournaments, pro teams, and a loyal community.',
-      icon: FaTrophy,
-      color: 'from-cyan-500 to-blue-600',
-      achievements: ['₹1Cr+ prize pools', 'Pro teams', 'Global recognition']
-    },
   ]
 
   const lineup = [
@@ -462,107 +413,7 @@ const Home = () => {
       {/* History & Timeline Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
-          {/* Background decorations */}
-          <div className="absolute -left-24 top-1/4 w-96 h-96 bg-primary-500/10 blur-3xl" />
-          <div className="absolute -right-24 bottom-1/4 w-96 h-96 bg-purple-500/10 blur-3xl" />
-          
-          <div className="relative space-y-8">
-            {/* Header */}
-            <div className="text-center max-w-3xl mx-auto space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-primary-500/20 border border-amber-500/30"
-              >
-                <FaCalendarAlt className="text-amber-400" />
-                <span className="text-sm font-semibold text-amber-300">Our Journey</span>
-              </motion.div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-amber-200 via-primary-200 to-purple-300 bg-clip-text text-transparent">
-                From Struggle to Premium Glory
-              </h2>
-              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                The full story from 2019 to today — the grind, the growth, and the moment we became a premier esports organizer.
-              </p>
-            </div>
 
-            {/* Timeline */}
-            <div className="relative space-y-8 sm:space-y-12 pt-8">
-              {/* Vertical line - hidden on mobile, visible on md+ */}
-              <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary-500/50 to-transparent" />
-              
-              {historyTimeline.map((item, idx) => (
-                <motion.div
-                  key={item.year}
-                  initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15 }}
-                  className={`relative grid md:grid-cols-2 gap-8 items-center ${
-                    idx % 2 === 0 ? 'md:text-right' : 'md:flex-row-reverse'
-                  }`}
-                >
-                  {/* Timeline node - centered */}
-                  <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                    <motion.div
-                      whileHover={{ scale: 1.2, rotate: 180 }}
-                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} border-4 border-dark-950 shadow-xl flex items-center justify-center`}
-                    >
-                      <item.icon className="text-2xl text-white" />
-                    </motion.div>
-                  </div>
-
-                  {/* Content - left side on desktop, full width on mobile */}
-                  <div className={idx % 2 === 0 ? 'md:col-start-1' : 'md:col-start-2'}>
-                    <motion.div
-                      whileHover={{ y: -6, scale: 1.02 }}
-                      className="group relative rounded-3xl border border-primary-500/20 bg-gradient-to-br from-dark-900/95 via-dark-950/95 to-dark-900/95 backdrop-blur-xl p-6 sm:p-8 hover:border-primary-500/40 transition-all shadow-xl hover:shadow-2xl"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl" />
-                      
-                      <div className="relative space-y-4">
-                        {/* Mobile icon - visible only on mobile */}
-                        <div className="md:hidden inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} shadow-lg mb-2">
-                          <item.icon className="text-2xl text-white" />
-                        </div>
-                        
-                        <div className="flex items-center gap-3 md:justify-start">
-                          <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${item.color} text-white font-bold text-sm shadow-lg`}>
-                            {item.year}
-                          </div>
-                          <div className="flex-1 h-px bg-gradient-to-r from-primary-500/50 to-transparent" />
-                        </div>
-                        
-                        <div>
-                          <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
-                            {item.title}
-                          </h3>
-                          <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                            {item.description}
-                          </p>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2">
-                          {item.achievements.map((achievement) => (
-                            <span
-                              key={achievement}
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-500/10 border border-primary-500/20 text-primary-300 text-xs font-semibold"
-                            >
-                              <FaStar className="text-[10px]" />
-                              {achievement}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Empty space for alternating layout on desktop */}
-                  <div className="hidden md:block" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
