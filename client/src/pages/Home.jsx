@@ -9,7 +9,18 @@ import {
   FaCrown,
   FaBolt,
   FaShieldAlt,
-  FaArrowRight
+  FaArrowRight,
+  FaHeart,
+  FaDiscord,
+  FaYoutube,
+  FaInstagram,
+  FaTwitch,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaStar,
+  FaRocket,
+  FaMedal,
+  FaChartLine
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
@@ -33,6 +44,56 @@ const Home = () => {
     { icon: FaGamepad, value: '1.2K+', label: 'Matches Played' },
     { icon: FaUsers, value: '20', label: 'Pro Players' },
     { icon: FaFire, value: '120K', label: 'Total Finishes' },
+  ]
+
+  const communityStats = [
+    { icon: FaHeart, value: '45K+', label: 'Active Fans', color: 'from-rose-500 to-pink-600' },
+    { icon: FaDiscord, value: '12K+', label: 'Discord Members', color: 'from-indigo-500 to-purple-600' },
+    { icon: FaYoutube, value: '25K+', label: 'YouTube Subs', color: 'from-red-500 to-red-600' },
+    { icon: FaTwitch, value: '8.5K+', label: 'Twitch Followers', color: 'from-purple-500 to-purple-700' },
+  ]
+
+  const historyTimeline = [
+    {
+      year: '2019',
+      title: 'The Beginning',
+      description: 'Founded by a group of passionate BGMI enthusiasts with a dream to compete at the highest level.',
+      icon: FaRocket,
+      color: 'from-blue-500 to-cyan-600',
+      achievements: ['First scrims', 'Team formation', '5 founding members']
+    },
+    {
+      year: '2020',
+      title: 'Breaking Through',
+      description: 'First major tournament victories. Established reputation in the competitive BGMI scene.',
+      icon: FaMedal,
+      color: 'from-amber-500 to-orange-600',
+      achievements: ['10+ tournament wins', 'Tier-2 competitions', 'Expanded to 12 members']
+    },
+    {
+      year: '2021-2022',
+      title: 'Rising to Glory',
+      description: 'Dominated regional tournaments. Consistent top-3 finishes. Built a loyal fanbase.',
+      icon: FaChartLine,
+      color: 'from-emerald-500 to-teal-600',
+      achievements: ['25+ tournament wins', 'Regional champions', 'Scrim partners with Tier-1 teams']
+    },
+    {
+      year: '2023-2024',
+      title: 'Elite Status',
+      description: 'LAN-ready roster. Championship-caliber performance. Tier-1 competitive presence.',
+      icon: FaCrown,
+      color: 'from-primary-500 to-primary-700',
+      achievements: ['50+ wins', 'LAN tournaments', 'Pro league invites', 'Full roster of 20 players']
+    },
+    {
+      year: '2025-2026',
+      title: 'Legacy Building',
+      description: 'Current era. Competing at the highest level. Building a championship legacy.',
+      icon: FaTrophy,
+      color: 'from-purple-500 to-pink-600',
+      achievements: ['Major tournament contenders', '45K+ community', 'Esports platform launch']
+    },
   ]
 
   const lineup = [
@@ -232,11 +293,9 @@ const Home = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold bg-gradient-to-r from-primary-200 via-primary-300 to-primary-400 bg-clip-text text-transparent">Team Excellence Metrics</h2>
               </div>
               <motion.div
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-primary-500/20 border border-emerald-500/30"
               >
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span className="text-xs sm:text-sm font-semibold text-emerald-300">Live Tracking</span>
               </motion.div>
             </div>
@@ -297,6 +356,211 @@ const Home = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Community & Fanbase Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-purple-950/20 to-dark-950 p-8 sm:p-10 lg:p-12">
+          <div className="absolute -right-32 -top-32 w-96 h-96 bg-purple-500/15 blur-3xl" />
+          <div className="absolute -left-32 -bottom-32 w-96 h-96 bg-pink-500/10 blur-3xl" />
+          
+          <div className="relative space-y-8">
+            {/* Header */}
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rose-500/20 to-purple-500/20 border border-rose-500/30"
+              >
+                <FaHeart className="text-rose-400" />
+                <span className="text-sm font-semibold text-rose-300">Powered by Community</span>
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-rose-200 via-purple-200 to-pink-300 bg-clip-text text-transparent">
+                Join the VioLencE Family
+              </h2>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
+                More than a team — we're a thriving community of passionate gamers, content creators, and esports enthusiasts. Connect, compete, and grow with us.
+              </p>
+            </div>
+
+            {/* Community Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {communityStats.map((stat, idx) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ y: -6, scale: 1.03 }}
+                  className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-xl p-6 hover:border-white/30 transition-all shadow-xl hover:shadow-2xl"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                  <div className="relative space-y-4">
+                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${stat.color} shadow-lg`}>
+                      <stat.icon className="text-2xl text-white" />
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-black bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs sm:text-sm text-gray-400 uppercase tracking-wider font-semibold mt-1">
+                        {stat.label}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Social Media Links */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+              <p className="text-sm text-gray-400 uppercase tracking-widest font-semibold">Connect With Us</p>
+              <div className="flex gap-3">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 flex items-center justify-center hover:from-indigo-500/30 hover:to-purple-500/30 hover:border-indigo-400/50 transition-all"
+                >
+                  <FaDiscord className="text-xl text-indigo-300" />
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/30 flex items-center justify-center hover:from-red-500/30 hover:to-red-600/30 hover:border-red-400/50 transition-all"
+                >
+                  <FaYoutube className="text-xl text-red-300" />
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-pink-500/30 flex items-center justify-center hover:from-pink-500/30 hover:to-rose-500/30 hover:border-pink-400/50 transition-all"
+                >
+                  <FaInstagram className="text-xl text-pink-300" />
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-700/20 border border-purple-500/30 flex items-center justify-center hover:from-purple-500/30 hover:to-purple-700/30 hover:border-purple-400/50 transition-all"
+                >
+                  <FaTwitch className="text-xl text-purple-300" />
+                </motion.a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* History & Timeline Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative">
+          {/* Background decorations */}
+          <div className="absolute -left-24 top-1/4 w-96 h-96 bg-primary-500/10 blur-3xl" />
+          <div className="absolute -right-24 bottom-1/4 w-96 h-96 bg-purple-500/10 blur-3xl" />
+          
+          <div className="relative space-y-8">
+            {/* Header */}
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-primary-500/20 border border-amber-500/30"
+              >
+                <FaCalendarAlt className="text-amber-400" />
+                <span className="text-sm font-semibold text-amber-300">Our Journey</span>
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-amber-200 via-primary-200 to-purple-300 bg-clip-text text-transparent">
+                From Scrims to Championships
+              </h2>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
+                Every champion has a beginning. Here's how Team VioLencE evolved from a small squad into one of the most competitive BGMI teams.
+              </p>
+            </div>
+
+            {/* Timeline */}
+            <div className="relative space-y-8 sm:space-y-12 pt-8">
+              {/* Vertical line - hidden on mobile, visible on md+ */}
+              <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary-500/50 to-transparent" />
+              
+              {historyTimeline.map((item, idx) => (
+                <motion.div
+                  key={item.year}
+                  initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.15 }}
+                  className={`relative grid md:grid-cols-2 gap-8 items-center ${
+                    idx % 2 === 0 ? 'md:text-right' : 'md:flex-row-reverse'
+                  }`}
+                >
+                  {/* Timeline node - centered */}
+                  <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 180 }}
+                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} border-4 border-dark-950 shadow-xl flex items-center justify-center`}
+                    >
+                      <item.icon className="text-2xl text-white" />
+                    </motion.div>
+                  </div>
+
+                  {/* Content - left side on desktop, full width on mobile */}
+                  <div className={idx % 2 === 0 ? 'md:col-start-1' : 'md:col-start-2'}>
+                    <motion.div
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      className="group relative rounded-3xl border border-primary-500/20 bg-gradient-to-br from-dark-900/95 via-dark-950/95 to-dark-900/95 backdrop-blur-xl p-6 sm:p-8 hover:border-primary-500/40 transition-all shadow-xl hover:shadow-2xl"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl" />
+                      
+                      <div className="relative space-y-4">
+                        {/* Mobile icon - visible only on mobile */}
+                        <div className="md:hidden inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} shadow-lg mb-2">
+                          <item.icon className="text-2xl text-white" />
+                        </div>
+                        
+                        <div className="flex items-center gap-3 md:justify-start">
+                          <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${item.color} text-white font-bold text-sm shadow-lg`}>
+                            {item.year}
+                          </div>
+                          <div className="flex-1 h-px bg-gradient-to-r from-primary-500/50 to-transparent" />
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {item.achievements.map((achievement) => (
+                            <span
+                              key={achievement}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-500/10 border border-primary-500/20 text-primary-300 text-xs font-semibold"
+                            >
+                              <FaStar className="text-[10px]" />
+                              {achievement}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Empty space for alternating layout on desktop */}
+                  <div className="hidden md:block" />
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
@@ -432,7 +696,7 @@ const Home = () => {
                   
                   {/* Call to action hint */}
                   <div className="flex items-center gap-2 text-primary-300 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary-400"></span>
                     Click to see full stats & story
                   </div>
                 </div>
@@ -456,13 +720,11 @@ const Home = () => {
               
               {/* Content */}
               <div className="relative h-full flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                <div
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary-500/20 border-2 border-primary-500/40 flex items-center justify-center group-hover:bg-primary-500/30 group-hover:border-primary-500/60 transition-all"
                 >
                   <FaUsers className="text-2xl sm:text-3xl text-primary-300" />
-                </motion.div>
+                </div>
                 
                 <div className="space-y-1 sm:space-y-2">
                   <p className="text-xl sm:text-2xl font-display font-bold text-white">+{lineup.length - 3} More</p>

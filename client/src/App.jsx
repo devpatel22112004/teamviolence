@@ -7,10 +7,13 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
+import Discovery from './pages/Discovery'
 import Tournaments from './pages/Tournaments'
 import TournamentDetails from './pages/TournamentDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import TeamManagement from './pages/TeamManagement'
 import MyRegistrations from './pages/MyRegistrations'
@@ -30,10 +33,13 @@ function App() {
                 <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/discovery" element={<Discovery />} />
               <Route path="/tournaments" element={<Tournaments />} />
               <Route path="/tournaments/:id" element={<TournamentDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route 
                 path="/dashboard" 
                 element={
