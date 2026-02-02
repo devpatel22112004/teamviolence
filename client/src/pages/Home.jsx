@@ -56,43 +56,43 @@ const Home = () => {
   const historyTimeline = [
     {
       year: '2019',
-      title: 'The Beginning',
-      description: 'Founded by a group of passionate BGMI enthusiasts with a dream to compete at the highest level.',
-      icon: FaRocket,
-      color: 'from-blue-500 to-cyan-600',
-      achievements: ['First scrims', 'Team formation', '5 founding members']
+      title: 'The Struggle Begins',
+      description: 'Started from a basement dream. No sponsors, no budget, only passion and a vision to build a real esports community.',
+      icon: FaFire,
+      color: 'from-orange-500 to-red-500',
+      achievements: ['Zero budget start', 'First scrims', 'Core team formed']
     },
     {
       year: '2020',
-      title: 'Breaking Through',
-      description: 'First major tournament victories. Established reputation in the competitive BGMI scene.',
-      icon: FaMedal,
-      color: 'from-amber-500 to-orange-600',
-      achievements: ['10+ tournament wins', 'Tier-2 competitions', 'Expanded to 12 members']
+      title: 'The Grind Years',
+      description: 'The pandemic became our turning point. We organized online tournaments with personal savings and built trust in the community.',
+      icon: FaRocket,
+      color: 'from-yellow-500 to-orange-600',
+      achievements: ['Online tournaments', 'Growing credibility', 'Community growth']
     },
     {
       year: '2021-2022',
-      title: 'Rising to Glory',
-      description: 'Dominated regional tournaments. Consistent top-3 finishes. Built a loyal fanbase.',
+      title: 'Breakthrough Phase',
+      description: 'Recognition arrived. Sponsors started noticing, prize pools increased, and professional management took shape.',
       icon: FaChartLine,
       color: 'from-emerald-500 to-teal-600',
-      achievements: ['25+ tournament wins', 'Regional champions', 'Scrim partners with Tier-1 teams']
+      achievements: ['First major prize pools', 'Sponsor interest', 'Infrastructure upgrade']
     },
     {
       year: '2023-2024',
-      title: 'Elite Status',
-      description: 'LAN-ready roster. Championship-caliber performance. Tier-1 competitive presence.',
+      title: 'Premium Era',
+      description: 'From grassroots to premium. Large-scale tournaments, professional streaming, and brand partnerships defined this era.',
       icon: FaCrown,
-      color: 'from-primary-500 to-primary-700',
-      achievements: ['50+ wins', 'LAN tournaments', 'Pro league invites', 'Full roster of 20 players']
+      color: 'from-purple-500 to-pink-600',
+      achievements: ['Premium tournaments', 'Professional streams', 'Brand partnerships']
     },
     {
-      year: '2025-2026',
-      title: 'Legacy Building',
-      description: 'Current era. Competing at the highest level. Building a championship legacy.',
+      year: '2025',
+      title: 'The Present Glory',
+      description: 'Today we stand as a premier esports organizer with world-class tournaments, pro teams, and a loyal community.',
       icon: FaTrophy,
-      color: 'from-purple-500 to-pink-600',
-      achievements: ['Major tournament contenders', '45K+ community', 'Esports platform launch']
+      color: 'from-cyan-500 to-blue-600',
+      achievements: ['₹1Cr+ prize pools', 'Pro teams', 'Global recognition']
     },
   ]
 
@@ -479,10 +479,10 @@ const Home = () => {
                 <span className="text-sm font-semibold text-amber-300">Our Journey</span>
               </motion.div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-amber-200 via-primary-200 to-purple-300 bg-clip-text text-transparent">
-                From Scrims to Championships
+                From Struggle to Premium Glory
               </h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
-                Every champion has a beginning. Here's how Team VioLencE evolved from a small squad into one of the most competitive BGMI teams.
+                The full story from 2019 to today — the grind, the growth, and the moment we became a premier esports organizer.
               </p>
             </div>
 
