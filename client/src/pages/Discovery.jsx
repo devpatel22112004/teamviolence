@@ -9,14 +9,14 @@ const Discovery = () => {
   const journey = [
     {
       year: '2019',
-      title: '🌱 Genesis - The Basement Dreams',
+      title: '🌱 Genesis — Basement Dreams',
       phase: 'STRUGGLE TO SURVIVAL',
-      summary: 'Where it all began. A group of passionate gamers with nothing but love for the game.',
+      summary: 'It started with late nights, old PCs, and a dream bigger than our budget. No sponsors, no recognition — just passion and a promise to build something real in esports.',
       highlights: [
         'Zero budget, pure passion',
-        'Competing as individuals',
-        'Learning the ropes of esports',
-        'Building initial community'
+        'Small scrims & local rooms',
+        'Learning tournament systems',
+        'First core community formed'
       ],
       stats: { events: '2', members: '5', investment: '₹0' },
       color: 'from-orange-500 to-red-500',
@@ -24,14 +24,14 @@ const Discovery = () => {
     },
     {
       year: '2020',
-      title: '💪 Pandemic Pivot - The Online Revolution',
+      title: '💪 Pandemic Pivot — Online Revolution',
       phase: 'GRIND TO GROWTH',
-      summary: 'When the world locked down, we leveled up. Online tournaments became our playground.',
+      summary: 'The world locked down, but we pushed forward. We organized online tournaments with personal savings and earned trust one match at a time.',
       highlights: [
         'First organized online tournaments',
-        'Self-funded with personal savings',
-        'Growing player base weekly',
-        'Building credibility in community'
+        'Self-funded prize pools',
+        'Weekly player growth',
+        'Community credibility earned'
       ],
       stats: { events: '12', members: '150', investment: '₹50K' },
       color: 'from-yellow-500 to-orange-500',
@@ -39,14 +39,14 @@ const Discovery = () => {
     },
     {
       year: '2021-2022',
-      title: '🚀 Breakthrough - Recognition Arrives',
+      title: '🚀 Breakthrough — Recognition Arrives',
       phase: 'GROWTH TO PROFESSIONALISM',
-      summary: 'Hard work pays off. First sponsor deals, first real prize pools, first pro teams.',
+      summary: 'Hard work finally paid off. Sponsors noticed, prize pools grew, and the first professional teams were built under Team VioLencE.',
       highlights: [
-        'First ₹1L+ prize pool tournament',
+        'First ₹1L+ prize pool',
         'Professional team formations',
         'Sponsor partnerships',
-        'Streaming infrastructure setup'
+        'Streaming + production setup'
       ],
       stats: { events: '24', members: '800', investment: '₹5L' },
       color: 'from-green-500 to-cyan-500',
@@ -54,14 +54,14 @@ const Discovery = () => {
     },
     {
       year: '2023-2024',
-      title: '👑 Premium Era - The Big League',
+      title: '👑 Premium Era — The Big League',
       phase: 'PROFESSIONAL TO PREMIUM',
-      summary: 'From grassroots to international standard. VioLencE becomes a household name.',
+      summary: 'We went premium. High‑production tournaments, brand partnerships, and large prize pools made Team VioLencE a name across the scene.',
       highlights: [
         'Multiple ₹5L+ tournaments',
-        'International partnerships',
-        'Professional management team',
-        'Media coverage and sponsorships'
+        'Brand + media partnerships',
+        'Professional operations team',
+        'Premium streaming quality'
       ],
       stats: { events: '40', members: '3000', investment: '₹50L+' },
       color: 'from-purple-500 to-pink-500',
@@ -69,18 +69,39 @@ const Discovery = () => {
     },
     {
       year: '2025',
-      title: '⭐ The Glory - Present & Future',
+      title: '⭐ The Glory — Present & Future',
       phase: 'EXCELLENCE & EXPANSION',
-      summary: 'Today we stand as India\'s premier esports tournament organizer. The future is limitless.',
+      summary: 'Today we are a premier esports organizer with world‑class tournaments, pro teams, and a loyal community. The future is limitless.',
       highlights: [
-        'World-class tournament infrastructure',
+        'World‑class tournament infrastructure',
         'Multiple professional teams',
-        '₹1Cr+ total prize distributions',
-        'Global recognition and partnerships'
+        '₹1Cr+ prize distributions',
+        'Global recognition & partnerships'
       ],
       stats: { events: '50+', members: '5000+', investment: '₹1Cr+' },
       color: 'from-cyan-500 to-blue-500',
       gradient: 'via-cyan-600'
+    }
+  ]
+
+  const storySummary = [
+    {
+      icon: FaFire,
+      title: 'Humble Origins',
+      desc: 'We started from the ground with no sponsors, no studio, and no shortcuts — only belief and grit.',
+      accent: 'from-orange-500 to-red-500'
+    },
+    {
+      icon: FaRocket,
+      title: 'Relentless Grind',
+      desc: 'From 2019 to 2022, we organized events, built trust, and reinvested every win back into the community.',
+      accent: 'from-yellow-500 to-amber-500'
+    },
+    {
+      icon: FaStar,
+      title: 'Premium Today',
+      desc: 'Now we deliver premium tournaments, pro teams, and a full ecosystem for serious competitors.',
+      accent: 'from-cyan-500 to-blue-500'
     }
   ]
 
@@ -156,7 +177,7 @@ const Discovery = () => {
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
-            From basement gamers to premium tournament organizer. Six years of struggle, growth, and glory.
+            A complete journey from struggle in 2019 to premium esports leadership today — every step, every sacrifice, fully told.
           </p>
 
           <div className="flex flex-wrap justify-center gap-3">
@@ -173,15 +194,48 @@ const Discovery = () => {
         </div>
       </motion.div>
 
-      {/* Timeline Selector */}
+      {/* Summary Highlights */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="max-w-6xl mx-auto mb-16"
       >
+        <div className="grid sm:grid-cols-3 gap-6">
+          {storySummary.map((card, idx) => {
+            const Icon = card.icon
+            return (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="relative group"
+              >
+                <div className={`absolute -inset-1 bg-gradient-to-r ${card.accent} rounded-2xl blur-2xl opacity-0 group-hover:opacity-30 transition-all`} />
+                <div className="relative bg-gradient-to-br from-slate-900/95 to-slate-950/95 border border-slate-700/60 rounded-2xl p-6 hover:border-slate-600 transition-all">
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r ${card.accent} mb-4 shadow-lg`}>
+                    <Icon className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-black text-white mb-2">{card.title}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">{card.desc}</p>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+      </motion.div>
+
+      {/* Timeline Selector */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto mb-12"
+      >
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-          {journey.map((item, idx) => (
+          {journey.map((item) => (
             <motion.button
               key={item.year}
               whileHover={{ scale: 1.05 }}
@@ -195,6 +249,28 @@ const Discovery = () => {
             >
               {item.year}
             </motion.button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Milestone Strip */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto mb-16"
+      >
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {milestones.map((milestone) => (
+            <div
+              key={milestone.year}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/70 border border-slate-700/60 text-gray-300 text-sm font-semibold"
+            >
+              <span>{milestone.emoji}</span>
+              <span className="text-white">{milestone.year}</span>
+              <span className="text-gray-400">•</span>
+              <span>{milestone.event}</span>
+            </div>
           ))}
         </div>
       </motion.div>
