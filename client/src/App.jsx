@@ -12,8 +12,6 @@ import Tournaments from './pages/Tournaments'
 import TournamentDetails from './pages/TournamentDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import ForgotPassword from './pages/ForgotPassword'
-import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import TeamManagement from './pages/TeamManagement'
 import MyRegistrations from './pages/MyRegistrations'
@@ -38,8 +36,6 @@ function App() {
               <Route path="/tournaments/:id" element={<TournamentDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
               <Route 
                 path="/dashboard" 
                 element={
