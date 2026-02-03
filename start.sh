@@ -36,7 +36,7 @@ FRONTEND_PID=$!
 sleep 4
 
 # Check if frontend started successfully
-if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/teamviolence/ | grep -q "200"; then
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ | grep -q "200"; then
     echo "✅ Frontend server started successfully"
 else
     echo "❌ Frontend server failed to start. Check /tmp/frontend.log"
@@ -49,7 +49,7 @@ echo "✅ Team VioLencE is RUNNING!"
 echo "========================================="
 echo ""
 echo "🌐 Access URLs:"
-echo "   Frontend: http://localhost:3000/teamviolence/"
+echo "   Frontend: http://localhost:3000/"
 echo "   Backend:  http://localhost:5000"
 echo "   Health:   http://localhost:5000/api/health"
 echo ""

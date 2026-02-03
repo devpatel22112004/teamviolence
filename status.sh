@@ -19,8 +19,8 @@ fi
 echo ""
 
 # Check frontend
-echo "🔍 Frontend (http://localhost:3000/teamviolence):"
-HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/teamviolence/ 2>/dev/null)
+echo "🔍 Frontend (http://localhost:3000/):"
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ 2>/dev/null)
 if [ "$HTTP_CODE" = "200" ]; then
     echo "✅ Frontend is RUNNING"
     echo "   HTTP Status: $HTTP_CODE"
@@ -51,7 +51,7 @@ if [ $BACKEND_PROC -gt 0 ] && [ $FRONTEND_PROC -gt 0 ]; then
     echo "✅ Status: ALL SYSTEMS OPERATIONAL"
     echo ""
     echo "🌐 Access Your App:"
-    echo "   👉 http://localhost:3000/teamviolence/"
+    echo "   👉 http://localhost:3000/"
     echo ""
     echo "👤 Test Credentials:"
     echo "   User:  user@test.com / user123"

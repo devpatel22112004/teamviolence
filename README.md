@@ -57,7 +57,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 
 ### Access Application
 
-- **Frontend:** http://localhost:3000/teamviolence/
+- **Frontend:** http://localhost:3000/
 - **Backend:** http://localhost:5000
 
 **Test Credentials:**
