@@ -234,6 +234,18 @@ const seedData = async () => {
           'Team leader must be present 30 mins before match'
         ],
         prizeBreakdown: {
+          first: 2000,
+          second: 1000,
+          third: 500,
+          highestKiller: 500
+        },
+        prizes: [
+          { position: '1st Place', amount: 2000 },
+          { position: '2nd Place', amount: 1000 },
+          { position: '3rd Place', amount: 500 },
+          { position: 'Highest Killer', amount: 500 }
+        ]
+      },
       {
         title: 'TDM Blitz Cup',
         description: 'Fast-paced TDM showdowns with tight rotations and nonstop action. Perfect for fraggers and clutch players.',
@@ -308,18 +320,6 @@ const seedData = async () => {
           'FPP mode only',
           'No teaming or stream sniping',
           'Match check-in 25 minutes before start'
-        ]
-      },
-          first: 2000,
-          second: 1000,
-          third: 500,
-          highestKiller: 500
-        },
-        prizes: [
-          { position: '1st Place', amount: 2000 },
-          { position: '2nd Place', amount: 1000 },
-          { position: '3rd Place', amount: 500 },
-          { position: 'Highest Killer', amount: 500 }
         ]
       }
     ]
