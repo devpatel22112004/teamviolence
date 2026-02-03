@@ -49,42 +49,9 @@ const TournamentDetails = () => {
 
     setRegistering(true)
     try {
-      if (tournament.type === 'paid') {
-        // Initiate Razorpay payment
-        const orderRes = await axios.post(apiUrl(`/api/tournaments/${id}/register`), teamData)
-        
-        const options = {
-          key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-          amount: orderRes.data.amount,
-          currency: 'INR',
-          name: 'Team VioLencE',
-          description: tournament.title,
-          order_id: orderRes.data.orderId,
-          handler: async (response) => {
-            try {
-              await axios.post(apiUrl(`/api/tournaments/${id}/verify-payment`), {
-                ...response,
-                teamData
-              })
-              toast.success('Registration successful!')
-              navigate('/dashboard')
-            } catch (error) {
-              toast.error('Payment verification failed')
-            }
-          },
-          theme: {
-            color: '#ef4444'
-          }
-        }
-        
-        const razorpay = new window.Razorpay(options)
-        razorpay.open()
-      } else {
-        // Free tournament registration
-        await axios.post(apiUrl(`/api/tournaments/${id}/register`), teamData)
-        toast.success('Registration successful!')
-        navigate('/dashboard')
-      }
+      const res = await axios.post(apiUrl(`/api/tournaments/${id}/register`), teamData)
+      toast.success(res.data?.message || 'Registration successful!')
+      navigate('/dashboard')
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed')
     } finally {
@@ -212,7 +179,9 @@ const TournamentDetails = () => {
                 <FaInfoCircle className="text-primary-500 mt-1 mr-3 flex-shrink-0" />
                 <div className="text-sm text-gray-300">
                   {tournament.type === 'paid' ? (
-                    <p>You will be redirected to payment gateway after clicking register. Entry fee: ₹{tournament.entryFee}</p>
+                    <p>
+                      Entry fee: ₹{tournament.entryFee}. After registering, please contact us on WhatsApp/Instagram/YouTube to complete payment.
+                    </p>
                   ) : (
                     <p>This is a free tournament. Click register to confirm your participation.</p>
                   )}

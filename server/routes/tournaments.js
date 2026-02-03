@@ -67,56 +67,31 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'You are already registered for this tournament' })
     }
 
-    if (tournament.type === 'paid') {
-      // Require Razorpay keys for paid tournaments
-      if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-        return res.status(400).json({
-          message: 'Payment service not available for paid tournaments. Please contact administrator or try free tournaments.'
-        })
-      }
+    const registration = new Registration({
+      user: req.user._id,
+      tournament: tournament._id,
+      tournamentTitle: tournament.title,
+      tournamentMode: tournament.mode,
+      tournamentType: tournament.type,
+      entryFee: tournament.entryFee,
+      teamName,
+      teamLeader,
+      players,
+      paymentStatus: tournament.type === 'paid' ? 'pending' : 'completed',
+      amount: tournament.type === 'paid' ? tournament.entryFee : 0
+    })
 
-      // Lazy-create Razorpay client only when keys exist
-      const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID,
-        key_secret: process.env.RAZORPAY_KEY_SECRET
-      })
+    await registration.save()
+    
+    tournament.registeredTeams += 1
+    await tournament.save()
 
-      // Create Razorpay order
-      const amount = tournament.entryFee * 100 // Convert to paise
-      const order = await razorpay.orders.create({
-        amount,
-        currency: 'INR',
-        receipt: `tournament_${tournament._id}_${Date.now()}`
-      })
-
-      res.json({
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency
-      })
-    } else {
-      // Free tournament - direct registration
-      const registration = new Registration({
-        user: req.user._id,
-        tournament: tournament._id,
-        tournamentTitle: tournament.title,
-        tournamentMode: tournament.mode,
-        tournamentType: tournament.type,
-        entryFee: tournament.entryFee,
-        teamName,
-        teamLeader,
-        players,
-        paymentStatus: 'completed',
-        amount: 0
-      })
-
-      await registration.save()
-      
-      tournament.registeredTeams += 1
-      await tournament.save()
-
-      res.status(201).json({ message: 'Registration successful', registration })
-    }
+    res.status(201).json({
+      message: tournament.type === 'paid'
+        ? 'Registration submitted. Please contact us on WhatsApp/Instagram/YouTube to complete payment.'
+        : 'Registration successful',
+      registration
+    })
   } catch (error) {
     res.status(500).json({ message: 'Error registering for tournament', error: error.message })
   }

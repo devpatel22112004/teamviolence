@@ -628,18 +628,7 @@ const Tournaments = () => {
                 )}
 
                 {user ? (
-                  selectedTournament.type === 'paid' ? (
-                    <div className="bg-amber-500/20 border-2 border-amber-500/50 rounded-xl p-6 text-center space-y-4">
-                      <p className="text-amber-100 font-black text-2xl">💰 PREMIUM</p>
-                      <p className="text-amber-200 text-sm">
-                        Register for FREE tournaments first!
-                      </p>
-                      <p className="text-amber-300 text-xs font-black">
-                        Paid tournaments coming soon! 🚀
-                      </p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleRegister} className="space-y-5">
+                  <form onSubmit={handleRegister} className="space-y-5">
                       <div>
                         <label className="block text-sm font-black text-gray-200 mb-2 uppercase">Team Name</label>
                         <input
@@ -675,16 +664,26 @@ const Tournaments = () => {
                           rows="3"
                         />
                       </div>
+                      {selectedTournament.type === 'paid' && (
+                        <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-4">
+                          <p className="text-amber-200 text-sm text-center">
+                            💰 Entry Fee: ₹{selectedTournament.entryFee}
+                            {selectedTournament.specialNote && (
+                              <span className="block mt-1 text-xs">⚡ {selectedTournament.specialNote}</span>
+                            )}
+                            <span className="block mt-1 text-xs">Contact us on WhatsApp/Instagram/YouTube to complete payment.</span>
+                          </p>
+                        </div>
+                      )}
                       <button
                         type="submit"
                         disabled={registering}
                         className="w-full font-black py-4 rounded-xl flex items-center justify-center gap-3 uppercase text-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50"
                       >
                         <FaRocket />
-                        <span>{registering ? 'REGISTERING...' : 'REGISTER'}</span>
+                        <span>{registering ? 'REGISTERING...' : selectedTournament.type === 'paid' ? `PAY ₹${selectedTournament.entryFee} & REGISTER` : 'REGISTER'}</span>
                       </button>
                     </form>
-                  )
                 ) : (
                   <div className="bg-red-500/20 border-2 border-red-500/50 rounded-xl p-6 text-center space-y-4">
                     <FaLock className="text-4xl text-red-400 mx-auto" />
@@ -727,15 +726,17 @@ const Tournaments = () => {
       return
     }
 
+    const teamData = {
+      teamName: formData.teamName.trim(),
+      teamLeader: formData.leaderName.trim(),
+      players
+    }
+
     setRegistering(true)
     try {
-      await axios.post(apiUrl(`/api/tournaments/${selectedTournament._id}/register`), {
-        teamName: formData.teamName.trim(),
-        teamLeader: formData.leaderName.trim(),
-        players
-      })
+      const res = await axios.post(apiUrl(`/api/tournaments/${selectedTournament._id}/register`), teamData)
 
-      toast.success('✅ Registered!')
+      toast.success(res.data?.message || '✅ Registered!')
       setShowRegisterModal(false)
       setFormData({ teamName: '', leaderName: '', members: '' })
       fetchTournaments()
