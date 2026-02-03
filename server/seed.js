@@ -223,7 +223,7 @@ const seedData = async () => {
         date: new Date('2026-02-27'),
         status: 'open',
         badge: '👑 Featured',
-        specialNote: '🎉 First 7 registered teams get FREE ENTRY!',
+        specialNote: '🎉 First 7 registered teams get FREE ENTRY! Contact for payment details.',
         freeEntrySlotsAvailable: 7,
         rules: [
           'Squad must have 4 players',
@@ -231,7 +231,8 @@ const seedData = async () => {
           'First 7 teams get FREE entry',
           'No hacking or cheating',
           'Professional matches with live commentary',
-          'Team leader must be present 30 mins before match'
+          'Team leader must be present 30 mins before match',
+          'FOR PAYMENT: Join WhatsApp Channel or contact us via message'
         ],
         prizeBreakdown: {
           first: 2000,

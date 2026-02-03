@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { memo } from 'react'
 import { FaDiscord, FaInstagram, FaYoutube, FaTwitch, FaTrophy, FaGamepad, FaArrowRight, FaWhatsapp } from 'react-icons/fa'
 
-const Footer = () => {
+const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
@@ -24,26 +25,26 @@ const Footer = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 16 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.4 },
     },
   }
 
   return (
-    <footer className="relative bg-dark-950 border-t border-primary-500/10 mt-32 overflow-hidden">
+    <footer className="relative bg-dark-950 border-t border-primary-500/10 mt-32 overflow-hidden will-change-transform">
       {/* Animated Background Elements */}
-      <div className="absolute top-0 left-10 w-64 h-64 bg-primary-600/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 right-20 w-96 h-96 bg-primary-700/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-10 w-64 h-64 bg-primary-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-20 w-96 h-96 bg-primary-700/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10">
         {/* Main Footer Content */}
@@ -158,6 +159,6 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
 
 export default Footer

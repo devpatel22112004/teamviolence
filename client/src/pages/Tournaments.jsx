@@ -264,24 +264,50 @@ const Tournaments = () => {
     members: ''
   })
 
-  const apiBase = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
-  const apiUrl = useCallback((path) => (apiBase ? `${apiBase}${path}` : path), [apiBase])
-
-  const fetchTournaments = useCallback(async () => {
-    try {
-      const res = await axios.get(apiUrl('/api/tournaments'))
-      setTournaments(res.data)
-    } catch (error) {
-      toast.error('Unable to load tournaments.')
-      setTournaments([])
-    } finally {
-      setLoading(false)
+  // Determine API base URL - works in dev and production
+  const getApiBase = () => {
+    const env = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL
+    if (env) return env.replace(/\/$/, '')
+    
+    // In browser, if server is on same domain with different port or path
+    const protocol = window.location.protocol
+    const hostname = window.location.hostname
+    
+    // For Codespaces or remote development
+    if (hostname.includes('.app.github.dev') || hostname.includes('herokuapp') || !hostname.includes('localhost')) {
+      // Replace port 3000/3001 with 5000 for server
+      return `${protocol}//${hostname.replace(/3000|3001/, '5000')}`
     }
-  }, [apiUrl])
+    
+    // Default for local development
+    return 'http://localhost:5000'
+  }
+  
+  const apiBase = getApiBase()
 
   useEffect(() => {
+    const fetchTournaments = async () => {
+      setLoading(true)
+      try {
+        const url = `${apiBase}/api/tournaments`
+        console.log('🔵 Fetching tournaments from:', url)
+        const res = await axios.get(url)
+        console.log('🟢 Tournament response received:', res.data)
+        if (Array.isArray(res.data)) {
+          setTournaments(res.data)
+          console.log('🟢 Tournaments loaded:', res.data.length)
+        }
+      } catch (error) {
+        console.error('🔴 Tournament fetch error:', error)
+        toast.error('Unable to load tournaments.')
+        setTournaments([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchTournaments()
-  }, [fetchTournaments])
+  }, [])
 
   // Memoized filtered and sorted tournaments
   const filteredTournaments = useMemo(() => {
@@ -665,14 +691,30 @@ const Tournaments = () => {
                         />
                       </div>
                       {selectedTournament.type === 'paid' && (
-                        <div className="bg-amber-500/20 border border-amber-500/50 rounded-lg p-4">
-                          <p className="text-amber-200 text-sm text-center">
-                            💰 Entry Fee: ₹{selectedTournament.entryFee}
-                            {selectedTournament.specialNote && (
-                              <span className="block mt-1 text-xs">⚡ {selectedTournament.specialNote}</span>
-                            )}
-                            <span className="block mt-1 text-xs">Contact us on WhatsApp/Instagram/YouTube to complete payment.</span>
-                          </p>
+                        <div className="bg-gradient-to-r from-amber-500/30 to-orange-500/30 border-2 border-amber-500/70 rounded-lg p-5 space-y-3">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl">💰</span>
+                            <p className="text-amber-200 font-black text-lg">PAYMENT REQUIRED</p>
+                          </div>
+                          <p className="text-amber-100 text-sm font-bold">Entry Fee: ₹{selectedTournament.entryFee}</p>
+                          <div className="bg-black/30 rounded-lg p-4 space-y-3">
+                            <p className="text-amber-200 font-bold text-center text-sm">📲 TO COMPLETE PAYMENT, CONTACT US:</p>
+                            <div className="grid grid-cols-2 gap-2">
+                              <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" target="_blank" rel="noopener noreferrer" className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
+                                <span>💬</span> WhatsApp
+                              </a>
+                              <a href="https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==" target="_blank" rel="noopener noreferrer" className="bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
+                                <span>📷</span> Instagram
+                              </a>
+                              <a href="https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w" target="_blank" rel="noopener noreferrer" className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
+                                <span>🎬</span> YouTube
+                              </a>
+                              <a href="https://discord.gg/AmezSUbP" target="_blank" rel="noopener noreferrer" className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
+                                <span>⚡</span> Discord
+                              </a>
+                            </div>
+                            <p className="text-amber-300 text-xs font-bold text-center">Message us about payment details</p>
+                          </div>
                         </div>
                       )}
                       <button
@@ -734,13 +776,23 @@ const Tournaments = () => {
 
     setRegistering(true)
     try {
-      const res = await axios.post(apiUrl(`/api/tournaments/${selectedTournament._id}/register`), teamData)
+      const url = `${apiBase}/api/tournaments/${selectedTournament._id}/register`
+      console.log('🔵 Registering tournament at:', url)
+      const res = await axios.post(url, teamData)
+      console.log('🟢 Registration successful:', res.data)
 
       toast.success(res.data?.message || '✅ Registered!')
       setShowRegisterModal(false)
       setFormData({ teamName: '', leaderName: '', members: '' })
-      fetchTournaments()
+      
+      // Refresh tournaments
+      const tourUrl = `${apiBase}/api/tournaments`
+      const tourRes = await axios.get(tourUrl)
+      if (Array.isArray(tourRes.data)) {
+        setTournaments(tourRes.data)
+      }
     } catch (error) {
+      console.error('🔴 Registration error:', error)
       toast.error(error.response?.data?.message || 'Registration failed')
     } finally {
       setRegistering(false)
