@@ -219,7 +219,7 @@ const seedData = async () => {
         entryFee: 50,
         prizePool: 4000,
         totalSlots: 100,
-        registeredTeams: 12,
+        registeredTeams: 0,
         date: new Date('2026-02-27'),
         status: 'open',
         badge: '👑 Featured',
@@ -244,82 +244,6 @@ const seedData = async () => {
           { position: '2nd Place', amount: 1000 },
           { position: '3rd Place', amount: 500 },
           { position: 'Highest Killer', amount: 500 }
-        ]
-      },
-      {
-        title: 'TDM Blitz Cup',
-        description: 'Fast-paced TDM showdowns with tight rotations and nonstop action. Perfect for fraggers and clutch players.',
-        mode: 'TDM 4v4',
-        type: 'free',
-        entryFee: 0,
-        prizePool: 1200,
-        totalSlots: 64,
-        registeredTeams: 18,
-        date: new Date('2026-02-12'),
-        status: 'open',
-        badge: '⚡ TDM Special',
-        specialNote: '🔥 High-intensity TDM battles with instant matchmaking!',
-        prizeBreakdown: {
-          first: 600,
-          second: 350,
-          third: 150,
-          highestKiller: 100
-        },
-        rules: [
-          'TDM 4v4 only',
-          'Single elimination',
-          'No emulators or third-party tools',
-          'Match check-in 15 minutes before start'
-        ]
-      },
-      {
-        title: 'Rookie Duo Rumble',
-        description: 'Duo-focused tournament built for rising talent. Quick rotations, compact zones, and aggressive play.',
-        mode: 'Duo TPP',
-        type: 'free',
-        entryFee: 0,
-        prizePool: 800,
-        totalSlots: 50,
-        registeredTeams: 21,
-        date: new Date('2026-02-16'),
-        status: 'open',
-        badge: '🎯 Rising Stars',
-        prizeBreakdown: {
-          first: 400,
-          second: 250,
-          third: 100,
-          highestKiller: 50
-        },
-        rules: [
-          'Duo must have 2 players',
-          'TPP mode only',
-          'No teaming with other duos',
-          'Match check-in 20 minutes before start'
-        ]
-      },
-      {
-        title: 'Nightfall Solo Showdown',
-        description: 'One v all. Prove your game sense and mechanics in a high-stakes solo FPP showdown.',
-        mode: 'Solo FPP',
-        type: 'paid',
-        entryFee: 30,
-        prizePool: 2000,
-        totalSlots: 80,
-        registeredTeams: 34,
-        date: new Date('2026-02-22'),
-        status: 'open',
-        badge: '🌙 Prime Night',
-        prizeBreakdown: {
-          first: 1000,
-          second: 600,
-          third: 250,
-          highestKiller: 150
-        },
-        rules: [
-          'Solo only',
-          'FPP mode only',
-          'No teaming or stream sniping',
-          'Match check-in 25 minutes before start'
         ]
       }
     ]
