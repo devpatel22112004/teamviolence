@@ -10,9 +10,11 @@ import {
   FaArrowRight,
   FaHeart,
   FaDiscord,
+  FaWhatsapp,
   FaYoutube,
   FaInstagram,
   FaTwitch,
+  FaWpforms,
   FaMapMarkerAlt,
   FaMedal,
   FaFire,
@@ -21,6 +23,45 @@ import {
 import { Link } from 'react-router-dom'
 
 const CLAN_LOGO = '/Line_up/logo.png'
+
+const SOCIAL_QUICK_LINKS = [
+  {
+    label: 'WhatsApp Channel',
+    href: 'https://whatsapp.com/channel/your-channel',
+    icon: FaWhatsapp,
+    gradient: 'from-emerald-500/20 to-green-600/20',
+    border: 'border-emerald-500/30',
+    hover: 'hover:from-emerald-500/30 hover:to-green-600/30 hover:border-emerald-400/50',
+    iconColor: 'text-emerald-300'
+  },
+  {
+    label: 'Google Form',
+    href: 'https://forms.gle/z6Vj1eJXtg8RQGfz7',
+    icon: FaWpforms,
+    gradient: 'from-sky-500/20 to-blue-600/20',
+    border: 'border-sky-500/30',
+    hover: 'hover:from-sky-500/30 hover:to-blue-600/30 hover:border-sky-400/50',
+    iconColor: 'text-sky-300'
+  },
+  {
+    label: 'YouTube',
+    href: 'https://www.youtube.com/',
+    icon: FaYoutube,
+    gradient: 'from-red-500/20 to-red-600/20',
+    border: 'border-red-500/30',
+    hover: 'hover:from-red-500/30 hover:to-red-600/30 hover:border-red-400/50',
+    iconColor: 'text-red-300'
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/',
+    icon: FaInstagram,
+    gradient: 'from-pink-500/20 to-rose-500/20',
+    border: 'border-pink-500/30',
+    hover: 'hover:from-pink-500/30 hover:to-rose-500/30 hover:border-pink-400/50',
+    iconColor: 'text-pink-300'
+  },
+]
 
 const formatImagePath = (path) => {
   if (!path) return ''
@@ -172,6 +213,27 @@ const Home = () => {
                 {['LAN ready', 'Tier-1 Scrims', 'Clutch Merch Drop', 'Prime community'].map((tag) => (
                   <span key={tag} className="pill text-xs uppercase tracking-wide">{tag}</span>
                 ))}
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-xs text-gray-400 uppercase tracking-[0.25em]">Quick Connect</p>
+                <div className="flex flex-wrap gap-3">
+                  {SOCIAL_QUICK_LINKS.map((item) => (
+                    <motion.a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.08, rotate: 3 }}
+                      whileTap={{ scale: 0.96 }}
+                      aria-label={item.label}
+                      title={item.label}
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${item.gradient} ${item.border} ${item.hover} border flex items-center justify-center shadow-lg shadow-black/30 transition-all`}
+                    >
+                      <item.icon className={`text-xl sm:text-2xl ${item.iconColor}`} />
+                    </motion.a>
+                  ))}
+                </div>
               </div>
             </div>
 
