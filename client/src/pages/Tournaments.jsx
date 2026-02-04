@@ -264,25 +264,13 @@ const Tournaments = () => {
     members: ''
   })
 
-  // Determine API base URL - works in dev and production
+  // Determine API base URL - prefers proxy-relative for local dev
   const getApiBase = () => {
     const env = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL
     if (env) return env.replace(/\/$/, '')
-    
-    // In browser, if server is on same domain with different port or path
-    const protocol = window.location.protocol
-    const hostname = window.location.hostname
-    
-    // For Codespaces or remote development
-    if (hostname.includes('.app.github.dev') || hostname.includes('herokuapp') || !hostname.includes('localhost')) {
-      // Replace port 3000/3001 with 5000 for server
-      return `${protocol}//${hostname.replace(/3000|3001/, '5000')}`
-    }
-    
-    // Default for local development
-    return 'http://localhost:5000'
+    return ''
   }
-  
+
   const apiBase = getApiBase()
 
   useEffect(() => {
@@ -290,15 +278,11 @@ const Tournaments = () => {
       setLoading(true)
       try {
         const url = `${apiBase}/api/tournaments`
-        console.log('🔵 Fetching tournaments from:', url)
         const res = await axios.get(url)
-        console.log('🟢 Tournament response received:', res.data)
         if (Array.isArray(res.data)) {
           setTournaments(res.data)
-          console.log('🟢 Tournaments loaded:', res.data.length)
         }
       } catch (error) {
-        console.error('🔴 Tournament fetch error:', error)
         toast.error('Unable to load tournaments.')
         setTournaments([])
       } finally {
