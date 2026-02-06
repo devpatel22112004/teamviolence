@@ -21,6 +21,7 @@ import {
   FaCrown
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import LazyImage from '../components/LazyImage'
 
 const CLAN_LOGO = '/Line_up/logo.png'
 
@@ -292,6 +293,34 @@ const Home = () => {
           </motion.div>
 
 
+        </div>
+      </section>
+
+      {/* SEO Landing Highlight */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl border border-primary-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 sm:p-8">
+          <div className="absolute -left-16 -top-16 w-56 h-56 bg-cyan-500/20 blur-3xl" />
+          <div className="absolute -right-16 -bottom-16 w-56 h-56 bg-purple-500/20 blur-3xl" />
+          <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Violence Esports</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
+                Your Home for Competitive Tournaments
+              </h2>
+              <p className="text-gray-300 max-w-2xl">
+                Explore our full tournament ecosystem, rules, and growth path for teams. Built for serious BGMI squads.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link to="/violence-esports-tournaments" className="btn-primary inline-flex items-center gap-2 px-5 py-3">
+                Explore the Pillar Page
+                <FaArrowRight />
+              </Link>
+              <Link to="/tournaments" className="btn-secondary inline-flex items-center gap-2 px-5 py-3">
+                View Tournaments
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -577,9 +606,11 @@ const Home = () => {
                 
                 {/* Image with blur on hover for suspense */}
                 <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 overflow-hidden">
-                  <img 
+                  <LazyImage 
                     src={formatImagePath(player.image)} 
                     alt={player.name} 
+                    width={480}
+                    height={640}
                     onError={handleImageError} 
                     className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-75" 
                   />

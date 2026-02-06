@@ -10,6 +10,7 @@ import Team from './pages/Team'
 import Discovery from './pages/Discovery'
 import Tournaments from './pages/Tournaments'
 import TournamentDetails from './pages/TournamentDetails'
+import ViolenceEsports from './pages/ViolenceEsports'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
@@ -37,6 +38,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/team" element={<Team />} />
               <Route path="/discovery" element={<Discovery />} />
+              <Route path="/violence-esports-tournaments" element={<ViolenceEsports />} />
               <Route path="/tournaments" element={<Tournaments />} />
               <Route path="/tournaments/:id" element={<TournamentDetails />} />
               <Route path="/login" element={<Login />} />

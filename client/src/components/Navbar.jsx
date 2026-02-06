@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaBars, FaTimes, FaTrophy, FaUsers, FaHome, FaUser, FaGamepad, FaSignOutAlt, FaCompass, FaChevronDown } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
+import LazyImage from './LazyImage'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -72,6 +73,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/', icon: FaHome },
+    { name: 'Esports', path: '/violence-esports-tournaments', icon: FaGamepad },
     { name: 'Lineup', path: '/team', icon: FaUsers },
     { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
     { name: 'Discover', path: '/discovery', icon: FaCompass },
@@ -225,9 +227,13 @@ const Navbar = () => {
                       ? 'bg-white/5 border-white/30 group-hover:border-white/60'
                       : 'bg-dark-950 border-primary-500/40 group-hover:border-primary-500/80'
                   }`}>
-                    <img 
+                    <LazyImage 
                       src="/Line_up/logo.png" 
                       alt="Team VioLencE Logo" 
+                      width={56}
+                      height={56}
+                      loading="eager"
+                      fetchpriority="high"
                       className="w-14 h-14 object-cover scale-150"
                     />
                   </div>

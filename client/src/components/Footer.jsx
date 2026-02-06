@@ -15,6 +15,7 @@ const Footer = memo(() => {
 
   const quickLinks = [
     { name: 'Home', path: '/' },
+    { name: 'Violence Esports', path: '/violence-esports-tournaments' },
     { name: 'About Us', path: '/about' },
     { name: 'Our Team', path: '/team' },
     { name: 'Tournaments', path: '/tournaments' },

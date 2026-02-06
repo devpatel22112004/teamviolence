@@ -21,10 +21,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Static files for uploads
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static('uploads', {
+  maxAge: '7d'
+}))
 
 // Serve frontend static files (built React app)
-app.use(express.static(path.join(__dirname, '../client/dist')))
+app.use(express.static(path.join(__dirname, '../client/dist'), {
+  maxAge: '30d',
+  immutable: true
+}))
 
 // Routes
 app.use('/api/auth', authRoutes)
