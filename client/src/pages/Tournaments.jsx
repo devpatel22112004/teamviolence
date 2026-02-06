@@ -693,7 +693,7 @@ const Tournaments = () => {
                               <a href="https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w" target="_blank" rel="noopener noreferrer" className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
                                 <span>🎬</span> YouTube
                               </a>
-                              <a href="https://discord.gg/AmezSUbP" target="_blank" rel="noopener noreferrer" className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
+                              <a href="https://discord.gg/amN9D8SrN8" target="_blank" rel="noopener noreferrer" className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded-lg text-center text-sm flex items-center justify-center gap-2 transition-all">
                                 <span>⚡</span> Discord
                               </a>
                             </div>

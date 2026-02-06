@@ -7,7 +7,7 @@ const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: FaDiscord, label: 'Discord', href: 'https://discord.gg/AmezSUbP' },
+    { icon: FaDiscord, label: 'Discord', href: 'https://discord.gg/amN9D8SrN8' },
     { icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==' },
     { icon: FaYoutube, label: 'YouTube', href: 'https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w' },
     { icon: FaWhatsapp, label: 'WhatsApp', href: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' },
@@ -121,7 +121,7 @@ const Footer = memo(() => {
                 </div>
                 <div>
                   <p className="text-primary-400 font-semibold mb-1">Discord</p>
-                  <a href="https://discord.gg/AmezSUbP" className="hover:text-primary-400 transition-colors">
+                  <a href="https://discord.gg/amN9D8SrN8" className="hover:text-primary-400 transition-colors">
                     Join Our Server
                   </a>
                 </div>

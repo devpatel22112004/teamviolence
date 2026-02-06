@@ -46,7 +46,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/UMANG_rana_BASIC_INFO.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Umang Rana _LOBBY.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/umangrana', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/umangrana', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'karan-patel',
@@ -64,7 +64,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Karan_patel_basic_info.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Karan_patel_lobby.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/karanpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/karanpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'purvang-pandya',
@@ -82,7 +82,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Purvang_pandya_basic_ino.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Purvang_pandya_lobby.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/purvangpandya', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/purvangpandya', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'aayush-panchal',
@@ -100,7 +100,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Aayush_panchal_basic_info.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Aayush_panchal_lobby.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/aayushpanchal', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'rinkesh-rajput',
@@ -118,7 +118,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Rinkesh_rajput_basic_info.jpeg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Rinkesh_rajput_lobby.jpeg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/rinkeshrajput', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/rinkeshrajput', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
   ]
 
@@ -139,7 +139,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/jainish_soni_Basic_info.jpeg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/jainish_soni_Lobby.jpeg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/jainishsoni', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/jainishsoni', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'dev-patel',
@@ -157,7 +157,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Dev_patel_basic_info1.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Dev_patel_lobby1.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/devpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/devpatel', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'harsh-thakor',
@@ -175,7 +175,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Harsh_thakor_basic_info.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Harsh_thakor_lobby.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/harshthakor', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
     {
       _id: 'mehul-darji',
@@ -193,7 +193,7 @@ const Team = () => {
         { type: 'basic_info', url: '/Line_up/Lobby_Basic_info/Mehul_darji_basic_info.jpg' },
         { type: 'lobby', url: '/Line_up/Lobby_Basic_info/Mehul_darji_lobby.jpg' }
       ],
-      socials: { discord: 'https://discord.gg/AmezSUbP', instagram: 'https://instagram.com/mehuldarji', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
+      socials: { discord: 'https://discord.gg/amN9D8SrN8', instagram: 'https://instagram.com/mehuldarji', whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu' }
     },
   ]
 
@@ -579,7 +579,7 @@ const Team = () => {
             </motion.a>
 
             <motion.a
-              href="https://discord.gg/AmezSUbP"
+              href="https://discord.gg/amN9D8SrN8"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -5 }}

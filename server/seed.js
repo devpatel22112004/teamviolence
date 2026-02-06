@@ -70,7 +70,7 @@ const seedData = async () => {
         category: 'Organizer',
         image: '/Line_up/Umang Rana.jpg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -86,7 +86,7 @@ const seedData = async () => {
         category: 'Organizer',
         image: '/Line_up/karan-patel.jpeg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -102,7 +102,7 @@ const seedData = async () => {
         category: 'Organizer',
         image: '/Line_up/Purvang Pandya.jpg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -118,7 +118,7 @@ const seedData = async () => {
         category: 'Organizer',
         image: '/Line_up/Aayush Panchal.webp',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -134,7 +134,7 @@ const seedData = async () => {
         category: 'Organizer',
         image: '/Line_up/Rinkesh Rajput.jpeg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -151,7 +151,7 @@ const seedData = async () => {
         category: 'Creator',
         image: '/Line_up/Jainish_Soni.jpeg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -167,7 +167,7 @@ const seedData = async () => {
         category: 'Creator',
         image: '/Line_up/Dev Patel.jpg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -183,7 +183,7 @@ const seedData = async () => {
         category: 'Creator',
         image: '/Line_up/Harsh Thakor.jpg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
@@ -199,7 +199,7 @@ const seedData = async () => {
         category: 'Creator',
         image: '/Line_up/Mehul Darji.jpg',
         socials: {
-          discord: 'https://discord.gg/AmezSUbP',
+          discord: 'https://discord.gg/amN9D8SrN8',
           instagram: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
           whatsapp: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu'
         }
