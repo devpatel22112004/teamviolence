@@ -212,39 +212,35 @@ const seedData = async () => {
     // Create tournaments
     const tournaments = [
       {
-        title: 'Team VioLencE Pro Championship',
-        description: 'Official Team VioLencE Championship with massive prize pool! First 7 teams get FREE entry!',
-        mode: 'Squad TPP',
+        title: '4v4 TDM Team Clash',
+        description: 'Fast-paced 4v4 Team TDM showdown. Two rounds, high intensity, and instant bragging rights.',
+        mode: 'TDM 4v4',
         type: 'paid',
-        entryFee: 50,
-        prizePool: 4000,
+        entryFee: 40,
+        prizePool: 100,
         totalSlots: 100,
-        registeredTeams: 0,
-        date: new Date('2026-02-27'),
+        registeredTeams: 15,
+        date: new Date(),
         status: 'open',
-        badge: '👑 Featured',
-        specialNote: '🎉 First 7 registered teams get FREE ENTRY! Contact for payment details.',
-        freeEntrySlotsAvailable: 7,
+        badge: '🔥 Live',
+        specialNote: '2 rounds only. Quick wins, faster glory.',
+        freeEntrySlotsAvailable: 0,
         rules: [
-          'Squad must have 4 players',
-          'TPP mode only',
-          'First 7 teams get FREE entry',
+          '4v4 Team TDM only',
+          '2 rounds total',
           'No hacking or cheating',
-          'Professional matches with live commentary',
-          'Team leader must be present 30 mins before match',
+          'All players must check in before the match',
+          'Team leader must be present 15 mins before match',
           'FOR PAYMENT: Join WhatsApp Channel or contact us via message'
         ],
         prizeBreakdown: {
-          first: 2000,
-          second: 1000,
-          third: 500,
-          highestKiller: 500
+          first: 100,
+          second: 0,
+          third: 0,
+          highestKiller: 0
         },
         prizes: [
-          { position: '1st Place', amount: 2000 },
-          { position: '2nd Place', amount: 1000 },
-          { position: '3rd Place', amount: 500 },
-          { position: 'Highest Killer', amount: 500 }
+          { position: 'Winner', amount: 100 }
         ]
       }
     ]
