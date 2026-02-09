@@ -28,7 +28,7 @@ const CLAN_LOGO = '/Line_up/logo.png'
 const SOCIAL_QUICK_LINKS = [
   {
     label: 'WhatsApp Channel',
-    href: 'https://whatsapp.com/channel/your-channel',
+    href: 'https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu',
     icon: FaWhatsapp,
     gradient: 'from-emerald-500/20 to-green-600/20',
     border: 'border-emerald-500/30',
@@ -46,7 +46,7 @@ const SOCIAL_QUICK_LINKS = [
   },
   {
     label: 'YouTube',
-    href: 'https://www.youtube.com/',
+    href: 'https://www.youtube.com/channel/UCb1hDeIuyEwrltpCf-0dw9w',
     icon: FaYoutube,
     gradient: 'from-red-500/20 to-red-600/20',
     border: 'border-red-500/30',
@@ -55,7 +55,7 @@ const SOCIAL_QUICK_LINKS = [
   },
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/',
+    href: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
     icon: FaInstagram,
     gradient: 'from-pink-500/20 to-rose-500/20',
     border: 'border-pink-500/30',
