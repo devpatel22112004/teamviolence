@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { memo } from 'react'
-import { FaDiscord, FaInstagram, FaYoutube, FaTwitch, FaTrophy, FaGamepad, FaArrowRight, FaWhatsapp } from 'react-icons/fa'
+import { FaDiscord, FaInstagram, FaYoutube, FaTrophy, FaGamepad, FaArrowRight, FaWhatsapp } from 'react-icons/fa'
 
 const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
@@ -42,10 +42,10 @@ const Footer = memo(() => {
   }
 
   return (
-    <footer className="relative bg-dark-950 border-t border-primary-500/10 mt-32 overflow-hidden will-change-transform">
+    <footer className="relative bg-gradient-to-b from-slate-950 via-dark-950 to-black border-t border-primary-500/20 mt-32 overflow-hidden will-change-transform">
       {/* Animated Background Elements */}
       <div className="absolute top-0 left-10 w-64 h-64 bg-primary-600/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-20 w-96 h-96 bg-primary-700/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-20 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10">
         {/* Main Footer Content */}
@@ -59,6 +59,9 @@ const Footer = memo(() => {
           >
             {/* Brand Section */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full border border-accent-400/40 bg-accent-500/10 text-accent-200 text-xs font-semibold tracking-wide">
+                Season 2026 Refresh
+              </div>
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-lg flex items-center justify-center">
                   <FaGamepad className="text-white text-xl" />
@@ -75,6 +78,8 @@ const Footer = memo(() => {
                   <motion.a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.15, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-10 h-10 bg-dark-900/80 hover:bg-primary-600 border border-dark-800 hover:border-primary-500 rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-all"
@@ -122,13 +127,13 @@ const Footer = memo(() => {
                 </div>
                 <div>
                   <p className="text-primary-400 font-semibold mb-1">Discord</p>
-                  <a href="https://discord.gg/amN9D8SrN8" className="hover:text-primary-400 transition-colors">
+                  <a href="https://discord.gg/amN9D8SrN8" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
                     Join Our Server
                   </a>
                 </div>
                 <div>
                   <p className="text-primary-400 font-semibold mb-1">WhatsApp</p>
-                  <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" className="hover:text-primary-400 transition-colors">
+                  <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
                     Join Channel
                   </a>
                 </div>

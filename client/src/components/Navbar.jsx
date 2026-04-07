@@ -8,14 +8,9 @@ import LazyImage from './LazyImage'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [isInsideNav, setIsInsideNav] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const navRef = useRef(null)
   const dropdownRef = useRef(null)
-  const mouseRaf = useRef(null)
-  const lastMousePos = useRef({ x: 0, y: 0 })
-  const lastInside = useRef(false)
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
@@ -23,32 +18,6 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
-    }
-    
-    const handleMouseMove = (e) => {
-      if (mouseRaf.current) return
-      mouseRaf.current = requestAnimationFrame(() => {
-        mouseRaf.current = null
-        if (!navRef.current) return
-        const rect = navRef.current.getBoundingClientRect()
-        const inX = e.clientX >= rect.left && e.clientX <= rect.right
-        const inY = e.clientY >= rect.top && e.clientY <= rect.bottom
-        const isInside = inX && inY
-        if (isInside !== lastInside.current) {
-          lastInside.current = isInside
-          setIsInsideNav(isInside)
-        }
-
-        if (isInside) {
-          const nextPos = { x: e.clientX, y: e.clientY - rect.top }
-          const dx = Math.abs(nextPos.x - lastMousePos.current.x)
-          const dy = Math.abs(nextPos.y - lastMousePos.current.y)
-          if (dx > 2 || dy > 2) {
-            lastMousePos.current = nextPos
-            setMousePos(nextPos)
-          }
-        }
-      })
     }
 
     const handleClickOutside = (event) => {
@@ -58,18 +27,17 @@ const Navbar = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
-    window.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mousedown', handleClickOutside)
-      if (mouseRaf.current) {
-        cancelAnimationFrame(mouseRaf.current)
-        mouseRaf.current = null
-      }
     }
   }, [])
+
+  useEffect(() => {
+    setIsOpen(false)
+    setDropdownOpen(false)
+  }, [location.pathname])
 
   const navLinks = [
     { name: 'Home', path: '/', icon: FaHome },
@@ -191,19 +159,6 @@ const Navbar = () => {
             : 'bg-dark-950/40 backdrop-blur-sm'
         }`}
       >
-        {/* Cursor-tracking ambient glow - disabled to avoid jitter */}
-        {false && isInsideNav && (
-          <motion.div
-            className="absolute inset-0 pointer-events-none overflow-hidden"
-            style={{
-              background: isHomePage && !scrolled
-                ? `radial-gradient(700px at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.08), transparent 80%)`
-                : `radial-gradient(700px at ${mousePos.x}px ${mousePos.y}px, rgba(14,165,233,0.06), transparent 80%)`
-            }}
-            transition={{ default: { duration: 0 } }}
-          />
-        )}
-
         <div className="max-w-full mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-[auto_1fr_auto] items-center h-20 min-h-[80px] gap-6">
             {/* Logo - Fixed Width */}

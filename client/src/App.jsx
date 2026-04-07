@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
@@ -33,8 +33,8 @@ function App() {
           <ScrollToTop behavior="smooth" />
           <Navbar />
           <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
+            <Routes>
+              <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/team" element={<Team />} />
               <Route path="/discovery" element={<Discovery />} />
@@ -75,6 +75,7 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <Footer />
@@ -91,7 +92,7 @@ function App() {
           />
         </div>
       </Router>
-      </AuthProvider>
+    </AuthProvider>
   )
 }
 

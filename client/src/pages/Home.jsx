@@ -191,6 +191,9 @@ const Home = () => {
           >
             <div className="space-y-6">
               <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-400/40 bg-accent-500/10 text-accent-200 text-xs font-semibold tracking-wide mb-4">
+                  April 2026 Update
+                </div>
                 <p className="text-gray-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] text-xs mb-3">Team VioLencE</p>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-black leading-tight sm:leading-[1.05]">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 via-primary-500 to-primary-700">{slides[activeSlide].title}</span>
@@ -300,7 +303,7 @@ const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl border border-primary-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 sm:p-8">
           <div className="absolute -left-16 -top-16 w-56 h-56 bg-cyan-500/20 blur-3xl" />
-          <div className="absolute -right-16 -bottom-16 w-56 h-56 bg-purple-500/20 blur-3xl" />
+          <div className="absolute -right-16 -bottom-16 w-56 h-56 bg-amber-500/20 blur-3xl" />
           <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-3">
               <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Violence Esports</p>
