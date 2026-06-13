@@ -1,11 +1,17 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaEnvelope, FaLock, FaUser, FaPhone } from 'react-icons/fa'
+import {
+  FaEnvelope, FaLock, FaUser, FaPhone, FaArrowRight, FaCheck,
+} from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import AuthLayout from '../components/AuthLayout'
+import Card from '../components/ui/Card'
+import Input from '../components/ui/Input'
+import Button from '../components/ui/Button'
 
-const Register = () => {
+export default function Register() {
   const navigate = useNavigate()
   const { register } = useAuth()
   const [formData, setFormData] = useState({
@@ -13,142 +19,160 @@ const Register = () => {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   })
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  const update = (k) => (e) => setFormData((f) => ({ ...f, [k]: e.target.value }))
+
+  const validate = () => {
+    const e = {}
+    if (!formData.name.trim()) e.name = 'Name is required'
+    if (!formData.email) e.email = 'Email is required'
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = 'Enter a valid email'
+    if (!formData.phone) e.phone = 'Phone is required'
+    else if (!/^[0-9+\-\s()]{7,}$/.test(formData.phone)) e.phone = 'Enter a valid phone'
+    if (!formData.password) e.password = 'Password is required'
+    else if (formData.password.length < 6) e.password = 'At least 6 characters'
+    if (formData.password !== formData.confirmPassword) e.confirmPassword = "Passwords don't match"
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match')
-      return
-    }
-
+    if (!validate()) return
     setLoading(true)
     try {
-      await register(formData)
-      toast.success('Registration successful!')
+      await register({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+      })
+      toast.success('Account created!')
       navigate('/dashboard')
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed')
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Registration failed')
     } finally {
       setLoading(false)
     }
   }
 
+  // Live strength meter
+  const strength = scorePassword(formData.password)
+  const strengthLabel = ['Too short', 'Weak', 'Okay', 'Good', 'Strong'][strength]
+  const strengthColor = ['bg-red-500/40', 'bg-red-500', 'bg-amber-500', 'bg-cyan-500', 'bg-lime-500'][strength]
+
   return (
-    <div className="min-h-screen flex items-center justify-center pt-20 pb-20 px-4 sm:px-6">
+    <AuthLayout
+      title={<>Join <span className="gradient-text">Team VioLencE</span></>}
+      subtitle="Create your account to register for tournaments and track your journey."
+      highlight="Start Your"
+      highlightAccent="Journey"
+      altLink={{ to: '/login', label: 'Sign in', prompt: 'Already have an account?' }}
+    >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.15 }}
       >
-        <div className="card p-6 sm:p-8">
-          <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-3xl sm:text-4xl font-display font-bold mb-2">
-              Join <span className="text-primary-500">Team VioLencE</span>
-            </h1>
-            <p className="text-gray-400 text-xs sm:text-sm">Create your account</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <Card variant="premium" className="p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <Input
+              label="Full Name"
+              iconLeft={FaUser}
+              value={formData.name}
+              onChange={update('name')}
+              error={errors.name}
+              autoComplete="name"
+            />
+            <Input
+              type="email"
+              label="Email"
+              iconLeft={FaEnvelope}
+              value={formData.email}
+              onChange={update('email')}
+              error={errors.email}
+              autoComplete="email"
+            />
+            <Input
+              type="tel"
+              label="Phone Number"
+              iconLeft={FaPhone}
+              value={formData.phone}
+              onChange={update('phone')}
+              error={errors.phone}
+              autoComplete="tel"
+            />
             <div>
-              <label className="block text-sm font-medium mb-2">Full Name</label>
-              <div className="relative">
-                <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
-                  placeholder="Enter your name"
-                />
-              </div>
+              <Input
+                type="password"
+                label="Password"
+                iconLeft={FaLock}
+                value={formData.password}
+                onChange={update('password')}
+                error={errors.password}
+                autoComplete="new-password"
+              />
+              {formData.password && (
+                <div className="mt-2 space-y-1.5">
+                  <div className="flex gap-1">
+                    {[0, 1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className={`h-1 flex-1 rounded-full transition-all ${i < strength ? strengthColor : 'bg-white/10'}`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">
+                    Strength: {strengthLabel}
+                  </p>
+                </div>
+              )}
             </div>
+            <Input
+              type="password"
+              label="Confirm Password"
+              iconLeft={FaLock}
+              value={formData.confirmPassword}
+              onChange={update('confirmPassword')}
+              error={errors.confirmPassword}
+              autoComplete="new-password"
+            />
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <div className="relative">
-                <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
+            <label className="flex items-start gap-2 text-xs text-gray-400 cursor-pointer pt-1">
+              <input type="checkbox" className="mt-0.5 rounded border-white/20 bg-white/5 text-cyan-500 focus:ring-cyan-400/30" />
+              <span>
+                I agree to the <span className="text-cyan-300 font-semibold">Terms of Service</span> and{' '}
+                <span className="text-cyan-300 font-semibold">Privacy Policy</span>.
+              </span>
+            </label>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Phone Number</label>
-              <div className="relative">
-                <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
-                  placeholder="Enter your phone number"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
-              <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
-                  placeholder="Create a password"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Confirm Password</label>
-              <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
-                  placeholder="Confirm your password"
-                />
-              </div>
-            </div>
-
-            <button
+            <Button
               type="submit"
-              disabled={loading}
-              className="btn-primary w-full text-lg disabled:opacity-50"
+              size="lg"
+              fullWidth
+              loading={loading}
+              iconRight={!loading && <FaArrowRight />}
+              iconLeft={!loading && <FaCheck />}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
-            </button>
+              {loading ? 'Creating account...' : 'Create Account'}
+            </Button>
           </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
-              Already have an account?{' '}
-              <Link to="/login" className="text-primary-500 hover:text-primary-400 font-semibold">
-                Login here
-              </Link>
-            </p>
-          </div>
-        </div>
+        </Card>
       </motion.div>
-    </div>
+    </AuthLayout>
   )
 }
 
-export default Register
+function scorePassword(p) {
+  if (!p) return 0
+  if (p.length < 6) return 1
+  let s = 1
+  if (p.length >= 8) s++
+  if (/[A-Z]/.test(p) && /[a-z]/.test(p)) s++
+  if (/[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)) s++
+  return Math.min(4, s)
+}

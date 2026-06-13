@@ -1,57 +1,50 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaTrophy, FaUser, FaCalendar, FaCheckCircle, FaClock, FaEdit, FaTimes, FaGamepad, FaUsers, FaMedal } from 'react-icons/fa'
+import {
+  FaTrophy, FaUser, FaCalendar, FaCheckCircle, FaClock, FaEdit,
+  FaTimes, FaGamepad, FaUsers, FaMedal, FaArrowRight, FaBolt, FaPlus,
+} from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import Section from '../components/ui/Section'
+import Card, { MotionCard } from '../components/ui/Card'
+import Badge from '../components/ui/Badge'
+import Avatar from '../components/ui/Avatar'
+import Button from '../components/ui/Button'
+import Input from '../components/ui/Input'
 
-const Dashboard = () => {
+const STAT_DEFS = [
+  { key: 'totalTournaments',     label: 'Total Tournaments', icon: FaGamepad, color: 'cyan',    gradient: 'from-cyan-500/20 to-cyan-500/5' },
+  { key: 'activeTournaments',    label: 'Active',            icon: FaTrophy,  color: 'lime',    gradient: 'from-lime-500/20 to-lime-500/5' },
+  { key: 'completedTournaments', label: 'Completed',         icon: FaMedal,   color: 'amber',   gradient: 'from-amber-500/20 to-amber-500/5' },
+]
+
+export default function Dashboard() {
   const { user, setUser } = useAuth()
   const [registrations, setRegistrations] = useState([])
   const [loading, setLoading] = useState(true)
   const [editMode, setEditMode] = useState(false)
-  const [editData, setEditData] = useState({
-    name: user?.name || '',
-    phone: user?.phone || ''
-  })
+  const [editData, setEditData] = useState({ name: user?.name || '', phone: user?.phone || '' })
   const [updating, setUpdating] = useState(false)
-  const [stats, setStats] = useState({
-    totalTournaments: 0,
-    activeTournaments: 0,
-    completedTournaments: 0
-  })
+  const [stats, setStats] = useState({ totalTournaments: 0, activeTournaments: 0, completedTournaments: 0 })
+
+  useEffect(() => { fetchRegistrations() }, [])
 
   useEffect(() => {
-    fetchRegistrations()
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      setEditData({
-        name: user.name || '',
-        phone: user.phone || ''
-      })
-    }
+    if (user) setEditData({ name: user.name || '', phone: user.phone || '' })
   }, [user])
 
   const fetchRegistrations = async () => {
     try {
       const res = await axios.get('/api/users/registrations')
       setRegistrations(res.data)
-      
-      // Calculate stats
       const total = res.data.length
-      const active = res.data.filter(r => new Date(r.tournament.date) > new Date()).length
-      const completed = total - active
-      
-      setStats({
-        totalTournaments: total,
-        activeTournaments: active,
-        completedTournaments: completed
-      })
-    } catch (error) {
-      // Error fetching registration stats
+      const active = res.data.filter((r) => new Date(r.tournament.date) > new Date()).length
+      setStats({ totalTournaments: total, activeTournaments: active, completedTournaments: total - active })
+    } catch {
+      /* silent */
     } finally {
       setLoading(false)
     }
@@ -60,344 +53,292 @@ const Dashboard = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
     setUpdating(true)
-    
     try {
       const res = await axios.put('/api/users/profile', editData)
       setUser(res.data.user)
-      toast.success('✅ Profile updated successfully!')
+      toast.success('Profile updated')
       setEditMode(false)
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to update profile')
+      toast.error(error.response?.data?.message || 'Update failed')
     } finally {
       setUpdating(false)
     }
   }
 
+  const cancelEdit = () => {
+    setEditMode(false)
+    setEditData({ name: user?.name || '', phone: user?.phone || '' })
+  }
+
   return (
-    <div className="pt-20 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Welcome Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 sm:mb-8"
-        >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-2 break-words">
-            Welcome, <span className="gradient-text">{user?.name}</span>
-          </h1>
-          <p className="text-sm sm:text-base text-gray-400">Manage your tournament registrations and profile</p>
-        </motion.div>
+    <div className="pt-20 pb-12">
+      {/* Hero */}
+      <Section aurora className="overflow-hidden">
+        <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none" />
+        <div className="absolute -left-32 -top-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -right-32 bottom-0 w-80 h-80 bg-violet-500/20 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="card-premium bg-gradient-to-br from-primary-500/20 to-cyan-500/10"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm mb-1">Total Tournaments</p>
-                <p className="text-4xl font-bold text-primary-500">{stats.totalTournaments}</p>
-              </div>
-              <FaGamepad className="text-5xl text-primary-500/30" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="card-premium bg-gradient-to-br from-green-500/20 to-emerald-500/10"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm mb-1">Active</p>
-                <p className="text-4xl font-bold text-green-500">{stats.activeTournaments}</p>
-              </div>
-              <FaTrophy className="text-5xl text-green-500/30" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="card-premium bg-gradient-to-br from-orange-500/20 to-amber-500/10"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm mb-1">Completed</p>
-                <p className="text-4xl font-bold text-orange-500">{stats.completedTournaments}</p>
-              </div>
-              <FaMedal className="text-5xl text-orange-500/30" />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* User Info Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="card-premium mb-8"
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-display font-bold flex items-center">
-              <FaUser className="text-primary-500 mr-3" />
-              Profile Information
-            </h2>
-            {!editMode && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setEditMode(true)}
-                className="btn-modern text-sm flex items-center space-x-2"
-              >
-                <FaEdit />
-                <span>Edit Profile</span>
-              </motion.button>
-            )}
+        <div className="relative flex flex-col md:flex-row md:items-center gap-6">
+          <Avatar
+            name={user?.name}
+            size="2xl"
+            ring="aurora"
+            className="shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <Badge variant="cyan" pulse size="md">Member Dashboard</Badge>
+            <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-display font-black leading-[1.1]">
+              Welcome, <span className="gradient-text">{user?.name}</span>
+            </h1>
+            <p className="text-gray-400 mt-2 text-sm sm:text-base">
+              Manage your tournament registrations, edit your profile, and track your journey.
+            </p>
           </div>
+          <div className="flex flex-wrap gap-2">
+            <Button as={Link} to="/tournaments" variant="primary" size="md" iconLeft={<FaBolt />}>
+              Browse Tournaments
+            </Button>
+            <Button as={Link} to="/team-management" variant="secondary" size="md" iconLeft={<FaUsers />}>
+              My Teams
+            </Button>
+          </div>
+        </div>
+      </Section>
 
-          <AnimatePresence mode="wait">
-            {editMode ? (
-              <motion.form
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleUpdateProfile}
-                className="space-y-4"
-              >
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm text-gray-400 mb-2 block">Name</label>
-                    <input
-                      type="text"
+      {/* Stats */}
+      <Section contained={false} className="!py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid sm:grid-cols-3 gap-4">
+            {STAT_DEFS.map((s, i) => {
+              const Icon = s.icon
+              return (
+                <MotionCard key={s.key} delay={i * 0.08}>
+                  <Card variant="premium" className={`p-6 bg-gradient-to-br ${s.gradient} group`}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">{s.label}</p>
+                        <p className="font-mono font-black text-4xl text-white mt-1">{stats[s.key]}</p>
+                      </div>
+                      <div className="w-14 h-14 rounded-2xl glass grid place-items-center group-hover:scale-110 transition">
+                        <Icon className="text-cyan-300 text-2xl" />
+                      </div>
+                    </div>
+                  </Card>
+                </MotionCard>
+              )
+            })}
+          </div>
+        </div>
+      </Section>
+
+      {/* Profile + Registrations */}
+      <Section>
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Profile */}
+          <MotionCard>
+            <Card variant="premium" className="p-6 sm:p-8 h-full">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-display font-black text-white flex items-center gap-2">
+                  <FaUser className="text-cyan-300" /> Profile
+                </h2>
+                {!editMode && (
+                  <Button variant="secondary" size="sm" onClick={() => setEditMode(true)} iconLeft={<FaEdit />}>
+                    Edit
+                  </Button>
+                )}
+              </div>
+
+              <AnimatePresence mode="wait">
+                {editMode ? (
+                  <motion.form
+                    key="edit"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    onSubmit={handleUpdateProfile}
+                    className="space-y-4"
+                  >
+                    <Input
+                      label="Name"
                       value={editData.name}
                       onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                      className="w-full bg-dark-800/50 border border-primary-500/30 rounded-lg px-4 py-3 focus:border-primary-500 focus:outline-none transition-colors"
                       required
                     />
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-400 mb-2 block">Phone</label>
-                    <input
+                    <Input
                       type="tel"
+                      label="Phone"
                       value={editData.phone}
                       onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
-                      className="w-full bg-dark-800/50 border border-primary-500/30 rounded-lg px-4 py-3 focus:border-primary-500 focus:outline-none transition-colors"
                       required
                     />
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-400 mb-2 block">Email</label>
-                    <input
-                      type="email"
-                      value={user?.email}
-                      disabled
-                      className="w-full bg-dark-800/30 border border-dark-700 rounded-lg px-4 py-3 text-gray-500 cursor-not-allowed"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-400 mb-2 block">Member Since</label>
-                    <input
-                      type="text"
-                      value={new Date(user?.createdAt).toLocaleDateString('en-IN')}
-                      disabled
-                      className="w-full bg-dark-800/30 border border-dark-700 rounded-lg px-4 py-3 text-gray-500 cursor-not-allowed"
-                    />
-                  </div>
-                </div>
-                <div className="flex space-x-4 pt-4">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    disabled={updating}
-                    className="btn-modern flex-1"
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-[10px] text-gray-500 uppercase tracking-widest font-bold block mb-2">Email</label>
+                        <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-500 text-sm">{user?.email}</div>
+                        <p className="text-[10px] text-gray-500 mt-1">Cannot be changed</p>
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-gray-500 uppercase tracking-widest font-bold block mb-2">Member Since</label>
+                        <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-500 text-sm">
+                          {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 pt-2">
+                      <Button type="submit" size="md" loading={updating} fullWidth>Save Changes</Button>
+                      <Button type="button" size="md" variant="ghost" onClick={cancelEdit} iconLeft={<FaTimes />}>Cancel</Button>
+                    </div>
+                  </motion.form>
+                ) : (
+                  <motion.div
+                    key="view"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="space-y-3"
                   >
-                    {updating ? 'Updating...' : 'Save Changes'}
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="button"
-                    onClick={() => {
-                      setEditMode(false)
-                      setEditData({ name: user?.name || '', phone: user?.phone || '' })
-                    }}
-                    className="px-6 py-3 bg-dark-800 hover:bg-dark-700 rounded-lg transition-colors flex items-center space-x-2"
-                  >
-                    <FaTimes />
-                    <span>Cancel</span>
-                  </motion.button>
-                </div>
-              </motion.form>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="grid md:grid-cols-2 gap-6"
-              >
-                <div className="bg-dark-800/30 rounded-lg p-4">
-                  <label className="text-sm text-gray-400 block mb-2">Name</label>
-                  <p className="text-lg font-semibold">{user?.name}</p>
-                </div>
-                <div className="bg-dark-800/30 rounded-lg p-4">
-                  <label className="text-sm text-gray-400 block mb-2">Email</label>
-                  <p className="text-lg font-semibold">{user?.email}</p>
-                </div>
-                <div className="bg-dark-800/30 rounded-lg p-4">
-                  <label className="text-sm text-gray-400 block mb-2">Phone</label>
-                  <p className="text-lg font-semibold">{user?.phone || 'Not provided'}</p>
-                </div>
-                <div className="bg-dark-800/30 rounded-lg p-4">
-                  <label className="text-sm text-gray-400 block mb-2">Member Since</label>
-                  <p className="text-lg font-semibold">
-                    {new Date(user?.createdAt).toLocaleDateString('en-IN', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric'
-                    })}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                    <ProfileField label="Name" value={user?.name} />
+                    <ProfileField label="Email" value={user?.email} />
+                    <ProfileField label="Phone" value={user?.phone || 'Not provided'} />
+                    <ProfileField
+                      label="Member Since"
+                      value={user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '—'}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Card>
+          </MotionCard>
 
-        {/* Tournament Registrations */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <h2 className="text-2xl font-display font-bold mb-6 flex items-center">
-            <FaTrophy className="text-primary-500 mr-3" />
-            My Tournament Registrations
-            <span className="ml-3 text-sm font-normal text-gray-400">({registrations.length} total)</span>
+          {/* Quick actions */}
+          <MotionCard delay={0.1}>
+            <Card variant="conic" className="p-6 sm:p-8 h-full">
+              <h2 className="text-xl font-display font-black text-white flex items-center gap-2">
+                <FaBolt className="text-amber-300" /> Quick Actions
+              </h2>
+              <p className="text-sm text-gray-400 mt-1">Jump into the action</p>
+
+              <div className="mt-6 space-y-3">
+                <QuickAction to="/tournaments"        icon={FaTrophy}   title="Browse Tournaments"   desc="Find your next match" />
+                <QuickAction to="/team-management"     icon={FaUsers}    title="Manage Team"           desc="Build or join a roster" />
+                <QuickAction to="/my-registrations"    icon={FaGamepad}  title="My Registrations"      desc="Track all your entries" />
+                <QuickAction to="/profile"             icon={FaUser}     title="Public Profile"        desc="How others see you" />
+              </div>
+            </Card>
+          </MotionCard>
+        </div>
+      </Section>
+
+      {/* Registrations */}
+      <Section>
+        <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
+          <h2 className="text-2xl font-display font-black text-white flex items-center gap-2">
+            <FaTrophy className="text-cyan-300" /> My Registrations
+            <span className="text-sm font-normal text-gray-400">({registrations.length} total)</span>
           </h2>
+          <Button as={Link} to="/tournaments" size="sm" variant="secondary" iconLeft={<FaPlus />}>
+            Register for more
+          </Button>
+        </div>
 
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-            </div>
-          ) : registrations.length > 0 ? (
-            <div className="space-y-6">
-              {registrations.map((reg, index) => (
-                <motion.div
-                  key={reg._id}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="card-premium hover:scale-[1.01] transition-transform duration-200"
-                >
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                    <div className="mb-4 lg:mb-0 flex-1">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="text-xl font-bold mb-1">
-                            {reg.tournament.title}
-                          </h3>
-                          <p className="text-primary-500 font-semibold flex items-center">
-                            <FaUsers className="mr-2" />
-                            Team: {reg.teamName}
-                          </p>
-                        </div>
-                        <div className="lg:hidden">
-                          {reg.paymentStatus === 'completed' ? (
-                            <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-semibold flex items-center">
-                              <FaCheckCircle className="mr-1" />
-                              Paid
-                            </span>
-                          ) : (
-                            <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-xs font-semibold flex items-center">
-                              <FaClock className="mr-1" />
-                              Pending
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div className="bg-dark-800/50 rounded-lg p-3">
-                          <p className="text-xs text-gray-400 mb-1">Tournament Date</p>
-                          <div className="flex items-center text-sm font-semibold">
-                            <FaCalendar className="mr-2 text-primary-500" />
-                            {new Date(reg.tournament.date).toLocaleDateString('en-IN', {
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric'
-                            })}
-                          </div>
-                        </div>
-                        <div className="bg-dark-800/50 rounded-lg p-3">
-                          <p className="text-xs text-gray-400 mb-1">Entry Fee</p>
-                          <p className="text-sm font-bold text-accent-500">
-                            {reg.tournament.entryFee === 0 ? 'FREE' : `₹${reg.tournament.entryFee}`}
-                          </p>
-                        </div>
-                      </div>
+        {loading ? (
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[0, 1].map((i) => (
+              <div key={i} className="glass rounded-2xl p-6 h-44 animate-pulse" />
+            ))}
+          </div>
+        ) : registrations.length > 0 ? (
+          <div className="grid sm:grid-cols-2 gap-4">
+            {registrations.map((reg, i) => (
+              <MotionCard key={reg._id} delay={i * 0.05}>
+                <Card variant="premium" hoverLift className="p-5 group">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="min-w-0">
+                      <h3 className="font-display font-bold text-white text-lg leading-tight line-clamp-1 group-hover:gradient-text transition-all">
+                        {reg.tournament.title}
+                      </h3>
+                      <p className="text-cyan-300 text-xs font-bold mt-1 flex items-center gap-1.5">
+                        <FaUsers /> {reg.teamName}
+                      </p>
                     </div>
-                    
-                    <div className="hidden lg:flex items-center space-x-4 ml-8">
-                      {reg.paymentStatus === 'completed' ? (
-                        <span className="bg-green-500/20 text-green-400 px-6 py-3 rounded-xl text-sm font-semibold flex items-center whitespace-nowrap">
-                          <FaCheckCircle className="mr-2" />
-                          Confirmed
-                        </span>
-                      ) : (
-                        <span className="bg-yellow-500/20 text-yellow-400 px-6 py-3 rounded-xl text-sm font-semibold flex items-center whitespace-nowrap">
-                          <FaClock className="mr-2" />
-                          Payment Pending
-                        </span>
-                      )}
+                    {reg.paymentStatus === 'completed' ? (
+                      <Badge variant="lime" size="sm" icon={FaCheckCircle}>Paid</Badge>
+                    ) : (
+                      <Badge variant="amber" size="sm" icon={FaClock}>Pending</Badge>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <Mini icon={FaCalendar} label="Date" value={new Date(reg.tournament.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} />
+                    <Mini icon={FaBolt} label="Entry" value={reg.tournament.entryFee === 0 ? 'FREE' : `₹${reg.tournament.entryFee}`} accent />
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-white/5 space-y-1.5 text-xs">
+                    <div>
+                      <span className="text-gray-500 uppercase tracking-widest text-[10px] font-bold">Leader</span>
+                      <p className="text-cyan-200 font-bold">{reg.teamLeader}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 uppercase tracking-widest text-[10px] font-bold">Members</span>
+                      <p className="text-gray-300 truncate">{reg.players?.join(', ')}</p>
                     </div>
                   </div>
-                  
-                  <div className="mt-4 pt-4 border-t border-dark-700/50">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div>
-                        <p className="text-xs text-gray-400 mb-1">Team Leader</p>
-                        <p className="text-sm font-semibold text-primary-400">{reg.teamLeader}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-400 mb-1">Team Members</p>
-                        <p className="text-sm font-semibold">{reg.players.join(', ')}</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                </Card>
+              </MotionCard>
+            ))}
+          </div>
+        ) : (
+          <Card variant="glass" className="p-12 text-center">
+            <FaTrophy className="text-7xl text-gray-600 mx-auto mb-4 opacity-50" />
+            <h3 className="text-2xl font-display font-black text-white">No tournaments yet</h3>
+            <p className="text-gray-400 mt-2">Join your first tournament and start competing.</p>
+            <div className="mt-6">
+              <Button as={Link} to="/tournaments" size="md" iconRight={<FaArrowRight />}>
+                Browse Tournaments
+              </Button>
             </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="card-premium text-center py-16"
-            >
-              <FaTrophy className="text-7xl text-gray-600 mx-auto mb-6 opacity-50" />
-              <h3 className="text-2xl font-bold mb-2">No Tournaments Yet</h3>
-              <p className="text-gray-400 text-lg mb-8">Join your first tournament and start competing!</p>
-              <Link to="/tournaments">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn-modern inline-block"
-                >
-                  Browse Tournaments
-                </motion.button>
-              </Link>
-            </motion.div>
-          )}
-        </motion.div>
-      </div>
+          </Card>
+        )}
+      </Section>
     </div>
   )
 }
 
-export default Dashboard
+function ProfileField({ label, value }) {
+  return (
+    <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/5">
+      <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">{label}</p>
+      <p className="text-white font-bold truncate">{value || '—'}</p>
+    </div>
+  )
+}
+
+function QuickAction({ to, icon: Icon, title, desc }) {
+  return (
+    <Link
+      to={to}
+      className="flex items-center gap-3 p-3 rounded-xl glass border border-white/5 hover:border-cyan-500/30 transition group"
+    >
+      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/30 to-violet-500/30 border border-cyan-500/20 grid place-items-center shrink-0 group-hover:scale-110 transition">
+        <Icon className="text-cyan-300" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-white font-bold text-sm">{title}</p>
+        <p className="text-xs text-gray-400">{desc}</p>
+      </div>
+      <FaArrowRight className="text-cyan-300 text-xs group-hover:translate-x-1 transition-transform" />
+    </Link>
+  )
+}
+
+function Mini({ icon: Icon, label, value, accent }) {
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/5">
+      <Icon className={accent ? 'text-amber-300' : 'text-cyan-300'} />
+      <div className="min-w-0">
+        <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold leading-none">{label}</p>
+        <p className="text-white font-bold text-sm truncate">{value}</p>
+      </div>
+    </div>
+  )
+}
