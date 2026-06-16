@@ -1,34 +1,33 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  FaUsers, FaEdit, FaTrash, FaTimes, FaPlus,
-  FaUserShield, FaCrown, FaArrowRight, FaCalendar,
-} from 'react-icons/fa'
+import { FaUsers, FaEdit, FaTrash, FaTimes, FaPlus, FaUserShield, FaCrown } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import Section from '../components/ui/Section'
-import Card, { MotionCard } from '../components/ui/Card'
-import Badge from '../components/ui/Badge'
-import Button from '../components/ui/Button'
-import Input from '../components/ui/Input'
 
-export default function TeamManagement() {
+const TeamManagement = () => {
   const { user } = useAuth()
   const [registrations, setRegistrations] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingTeam, setEditingTeam] = useState(null)
-  const [editFormData, setEditFormData] = useState({ teamName: '', leaderName: '', members: '' })
+  const [editFormData, setEditFormData] = useState({
+    teamName: '',
+    leaderName: '',
+    members: ''
+  })
 
-  useEffect(() => { fetchRegistrations() }, [])
+  useEffect(() => {
+    fetchRegistrations()
+  }, [])
 
   const fetchRegistrations = async () => {
     try {
       const res = await axios.get('/api/users/registrations')
       setRegistrations(res.data)
     } catch (error) {
-      toast.error('Failed to load teams')
+      // Error loading registrations
+      toast.error('Failed to load registrations')
     } finally {
       setLoading(false)
     }
@@ -39,203 +38,274 @@ export default function TeamManagement() {
     setEditFormData({
       teamName: reg.teamName,
       leaderName: reg.teamLeader,
-      members: reg.players.join(', '),
+      members: reg.players.join(', ')
     })
   }
 
   const handleUpdateTeam = async (e, registrationId) => {
     e.preventDefault()
+    
     try {
-      const membersArray = editFormData.members.split(',').map((m) => m.trim()).filter(Boolean)
+      const membersArray = editFormData.members.split(',').map(m => m.trim()).filter(m => m)
+      
       await axios.put(`/api/tournaments/registrations/${registrationId}`, {
         teamName: editFormData.teamName,
         leaderName: editFormData.leaderName,
-        members: membersArray,
+        members: membersArray
       })
-      toast.success('Team updated')
+      
+      toast.success('✅ Team updated successfully!')
       setEditingTeam(null)
       fetchRegistrations()
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Update failed')
+      toast.error(error.response?.data?.message || 'Failed to update team')
     }
   }
 
-  const handleCancelRegistration = async (reg) => {
-    if (!confirm(`Cancel your registration for "${reg.tournament.title}"?`)) return
+  const handleCancelRegistration = async (registrationId, tournamentTitle) => {
+    if (!confirm(`Are you sure you want to cancel your registration for "${tournamentTitle}"?`)) {
+      return
+    }
+
     try {
-      await axios.delete(`/api/tournaments/registrations/${reg._id}`)
-      toast.success('Registration cancelled')
+      await axios.delete(`/api/tournaments/registrations/${registrationId}`)
+      toast.success('❌ Registration cancelled successfully')
       fetchRegistrations()
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Cancel failed')
+      toast.error(error.response?.data?.message || 'Failed to cancel registration')
     }
   }
 
   return (
-    <div className="pt-20 pb-12">
-      {/* Hero */}
-      <Section aurora className="overflow-hidden">
-        <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none" />
-        <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <Badge variant="cyan" size="md">Roster HQ</Badge>
-            <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-display font-black leading-[1.05]">
-              Team <span className="gradient-text">Management</span>
-            </h1>
-            <p className="text-gray-400 mt-2 max-w-2xl">
-              Edit your roster, swap players, and manage your registered teams — all in one place.
-            </p>
-          </div>
-          <Button as={Link} to="/tournaments" size="md" iconLeft={<FaPlus />}>
-            Register New Team
-          </Button>
-        </div>
-      </Section>
+    <div className="pt-20 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            Team <span className="gradient-text">Management</span>
+          </h1>
+          <p className="text-gray-400 text-lg">View and manage your tournament teams</p>
+        </motion.div>
 
-      {/* Team list */}
-      <Section>
         {loading ? (
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[0, 1].map((i) => <div key={i} className="glass rounded-2xl p-6 h-48 animate-pulse" />)}
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
           </div>
         ) : registrations.length > 0 ? (
-          <div className="grid lg:grid-cols-2 gap-5">
-            {registrations.map((reg, i) => (
-              <MotionCard key={reg._id} delay={i * 0.06}>
-                <Card variant="premium" className="overflow-hidden h-full">
-                  {/* Card header */}
-                  <div className="px-5 py-4 flex items-center justify-between gap-3 border-b border-white/5">
-                    <div className="min-w-0">
-                      <h3 className="font-display font-bold text-white text-base leading-tight truncate group-hover:gradient-text">
-                        {reg.tournament.title}
-                      </h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1.5">
-                        <FaCalendar className="text-cyan-300" />
-                        {new Date(reg.tournament.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                      </p>
-                    </div>
-                    {reg.paymentStatus === 'completed' ? (
-                      <Badge variant="lime" size="sm">Confirmed</Badge>
-                    ) : (
-                      <Badge variant="amber" size="sm">Pending</Badge>
-                    )}
+          <div className="space-y-8">
+            {registrations.map((reg, index) => (
+              <motion.div
+                key={reg._id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="card-premium"
+              >
+                {/* Tournament Header */}
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-dark-700/50">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{reg.tournament.title}</h3>
+                    <p className="text-gray-400 text-sm">
+                      {new Date(reg.tournament.date).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </p>
                   </div>
+                  {reg.paymentStatus === 'completed' ? (
+                    <span className="bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm font-semibold">
+                      ✓ Confirmed
+                    </span>
+                  ) : (
+                    <span className="bg-yellow-500/20 text-yellow-400 px-4 py-2 rounded-full text-sm font-semibold">
+                      ⏳ Pending Payment
+                    </span>
+                  )}
+                </div>
 
-                  <div className="p-5">
-                    <AnimatePresence mode="wait">
-                      {editingTeam === reg._id ? (
-                        <motion.form
-                          key="edit"
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          onSubmit={(e) => handleUpdateTeam(e, reg._id)}
-                          className="space-y-4"
-                        >
-                          <Input
-                            label="Team Name"
+                <AnimatePresence mode="wait">
+                  {editingTeam === reg._id ? (
+                    /* Edit Form */
+                    <motion.form
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onSubmit={(e) => handleUpdateTeam(e, reg._id)}
+                      className="space-y-4"
+                    >
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-sm text-gray-400 mb-2 block">
+                            <FaCrown className="inline mr-2" />
+                            Team Name
+                          </label>
+                          <input
+                            type="text"
                             value={editFormData.teamName}
                             onChange={(e) => setEditFormData({ ...editFormData, teamName: e.target.value })}
+                            className="w-full bg-dark-800/50 border border-primary-500/30 rounded-lg px-4 py-3 focus:border-primary-500 focus:outline-none transition-colors"
                             required
                           />
-                          <Input
-                            label="Team Leader"
+                        </div>
+                        <div>
+                          <label className="text-sm text-gray-400 mb-2 block">
+                            <FaUserShield className="inline mr-2" />
+                            Team Leader
+                          </label>
+                          <input
+                            type="text"
                             value={editFormData.leaderName}
                             onChange={(e) => setEditFormData({ ...editFormData, leaderName: e.target.value })}
+                            className="w-full bg-dark-800/50 border border-primary-500/30 rounded-lg px-4 py-3 focus:border-primary-500 focus:outline-none transition-colors"
                             required
                           />
-                          <Input
-                            as="textarea"
-                            label="Team Members (comma-separated)"
-                            value={editFormData.members}
-                            onChange={(e) => setEditFormData({ ...editFormData, members: e.target.value })}
-                            hint="Player1, Player2, Player3, Player4"
-                            required
-                          />
-                          <div className="flex gap-3 pt-1">
-                            <Button type="submit" size="md" fullWidth>Save Changes</Button>
-                            <Button type="button" size="md" variant="ghost" onClick={() => setEditingTeam(null)} iconLeft={<FaTimes />}>
-                              Cancel
-                            </Button>
-                          </div>
-                        </motion.form>
-                      ) : (
-                        <motion.div
-                          key="view"
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm text-gray-400 mb-2 block">
+                          <FaUsers className="inline mr-2" />
+                          Team Members (comma-separated)
+                        </label>
+                        <textarea
+                          value={editFormData.members}
+                          onChange={(e) => setEditFormData({ ...editFormData, members: e.target.value })}
+                          className="w-full bg-dark-800/50 border border-primary-500/30 rounded-lg px-4 py-3 focus:border-primary-500 focus:outline-none transition-colors h-24"
+                          placeholder="Player1, Player2, Player3, Player4"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Separate player names with commas</p>
+                      </div>
+                      <div className="flex space-x-3 pt-2">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          type="submit"
+                          className="btn-modern flex-1"
                         >
-                          <div className="space-y-3">
-                            <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/5">
-                              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1.5">
-                                <FaCrown className="text-amber-300" /> Team Name
-                              </p>
-                              <p className="text-cyan-200 font-bold truncate">{reg.teamName}</p>
-                            </div>
+                          Save Changes
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          type="button"
+                          onClick={() => setEditingTeam(null)}
+                          className="px-6 py-3 bg-dark-800 hover:bg-dark-700 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                          <FaTimes />
+                          <span>Cancel</span>
+                        </motion.button>
+                      </div>
+                    </motion.form>
+                  ) : (
+                    /* Team Display */
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <div className="space-y-4 mb-6">
+                        <div className="bg-dark-800/30 rounded-lg p-4">
+                          <div className="flex items-center mb-2">
+                            <FaCrown className="text-accent-500 mr-2" />
+                            <h4 className="text-sm text-gray-400">Team Name</h4>
+                          </div>
+                          <p className="text-xl font-bold text-primary-400">{reg.teamName}</p>
+                        </div>
 
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/5">
-                                <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1.5">
-                                  <FaUserShield className="text-violet-300" /> Leader
-                                </p>
-                                <p className="text-white font-bold truncate text-sm">{reg.teamLeader}</p>
-                              </div>
-                              <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/5">
-                                <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1.5">
-                                  <FaUsers className="text-cyan-300" /> Roster Size
-                                </p>
-                                <p className="text-white font-bold text-sm">{reg.players.length} Players</p>
-                              </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div className="bg-dark-800/30 rounded-lg p-4">
+                            <div className="flex items-center mb-2">
+                              <FaUserShield className="text-primary-500 mr-2" />
+                              <h4 className="text-sm text-gray-400">Team Leader</h4>
                             </div>
-
-                            <div>
-                              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-2 flex items-center gap-1.5">
-                                <FaUsers className="text-lime-300" /> Members
-                              </p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {reg.players.map((p, idx) => (
-                                  <span key={idx} className="px-2.5 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-200 border border-cyan-500/20">
-                                    {p}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
+                            <p className="text-lg font-semibold">{reg.teamLeader}</p>
                           </div>
 
-                          <div className="flex gap-2 mt-5 pt-4 border-t border-white/5">
-                            <Button size="sm" variant="secondary" onClick={() => handleEditTeam(reg)} iconLeft={<FaEdit />} fullWidth>
-                              Edit Team
-                            </Button>
-                            <Button
-                              size="sm" variant="ghost" onClick={() => handleCancelRegistration(reg)}
-                              className="!text-red-300 hover:!bg-red-500/10"
-                              iconLeft={<FaTrash />}
-                            >
-                              Cancel
-                            </Button>
+                          <div className="bg-dark-800/30 rounded-lg p-4">
+                            <div className="flex items-center mb-2">
+                              <FaUsers className="text-cyan-500 mr-2" />
+                              <h4 className="text-sm text-gray-400">Team Size</h4>
+                            </div>
+                            <p className="text-lg font-semibold">{reg.players.length} Players</p>
                           </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </Card>
-              </MotionCard>
+                        </div>
+
+                        <div className="bg-dark-800/30 rounded-lg p-4">
+                          <div className="flex items-center mb-3">
+                            <FaUsers className="text-green-500 mr-2" />
+                            <h4 className="text-sm text-gray-400">Team Members</h4>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {reg.players.map((player, idx) => (
+                              <span
+                                key={idx}
+                                className="bg-primary-500/20 text-primary-300 px-3 py-1 rounded-full text-sm font-medium"
+                              >
+                                {player}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex space-x-3">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => handleEditTeam(reg)}
+                          className="btn-modern flex-1 flex items-center justify-center space-x-2"
+                        >
+                          <FaEdit />
+                          <span>Edit Team</span>
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => handleCancelRegistration(reg._id, reg.tournament.title)}
+                          className="px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-colors flex items-center space-x-2"
+                        >
+                          <FaTrash />
+                          <span>Cancel</span>
+                        </motion.button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             ))}
           </div>
         ) : (
-          <Card variant="glass" className="p-12 text-center">
-            <FaUsers className="text-7xl text-gray-600 mx-auto mb-4 opacity-50" />
-            <h3 className="text-2xl font-display font-black text-white">No teams yet</h3>
-            <p className="text-gray-400 mt-2">Register for a tournament to build your first team.</p>
-            <div className="mt-6">
-              <Button as={Link} to="/tournaments" size="md" iconLeft={<FaPlus />} iconRight={<FaArrowRight />}>
-                Browse Tournaments
-              </Button>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="card-premium text-center py-16"
+          >
+            <FaUsers className="text-7xl text-gray-600 mx-auto mb-6 opacity-50" />
+            <h3 className="text-2xl font-bold mb-2">No Teams Yet</h3>
+            <p className="text-gray-400 text-lg mb-8">Register for a tournament to create your first team!</p>
+            <div>
+              <Link to="/tournaments" className="flex items-center justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-modern inline-flex items-center"
+                >
+                  <FaPlus className="inline mr-2" />
+                  Browse Tournaments
+                </motion.button>
+              </Link>
             </div>
-          </Card>
+          </motion.div>
         )}
-      </Section>
+      </div>
     </div>
   )
 }
+
+export default TeamManagement
