@@ -16,9 +16,14 @@ const CLAN_LOGO = '/Line_up/logo.png'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isInsideNav, setIsInsideNav] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const navRef = useRef(null)
   const dropdownRef = useRef(null)
+  const mouseRaf = useRef(null)
+  const lastMousePos = useRef({ x: 0, y: 0 })
+  const lastInside = useRef(false)
   const location = useLocation()
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
