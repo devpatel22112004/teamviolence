@@ -1,17 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
-import {
-  FaBars, FaTimes, FaTrophy, FaUsers, FaHome, FaUser, FaGamepad,
-  FaSignOutAlt, FaCompass, FaChevronDown, FaDiscord, FaWhatsapp
-} from 'react-icons/fa'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaBars, FaTimes, FaTrophy, FaUsers, FaHome, FaUser, FaGamepad, FaSignOutAlt, FaCompass, FaChevronDown } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import LazyImage from './LazyImage'
-import { formatImagePath } from '../utils/images'
-import Button from './ui/Button'
-import Avatar from './ui/Avatar'
-
-const CLAN_LOGO = '/Line_up/logo.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,23 +15,23 @@ const Navbar = () => {
   const { user, logout } = useAuth()
   const isHomePage = location.pathname === '/'
 
-  // Scroll progress bar
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })
-
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const onClick = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setDropdownOpen(false)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
     }
-    document.addEventListener('mousedown', onClick)
-    return () => document.removeEventListener('mousedown', onClick)
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
   }, [])
 
   useEffect(() => {
@@ -47,315 +39,453 @@ const Navbar = () => {
     setDropdownOpen(false)
   }, [location.pathname])
 
-  // Lock body scroll when mobile menu open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [isOpen])
-
   const navLinks = [
-    { name: 'Home',        path: '/',                              icon: FaHome },
-    { name: 'Esports',     path: '/violence-esports-tournaments',  icon: FaGamepad },
-    { name: 'Lineup',      path: '/team',                          icon: FaUsers },
-    { name: 'Tournaments', path: '/tournaments',                   icon: FaTrophy },
-    { name: 'Discover',    path: '/discovery',                     icon: FaCompass },
+    { name: 'Home', path: '/', icon: FaHome },
+    { name: 'Esports', path: '/violence-esports-tournaments', icon: FaGamepad },
+    { name: 'Lineup', path: '/team', icon: FaUsers },
+    { name: 'Tournaments', path: '/tournaments', icon: FaTrophy },
+    { name: 'Discover', path: '/discovery', icon: FaCompass },
   ]
 
   const dashboardLinks = [
-    { name: 'Dashboard',     path: '/dashboard',         icon: FaUser },
-    { name: 'My Teams',      path: '/team-management',   icon: FaUsers },
-    { name: 'Registrations', path: '/my-registrations',  icon: FaTrophy },
-    { name: 'Profile',       path: '/profile',           icon: FaUser },
+    { name: 'Dashboard', path: '/dashboard', icon: FaUser },
+    { name: 'My Teams', path: '/team-management', icon: FaUsers },
+    { name: 'Registrations', path: '/my-registrations', icon: FaTrophy },
+    { name: 'Profile', path: '/profile', icon: FaUser },
   ]
 
-  const isActive = (path) =>
-    path === '/' ? location.pathname === '/' : location.pathname === path
+  const isActive = (path) => location.pathname === path
 
-  const NavLink = ({ link }) => {
-    const [h, setH] = useState(false)
-    const active = isActive(link.path)
+  const NavLink = ({ link, isHome }) => {
+    const [isHovering, setIsHovering] = useState(false)
+
     return (
-      <Link
-        to={link.path}
-        onMouseEnter={() => setH(true)}
-        onMouseLeave={() => setH(false)}
-        className="relative inline-flex"
-      >
-        <motion.span
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.96 }}
-          className={[
-            'relative inline-flex items-center gap-2.5 px-4 py-2 rounded-xl text-sm font-bold tracking-wide transition-colors duration-300',
-            active ? 'text-white' : 'text-gray-300 hover:text-white',
-          ].join(' ')}
+      <Link to={link.path}>
+        <motion.div
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          whileHover={{ scale: 1.1, y: -3 }}
+          whileTap={{ scale: 0.95 }}
+          className={`relative px-5 py-2.5 rounded-xl transition-all duration-300 group inline-flex items-center gap-2.5 ${
+            isActive(link.path)
+              ? isHome
+                ? 'text-white'
+                : 'text-primary-300'
+              : isHome
+              ? 'text-gray-200'
+              : 'text-gray-300'
+          }`}
         >
-          {/* Animated background pill */}
-          {(active || h) && (
-            <motion.span
-              layoutId="nav-pill"
-              className={[
-                'absolute inset-0 rounded-xl -z-10',
-                active
-                  ? 'bg-gradient-to-br from-cyan-500/20 to-violet-500/10 border border-cyan-400/40 shadow-glow-cyan'
-                  : 'bg-white/[0.06] border border-white/10',
-              ].join(' ')}
-              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+          {/* Static hover glow (no movement) */}
+          {isHovering && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none"
+            >
+              <div
+                className={`absolute w-40 h-40 rounded-full pointer-events-none ${
+                  isHome ? 'bg-white/30' : 'bg-primary-400/30'
+                } blur-3xl`}
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}
+              />
+            </motion.div>
+          )}
+
+          {/* Premium glass + glow background */}
+          {(isActive(link.path) || isHovering) && (
+            <motion.div
+              layoutId={`nav-pill-${link.path}`}
+              className={`absolute inset-0 rounded-xl ${
+                isActive(link.path)
+                  ? isHome
+                    ? 'bg-gradient-to-br from-white/30 to-white/10 shadow-xl shadow-white/40'
+                    : 'bg-gradient-to-br from-primary-500/30 to-primary-500/10 shadow-xl shadow-primary-500/50'
+                  : isHome
+                  ? 'bg-white/20 shadow-lg shadow-white/30'
+                  : 'bg-primary-500/20 shadow-lg shadow-primary-500/40'
+              }`}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
             />
           )}
-          {/* Active underline */}
-          {active && (
-            <motion.span
-              layoutId="nav-underline"
-              className="absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-[2px] w-6 rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 shadow-glow-cyan"
+
+          {/* Animated border glow on hover */}
+          {isHovering && (
+            <motion.div
+              className={`absolute inset-0 rounded-xl border-2 pointer-events-none ${
+                isHome ? 'border-white/60' : 'border-primary-400/60'
+              }`}
+              animate={{
+                boxShadow: isHome
+                  ? ['0 0 20px rgba(255,255,255,0.5)', '0 0 30px rgba(255,255,255,0.3)']
+                  : ['0 0 20px rgba(14,165,233,0.5)', '0 0 30px rgba(14,165,233,0.3)']
+              }}
+              transition={{ duration: 0.8, repeat: Infinity }}
             />
           )}
-          <link.icon className="text-base" />
-          <span>{link.name}</span>
-        </motion.span>
+
+          <motion.div
+            whileHover={{ rotate: 15, scale: 1.2 }}
+            transition={{ type: 'spring', stiffness: 400 }}
+            className="relative z-10"
+          >
+            <link.icon className="text-lg" />
+          </motion.div>
+          <span className="text-sm font-extrabold tracking-wide relative z-10">{link.name}</span>
+        </motion.div>
       </Link>
     )
   }
 
   return (
     <>
-      {/* Scroll progress bar */}
-      <motion.div
-        style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 h-[3px] origin-left z-[60] bg-gradient-to-r from-cyan-400 via-violet-500 to-pink-500 shadow-glow-cyan pointer-events-none"
-      />
-
       <motion.nav
         ref={navRef}
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className={[
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`fixed w-full z-50 transition-all duration-500 ${
           isHomePage && !scrolled
             ? 'bg-transparent'
-            : 'bg-[#030712]/80 backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/30',
-        ].join(' ')}
+            : isHomePage && scrolled
+            ? 'bg-black/70 backdrop-blur-xl shadow-xl shadow-black/20 border-b border-white/10'
+            : scrolled
+            ? 'bg-dark-950/80 backdrop-blur-xl shadow-xl shadow-primary-900/5 border-b border-primary-500/10'
+            : 'bg-dark-950/40 backdrop-blur-sm'
+        }`}
       >
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex items-center justify-between h-20 min-h-[80px] gap-6">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-              <div className="relative">
-                <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                     style={{ background: 'conic-gradient(from 0deg, #22d3ee, #a855f7, #ec4899, #22d3ee)', filter: 'blur(14px)' }} />
+        <div className="max-w-full mx-auto px-6 lg:px-12 relative z-10">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center h-20 min-h-[80px] gap-6">
+            {/* Logo - Fixed Width */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex-shrink-0"
+            >
+              <Link to="/" className="flex items-center gap-2 group cursor-pointer">
                 <motion.div
-                  whileHover={{ rotate: 10, scale: 1.06 }}
+                  whileHover={{ rotate: 15, scale: 1.15 }}
                   transition={{ type: 'spring', stiffness: 300 }}
-                  className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border border-cyan-400/40 group-hover:border-cyan-400 bg-[#030712] shadow-glow-cyan"
+                  className="relative"
                 >
-                  <LazyImage
-                    src={formatImagePath(CLAN_LOGO)}
-                    alt="Team VioLencE"
-                    width={56}
-                    height={56}
-                    loading="eager"
-                    className="w-full h-full object-cover scale-150"
-                  />
+                  <div className={`absolute -inset-2 rounded-xl blur opacity-0 group-hover:opacity-70 transition-all duration-300 ${
+                    isHomePage && !scrolled
+                      ? 'bg-gradient-to-r from-white to-gray-300'
+                      : 'bg-gradient-to-r from-primary-600 to-primary-500'
+                  }`} />
+                  <div className={`relative rounded-lg overflow-hidden border transition-all duration-300 ${
+                    isHomePage && !scrolled
+                      ? 'bg-white/5 border-white/30 group-hover:border-white/60'
+                      : 'bg-dark-950 border-primary-500/40 group-hover:border-primary-500/80'
+                  }`}>
+                    <LazyImage 
+                      src="/Line_up/logo.png" 
+                      alt="Team VioLencE Logo" 
+                      width={56}
+                      height={56}
+                      loading="eager"
+                      fetchpriority="high"
+                      className="w-14 h-14 object-cover scale-150"
+                    />
+                  </div>
                 </motion.div>
-              </div>
-              <div className="hidden sm:flex flex-col leading-none">
-                <span className="font-display font-black text-base sm:text-lg gradient-text-static">Team VioLencE</span>
-                <span className="text-[10px] font-bold tracking-[0.3em] text-cyan-400 mt-0.5">ESPORTS</span>
-              </div>
-            </Link>
+                <div className="flex flex-col min-w-fit">
+                  <span className={`text-lg font-display font-black leading-tight transition-colors duration-300 ${
+                    isHomePage && !scrolled ? 'text-white' : 'gradient-text'
+                  }`}>
+                    Team VioLencE
+                  </span>
+                  <span className={`text-xs font-bold tracking-widest transition-colors duration-300 ${
+                    isHomePage && !scrolled ? 'text-gray-300' : 'text-primary-400'
+                  }`}>ESPORTS</span>
+                </div>
+              </Link>
+            </motion.div>
 
-            {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-1.5">
-              {navLinks.map((link) => <NavLink key={link.path} link={link} />)}
+            {/* Desktop Navigation - Centered */}
+            <div className="hidden lg:flex justify-center items-center gap-3 px-4">
+              {navLinks.map((link) => (
+                <NavLink key={link.path} link={link} isHome={isHomePage && !scrolled} />
+              ))}
             </div>
 
-            {/* Right section */}
-            <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-              {/* Quick socials */}
-              <div className="hidden xl:flex items-center gap-2 mr-1">
-                <a href="https://discord.gg/amN9D8SrN8" target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 hover:text-indigo-300 hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-all"
-                   aria-label="Discord">
-                  <FaDiscord className="text-sm" />
-                </a>
-                <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 hover:text-emerald-300 hover:border-emerald-400/40 hover:bg-emerald-500/10 transition-all"
-                   aria-label="WhatsApp">
-                  <FaWhatsapp className="text-sm" />
-                </a>
-              </div>
-
+            {/* Right Section - Always Visible */}
+            <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
               {user ? (
-                <div className="relative" ref={dropdownRef}>
-                  <motion.button
-                    whileHover={{ scale: 1.04, y: -1 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => setDropdownOpen((v) => !v)}
-                    className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-cyan-400/40 transition-all"
-                    aria-haspopup="true"
-                    aria-expanded={dropdownOpen}
-                  >
-                    <Avatar src={user.profilePicture} name={user.name} size="sm" ring="cyan" fallbackTone="cyan" />
-                    <span className="text-sm font-bold text-white max-w-[120px] truncate">{user.name?.split(' ')[0] || 'Account'}</span>
-                    <motion.span animate={{ rotate: dropdownOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <FaChevronDown className="text-[10px] text-gray-400" />
-                    </motion.span>
-                  </motion.button>
-
-                  <AnimatePresence>
-                    {dropdownOpen && (
+                <>
+                  {/* Dashboard Dropdown Button */}
+                  <div className="relative" ref={dropdownRef}>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className={`relative px-4 py-2.5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 font-bold text-sm group ${
+                        isHomePage && !scrolled
+                          ? 'bg-white/10 text-white border border-white/30 hover:bg-white/15'
+                          : 'bg-dark-800/50 text-gray-300 border border-dark-700 hover:border-primary-500/50 hover:text-primary-300'
+                      }`}
+                    >
+                      <FaUser className="text-base" />
+                      <span>Account</span>
                       <motion.div
-                        initial={{ opacity: 0, y: -6, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -6, scale: 0.96 }}
-                        transition={{ duration: 0.18 }}
-                        className="absolute right-0 mt-2 w-64 rounded-2xl shadow-2xl border border-white/10 bg-[#0b1220]/95 backdrop-blur-xl overflow-hidden z-50"
+                        animate={{ rotate: dropdownOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="px-4 py-3 border-b border-white/5 flex items-center gap-3">
-                          <Avatar src={user.profilePicture} name={user.name} size="md" ring="cyan" fallbackTone="cyan" />
-                          <div className="min-w-0">
-                            <p className="text-sm font-bold text-white truncate">{user.name}</p>
-                            <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                          </div>
-                        </div>
-                        <div className="py-1">
-                          {dashboardLinks.map((link, i) => (
-                            <Link
-                              key={link.path}
-                              to={link.path}
-                              onClick={() => setDropdownOpen(false)}
-                              className={[
-                                'flex items-center gap-3 px-4 py-2.5 text-sm font-semibold transition-colors',
-                                isActive(link.path)
-                                  ? 'text-cyan-300 bg-cyan-500/10'
-                                  : 'text-gray-300 hover:text-white hover:bg-white/[0.04]',
-                                i !== 0 ? 'border-t border-white/[0.04]' : '',
-                              ].join(' ')}
-                            >
-                              <link.icon className="text-sm" />
-                              <span>{link.name}</span>
-                            </Link>
-                          ))}
-                        </div>
-                        <button
-                          onClick={() => { setDropdownOpen(false); logout() }}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-300 hover:bg-red-500/10 border-t border-white/5 transition-colors"
-                        >
-                          <FaSignOutAlt />
-                          Logout
-                        </button>
+                        <FaChevronDown className="text-xs" />
                       </motion.div>
+                    </motion.button>
+
+                    {/* Dropdown Menu */}
+                    <AnimatePresence>
+                      {dropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className={`absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border backdrop-blur-xl overflow-hidden z-50 ${
+                            isHomePage && !scrolled
+                              ? 'bg-black/80 border-white/20'
+                              : 'bg-dark-900/95 border-primary-500/20'
+                          }`}
+                        >
+                          <div className="py-2">
+                            {dashboardLinks.map((link, index) => (
+                              <Link
+                                key={link.path}
+                                to={link.path}
+                                onClick={() => setDropdownOpen(false)}
+                              >
+                                <motion.div
+                                  whileHover={{ x: 4 }}
+                                  className={`flex items-center gap-3 px-4 py-3 transition-all duration-200 ${
+                                    isActive(link.path)
+                                      ? isHomePage && !scrolled
+                                        ? 'bg-white/15 text-white'
+                                        : 'bg-primary-500/10 text-primary-400'
+                                      : isHomePage && !scrolled
+                                      ? 'text-gray-300 hover:bg-white/10 hover:text-white'
+                                      : 'text-gray-400 hover:bg-dark-800 hover:text-primary-300'
+                                  } ${index !== dashboardLinks.length - 1 ? 'border-b border-dark-700/30' : ''}`}
+                                >
+                                  <link.icon className="text-sm flex-shrink-0" />
+                                  <span className="text-sm font-semibold">{link.name}</span>
+                                </motion.div>
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Logout Button - Pill Shape */}
+                  <motion.button
+                    whileHover={{ scale: 1.12, y: -3 }}
+                    whileTap={{ scale: 0.92 }}
+                    onClick={logout}
+                    className={`relative px-3 py-3 rounded-full text-sm font-bold transition-all duration-300 inline-flex items-center justify-center flex-shrink-0 group w-12 h-12 backdrop-blur-md border-2 overflow-hidden ${
+                      isHomePage && !scrolled
+                        ? 'border-red-400/40 drop-shadow-[0_0_15px_rgba(248,113,113,0.5)]'
+                        : 'border-red-500/50 drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]'
+                    }`}
+                    title="Logout"
+                  >
+                    {/* Animated background gradient */}
+                    <motion.div
+                      className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                        isHomePage && !scrolled 
+                          ? 'bg-gradient-to-br from-red-500/30 to-red-600/20' 
+                          : 'bg-gradient-to-br from-red-600/40 to-red-500/30'
+                      }`}
+                    />
+                    
+                    {/* Glowing border on hover */}
+                    {isHomePage && !scrolled ? (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-red-400/60 opacity-0 group-hover:opacity-100"
+                        animate={{
+                          boxShadow: ['0 0 15px rgba(248,113,113,0.4)', '0 0 25px rgba(248,113,113,0.2)']
+                        }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-red-500/60 opacity-0 group-hover:opacity-100"
+                        animate={{
+                          boxShadow: ['0 0 15px rgba(239,68,68,0.5)', '0 0 25px rgba(239,68,68,0.3)']
+                        }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                      />
                     )}
-                  </AnimatePresence>
-                </div>
+                    
+                    <motion.div
+                      whileHover={{ rotate: 15, scale: 1.3 }}
+                      transition={{ type: 'spring', stiffness: 400 }}
+                      className="relative z-10"
+                    >
+                      <FaSignOutAlt className={`text-lg ${isHomePage && !scrolled ? 'text-red-300' : 'text-red-400'}`} />
+                    </motion.div>
+                  </motion.button>
+                </>
               ) : (
-                <Link to="/login">
-                  <Button variant="primary" size="md" iconLeft={<FaUser />}>Login</Button>
+                <Link to="/login" className="block flex-shrink-0">
+                  <motion.button
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative px-4 lg:px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 inline-flex items-center justify-center gap-2 group whitespace-nowrap ${
+                      isHomePage && !scrolled
+                        ? 'bg-gradient-to-r from-white to-gray-200 text-black drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
+                        : 'bg-gradient-to-r from-primary-600 to-primary-500 text-white drop-shadow-[0_0_12px_rgba(14,165,233,0.4)]'
+                    }`}
+                  >
+                    <FaUser className="text-base flex-shrink-0" />
+                    <span>Login</span>
+                  </motion.button>
                 </Link>
               )}
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile Menu Button */}
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={() => setIsOpen((v) => !v)}
-              className="md:hidden p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white"
-              aria-label="Toggle menu"
+              onClick={() => setIsOpen(!isOpen)}
+              className={`md:hidden p-2.5 rounded-xl transition-all duration-300 justify-self-end ${
+                isHomePage && !scrolled
+                  ? 'text-white hover:text-gray-200 border border-white/20 hover:border-white/40 hover:bg-white/10'
+                  : 'text-gray-300 hover:text-primary-500 border border-dark-700 hover:border-primary-500/30'
+              }`}
             >
-              <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
-                {isOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+              <motion.div
+                animate={{ rotate: isOpen ? 90 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
               </motion.div>
             </motion.button>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: '100vh' }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-              className="md:hidden fixed inset-0 top-20 bg-[#030712]/98 backdrop-blur-xl overflow-y-auto"
+              transition={{ duration: 0.3 }}
+              className={`md:hidden transition-all duration-300 border-t backdrop-blur-xl ${
+                isHomePage && !scrolled
+                  ? 'bg-black/70 border-white/10'
+                  : 'bg-dark-950 border-primary-500/10'
+              }`}
             >
-              <div className="px-4 sm:px-6 py-6 space-y-1">
-                {navLinks.map((link, i) => (
-                  <motion.div
+              <div className="px-4 py-4 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+                {navLinks.map((link) => (
+                  <Link
                     key={link.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
                   >
-                    <Link
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={[
-                        'flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all',
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                         isActive(link.path)
-                          ? 'bg-gradient-to-r from-cyan-500/20 to-violet-500/10 text-white border border-cyan-400/40'
-                          : 'text-gray-300 hover:bg-white/[0.04] hover:text-white border border-transparent',
-                      ].join(' ')}
+                          ? isHomePage && !scrolled
+                            ? 'bg-white/15 text-white border border-white/30'
+                            : 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
+                          : isHomePage && !scrolled
+                          ? 'text-gray-200 hover:text-white hover:bg-white/10 border border-white/10'
+                          : 'text-gray-300 hover:text-primary-400 hover:bg-dark-800 border border-transparent'
+                      }`}
                     >
-                      <link.icon className="text-base text-cyan-400" />
-                      <span>{link.name}</span>
-                    </Link>
-                  </motion.div>
+                      <motion.div whileHover={{ rotate: 10 }} className="text-lg">
+                        <link.icon />
+                      </motion.div>
+                      <span className="font-bold">{link.name}</span>
+                    </motion.div>
+                  </Link>
                 ))}
 
                 {user && (
-                  <div className="pt-4 mt-4 border-t border-white/5 space-y-1">
-                    <p className="px-4 py-2 text-[10px] font-bold tracking-[0.3em] text-cyan-400 uppercase">Your Account</p>
-                    {dashboardLinks.map((link, i) => (
-                      <motion.div
-                        key={link.path}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (navLinks.length + i) * 0.05 }}
-                      >
+                  <>
+                    <div className={`border-t pt-4 mt-4 space-y-2 transition-colors duration-300 ${
+                      isHomePage && !scrolled ? 'border-white/20' : 'border-dark-700'
+                    }`}>
+                      <div className={`text-xs font-bold px-4 py-2 tracking-wider transition-colors duration-300 ${
+                        isHomePage && !scrolled ? 'text-gray-300' : 'text-primary-400'
+                      }`}>YOUR ACCOUNT</div>
+                      {dashboardLinks.map((link) => (
                         <Link
+                          key={link.path}
                           to={link.path}
                           onClick={() => setIsOpen(false)}
-                          className={[
-                            'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors',
-                            isActive(link.path) ? 'text-cyan-300 bg-cyan-500/10' : 'text-gray-300 hover:bg-white/[0.04] hover:text-white',
-                          ].join(' ')}
                         >
-                          <link.icon className="text-sm" />
-                          <span>{link.name}</span>
+                          <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                              isActive(link.path)
+                                ? isHomePage && !scrolled
+                                  ? 'bg-white/15 text-white border border-white/30'
+                                  : 'bg-primary-500/10 text-primary-400 border border-primary-500/30'
+                                : isHomePage && !scrolled
+                                ? 'text-gray-200 hover:text-white hover:bg-white/10 border border-white/10'
+                                : 'text-gray-300 hover:text-primary-400 hover:bg-dark-800 border border-transparent'
+                            }`}
+                          >
+                            <motion.div whileHover={{ rotate: 10 }} className="text-lg">
+                              <link.icon />
+                            </motion.div>
+                            <span className="font-semibold text-sm">{link.name}</span>
+                          </motion.div>
                         </Link>
-                      </motion.div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  </>
                 )}
 
-                <div className="pt-4 mt-4 border-t border-white/5 space-y-2">
+                <div className={`border-t pt-4 mt-4 space-y-2 transition-colors duration-300 ${
+                  isHomePage && !scrolled ? 'border-white/20' : 'border-dark-700'
+                }`}>
                   {user ? (
-                    <Button variant="danger" fullWidth onClick={() => { logout(); setIsOpen(false) }} iconLeft={<FaSignOutAlt />}>
-                      Logout
-                    </Button>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        logout()
+                        setIsOpen(false)
+                      }}
+                      className={`flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg font-bold transition-all duration-300 ${
+                        isHomePage && !scrolled
+                          ? 'bg-white/15 text-white hover:bg-white/25 border border-white/30'
+                          : 'bg-red-600/20 text-red-400 hover:bg-red-600/30 border border-red-500/30'
+                      }`}
+                    >
+                      <FaSignOutAlt />
+                      <span>Logout</span>
+                    </motion.button>
                   ) : (
-                    <Link to="/login" onClick={() => setIsOpen(false)} className="block">
-                      <Button variant="primary" fullWidth iconLeft={<FaUser />}>Login</Button>
+                    <Link
+                      to="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="block"
+                    >
+                      <motion.button
+                        whileTap={{ scale: 0.95 }}
+                        className={`flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg font-bold transition-all duration-300 ${
+                          isHomePage && !scrolled
+                            ? 'bg-white text-black hover:shadow-lg hover:shadow-white/50'
+                            : 'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:shadow-lg hover:shadow-primary-500/50'
+                        }`}
+                      >
+                        <FaUser />
+                        <span>Login</span>
+                      </motion.button>
                     </Link>
                   )}
-
-                  <div className="flex items-center justify-center gap-3 pt-4">
-                    <a href="https://discord.gg/amN9D8SrN8" target="_blank" rel="noopener noreferrer"
-                       className="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-300 hover:bg-indigo-500/20 transition-all"
-                       aria-label="Discord">
-                      <FaDiscord />
-                    </a>
-                    <a href="https://chat.whatsapp.com/BRydZHpa1ARDNp2DTdBrlu" target="_blank" rel="noopener noreferrer"
-                       className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-300 hover:bg-emerald-500/20 transition-all"
-                       aria-label="WhatsApp">
-                      <FaWhatsapp />
-                    </a>
-                  </div>
                 </div>
               </div>
             </motion.div>
