@@ -148,7 +148,7 @@ const ViolenceEsports = () => {
       />
 
       <section className="relative overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/20 blur-3xl" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary-500/20 blur-3xl" />
         <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 blur-3xl" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,7 +159,7 @@ const ViolenceEsports = () => {
             className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center"
           >
             <div className="space-y-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-cyan-300">Violence Esports</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-primary-300">Violence Esports</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
                 Violence Esports Tournaments: Win the Arena
               </h1>
@@ -178,7 +178,7 @@ const ViolenceEsports = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl blur-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-purple-500/20 rounded-3xl blur-2xl" />
               <LazyImage
                 src={heroImage}
                 alt="Violence Esports tournament stage with premium production"
@@ -219,7 +219,7 @@ const ViolenceEsports = () => {
             { icon: FaUsers, title: 'Community Growth', text: 'Teams get visibility, feedback, and clear steps to enter higher-tier tournaments.' },
           ].map((item) => (
             <div key={item.title} className="rounded-2xl border border-slate-700/70 bg-slate-900/60 p-6">
-              <item.icon className="text-cyan-400 text-2xl mb-4" />
+              <item.icon className="text-primary-400 text-2xl mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
               <p className="text-gray-400 text-sm">{item.text}</p>
             </div>
@@ -253,14 +253,14 @@ const ViolenceEsports = () => {
                 These are our highest-production events with elevated prize pools. They include tighter eligibility checks, detailed lobby management, and broadcast-ready match setups.
               </p>
             </div>
-            <Link to="/tournaments" className="inline-flex items-center gap-2 text-cyan-300 font-semibold hover:text-cyan-200">
+            <Link to="/tournaments" className="inline-flex items-center gap-2 text-primary-300 font-semibold hover:text-primary-200">
               Browse all tournaments
               <FaArrowRight />
             </Link>
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-3xl blur-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-primary-500/20 rounded-3xl blur-2xl" />
             <LazyImage
               src={crowdImage}
               alt="BGMI esports crowd watching a finals match"
@@ -298,7 +298,7 @@ const ViolenceEsports = () => {
           </div>
         </div>
         <p className="text-gray-400 text-sm">
-          Internal guide: explore the <Link to="/discovery" className="text-cyan-300 hover:text-cyan-200">Violence Esports journey</Link> to see how top teams grow over seasons.
+          Internal guide: explore the <Link to="/discovery" className="text-primary-300 hover:text-primary-200">Violence Esports journey</Link> to see how top teams grow over seasons.
         </p>
       </section>
 
@@ -321,13 +321,13 @@ const ViolenceEsports = () => {
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-white">Authority Signals You Can Verify</h3>
             <ul className="space-y-2 text-gray-300 text-sm">
-              <li className="flex items-start gap-2"><FaCheckCircle className="text-cyan-400 mt-1" />Tournament history and public highlights.</li>
-              <li className="flex items-start gap-2"><FaCheckCircle className="text-cyan-400 mt-1" />Transparent prize payouts and match results.</li>
-              <li className="flex items-start gap-2"><FaCheckCircle className="text-cyan-400 mt-1" />Dedicated moderation and anti-cheat reviews.</li>
-              <li className="flex items-start gap-2"><FaCheckCircle className="text-cyan-400 mt-1" />Growing partnerships and community endorsements.</li>
+              <li className="flex items-start gap-2"><FaCheckCircle className="text-primary-400 mt-1" />Tournament history and public highlights.</li>
+              <li className="flex items-start gap-2"><FaCheckCircle className="text-primary-400 mt-1" />Transparent prize payouts and match results.</li>
+              <li className="flex items-start gap-2"><FaCheckCircle className="text-primary-400 mt-1" />Dedicated moderation and anti-cheat reviews.</li>
+              <li className="flex items-start gap-2"><FaCheckCircle className="text-primary-400 mt-1" />Growing partnerships and community endorsements.</li>
             </ul>
             <p className="text-gray-400 text-sm">
-              External resources: learn more about <a className="text-cyan-300 hover:text-cyan-200" href="https://en.wikipedia.org/wiki/Esports" target="_blank" rel="noreferrer">esports competition standards</a> and the official <a className="text-cyan-300 hover:text-cyan-200" href="https://www.battlegroundsmobileindia.com/" target="_blank" rel="noreferrer">BGMI competitive ecosystem</a>.
+              External resources: learn more about <a className="text-primary-300 hover:text-primary-200" href="https://en.wikipedia.org/wiki/Esports" target="_blank" rel="noreferrer">esports competition standards</a> and the official <a className="text-primary-300 hover:text-primary-200" href="https://www.battlegroundsmobileindia.com/" target="_blank" rel="noreferrer">BGMI competitive ecosystem</a>.
             </p>
           </div>
         </div>
@@ -345,7 +345,7 @@ const ViolenceEsports = () => {
             { title: 'Community Growth', desc: 'Our story, milestones, and what we are building next.', link: '/discovery' },
             { title: 'Join the Squad', desc: 'Create an account and enter events faster.', link: '/register' },
           ].map((item) => (
-            <Link key={item.title} to={item.link} className="rounded-2xl border border-slate-700/70 bg-slate-900/60 p-6 hover:border-cyan-400/60 transition">
+            <Link key={item.title} to={item.link} className="rounded-2xl border border-slate-700/70 bg-slate-900/60 p-6 hover:border-primary-400/60 transition">
               <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
               <p className="text-gray-400 text-sm">{item.desc}</p>
             </Link>
@@ -368,7 +368,7 @@ const ViolenceEsports = () => {
       </section>
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="rounded-3xl border border-cyan-500/40 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 p-8 sm:p-10 text-center">
+        <div className="rounded-3xl border border-primary-500/40 bg-gradient-to-br from-primary-500/10 to-purple-500/10 p-8 sm:p-10 text-center">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">Ready to Compete?</h2>
           <p className="text-gray-300 mb-6">Claim your slot in the next Violence Esports tournament and start building your team legacy.</p>
           <Link to="/tournaments" className="btn-primary inline-flex items-center gap-2 px-6 py-3">

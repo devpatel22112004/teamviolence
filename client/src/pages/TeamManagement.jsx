@@ -228,7 +228,7 @@ const TeamManagement = () => {
 
                           <div className="bg-dark-800/30 rounded-lg p-4">
                             <div className="flex items-center mb-2">
-                              <FaUsers className="text-cyan-500 mr-2" />
+                              <FaUsers className="text-primary-500 mr-2" />
                               <h4 className="text-sm text-gray-400">Team Size</h4>
                             </div>
                             <p className="text-lg font-semibold">{reg.players.length} Players</p>

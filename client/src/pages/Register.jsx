@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaEnvelope, FaLock, FaUser, FaPhone } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaUser, FaPhone, FaUserPlus } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
+import ParticleField from '../components/ParticleField'
 import toast from 'react-hot-toast'
 
 const Register = () => {
@@ -38,91 +39,101 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center pt-20 pb-20 px-4 sm:px-6">
+    <div className="relative min-h-screen flex items-center justify-center pt-20 pb-20 px-4 sm:px-6">
+      <ParticleField />
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 w-full max-w-md"
       >
-        <div className="card p-6 sm:p-8">
+        <div className="glass-strong p-6 sm:p-10 neon-glow">
           <div className="text-center mb-6 sm:mb-8">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, delay: 0.15 }}
+              className="mx-auto mb-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-neon"
+            >
+              <FaUserPlus className="text-2xl text-white" />
+            </motion.div>
             <h1 className="text-3xl sm:text-4xl font-display font-bold mb-2">
-              Join <span className="text-primary-500">Team VioLencE</span>
+              Join <span className="gradient-text">Team VioLencE</span>
             </h1>
-            <p className="text-gray-400 text-xs sm:text-sm">Create your account</p>
+            <p className="text-[color:var(--text-muted)] text-xs sm:text-sm">Create your account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-2">Full Name</label>
+              <label className="block text-sm font-semibold mb-2 text-[color:var(--text-muted)]">Full Name</label>
               <div className="relative">
-                <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400" />
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
+                  className="w-full bg-primary-500/5 border border-primary-500/25 rounded-xl pl-12 pr-4 py-3 text-[color:var(--text-main)] placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:shadow-neon transition-all"
                   placeholder="Enter your name"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
+              <label className="block text-sm font-semibold mb-2 text-[color:var(--text-muted)]">Email</label>
               <div className="relative">
-                <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400" />
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
+                  className="w-full bg-primary-500/5 border border-primary-500/25 rounded-xl pl-12 pr-4 py-3 text-[color:var(--text-main)] placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:shadow-neon transition-all"
                   placeholder="Enter your email"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Phone Number</label>
+              <label className="block text-sm font-semibold mb-2 text-[color:var(--text-muted)]">Phone Number</label>
               <div className="relative">
-                <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400" />
                 <input
                   type="tel"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
+                  className="w-full bg-primary-500/5 border border-primary-500/25 rounded-xl pl-12 pr-4 py-3 text-[color:var(--text-main)] placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:shadow-neon transition-all"
                   placeholder="Enter your phone number"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
+              <label className="block text-sm font-semibold mb-2 text-[color:var(--text-muted)]">Password</label>
               <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400" />
                 <input
                   type="password"
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
+                  className="w-full bg-primary-500/5 border border-primary-500/25 rounded-xl pl-12 pr-4 py-3 text-[color:var(--text-main)] placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:shadow-neon transition-all"
                   placeholder="Create a password"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Confirm Password</label>
+              <label className="block text-sm font-semibold mb-2 text-[color:var(--text-muted)]">Confirm Password</label>
               <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400" />
                 <input
                   type="password"
                   required
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                  className="w-full bg-dark-800 border border-dark-700 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:border-primary-500"
+                  className="w-full bg-primary-500/5 border border-primary-500/25 rounded-xl pl-12 pr-4 py-3 text-[color:var(--text-main)] placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:shadow-neon transition-all"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -131,7 +142,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full text-lg disabled:opacity-50"
+              className="btn-modern w-full text-lg disabled:opacity-50"
             >
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>

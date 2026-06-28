@@ -211,7 +211,7 @@ const Team = () => {
       title: 'Content Creators', 
       members: creators, 
       icon: FaVideo,
-      color: 'from-purple-500 to-pink-600',
+      color: 'from-purple-500 to-accent-600',
       bgColor: 'bg-purple-500/10',
       borderColor: 'border-purple-500/30',
       description: 'Creators bringing VioLencE to the community'
@@ -560,7 +560,7 @@ const Team = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold transition-all shadow-lg hover:shadow-pink-500/50"
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-600 to-purple-600 hover:from-accent-500 hover:to-purple-500 text-white font-bold transition-all shadow-lg hover:shadow-accent-500/50"
             >
               <FaInstagram className="text-xl" />
               <span>Follow on Instagram</span>
@@ -584,7 +584,7 @@ const Team = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold transition-all shadow-lg hover:shadow-indigo-500/50"
+              className="flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-500 hover:to-primary-500 text-white font-bold transition-all shadow-lg hover:shadow-primary-500/50"
             >
               <FaDiscord className="text-xl" />
               <span>Join Discord</span>

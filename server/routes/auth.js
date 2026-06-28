@@ -274,42 +274,11 @@ router.post('/verify-otp', async (req, res) => {
     }
 
     // OTP verified successfully
-    res.json({ 
+    res.json({
       message: 'OTP verified successfully',
       verified: true
     })
   } catch (error) {
-    console.error('OTP verification error:', error)
-    res.status(500).json({ message: 'Error verifying OTP' })
-  }
-})
-
-// Verify OTP
-router.post('/verify-otp', async (req, res) => {
-  try {
-    const { email, otp } = req.body
-    if (!email || !otp) {
-      return res.status(400).json({ message: 'Email and OTP are required' })
-    }
-
-    const otpHash = crypto.createHash('sha256').update(otp).digest('hex')
-    const user = await User.findOne({
-      email,
-      resetPasswordOTP: otpHash,
-      resetPasswordOTPExpires: { $gt: Date.now() }
-    })
-
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired OTP code' })
-    }
-
-    // OTP verified successfully
-    res.json({ 
-      message: 'OTP verified successfully',
-      verified: true
-    })
-  } catch (error) {
-    console.error('OTP verification error:', error)
     res.status(500).json({ message: 'Error verifying OTP' })
   }
 })

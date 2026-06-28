@@ -38,8 +38,6 @@ const registrationSchema = new mongoose.Schema({
     enum: ['pending', 'completed', 'failed'],
     default: 'pending'
   },
-  paymentId: String,
-  orderId: String,
   amount: Number
 }, {
   timestamps: true

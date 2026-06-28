@@ -94,7 +94,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="card-premium bg-gradient-to-br from-primary-500/20 to-cyan-500/10"
+            className="card-premium bg-gradient-to-br from-primary-500/20 to-primary-500/10"
           >
             <div className="flex items-center justify-between">
               <div>

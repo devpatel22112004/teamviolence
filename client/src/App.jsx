@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
+import PageTransition from './components/PageTransition'
 import Home from './pages/Home'
 import About from './pages/About'
 import Team from './pages/Team'
@@ -19,6 +21,64 @@ import MyRegistrations from './pages/MyRegistrations'
 import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './components/ProtectedRoute'
 
+const p = (Component) => (
+  <PageTransition>
+    <Component />
+  </PageTransition>
+)
+
+function AnimatedRoutes() {
+  const location = useLocation()
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={p(Home)} />
+        <Route path="/about" element={p(About)} />
+        <Route path="/team" element={p(Team)} />
+        <Route path="/discovery" element={p(Discovery)} />
+        <Route path="/violence-esports-tournaments" element={p(ViolenceEsports)} />
+        <Route path="/tournaments" element={p(Tournaments)} />
+        <Route path="/tournaments/:id" element={p(TournamentDetails)} />
+        <Route path="/login" element={p(Login)} />
+        <Route path="/register" element={p(Register)} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <PageTransition><Dashboard /></PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/team-management"
+          element={
+            <ProtectedRoute>
+              <PageTransition><TeamManagement /></PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-registrations"
+          element={
+            <ProtectedRoute>
+              <PageTransition><MyRegistrations /></PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <PageTransition><UserProfile /></PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -33,61 +93,21 @@ function App() {
           <ScrollToTop behavior="smooth" />
           <Navbar />
           <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/discovery" element={<Discovery />} />
-              <Route path="/violence-esports-tournaments" element={<ViolenceEsports />} />
-              <Route path="/tournaments" element={<Tournaments />} />
-              <Route path="/tournaments/:id" element={<TournamentDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/team-management" 
-                element={
-                  <ProtectedRoute>
-                    <TeamManagement />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/my-registrations" 
-                element={
-                  <ProtectedRoute>
-                    <MyRegistrations />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute>
-                    <UserProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <AnimatedRoutes />
           </main>
           <Footer />
-          <Toaster 
+          <Toaster
             position="top-right"
             toastOptions={{
               duration: 3000,
               style: {
-                background: '#1f2937',
-                color: '#fff',
-                border: '1px solid #374151'
-              }
+                background: 'rgba(21, 15, 38, 0.95)',
+                color: '#f5f3ff',
+                border: '1px solid rgba(139, 92, 246, 0.35)',
+                backdropFilter: 'blur(12px)'
+              },
+              success: { iconTheme: { primary: '#8b5cf6', secondary: '#fff' } },
+              error: { iconTheme: { primary: '#e935e0', secondary: '#fff' } }
             }}
           />
         </div>

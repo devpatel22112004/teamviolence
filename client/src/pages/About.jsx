@@ -7,7 +7,7 @@ const About = () => {
       icon: FaBullseye,
       title: 'Excellence',
       description: 'We strive for perfection in every match, constantly improving our skills and strategies.',
-      color: 'from-blue-500 to-blue-600',
+      color: 'from-primary-500 to-primary-600',
     },
     {
       icon: FaTrophy,
@@ -19,13 +19,13 @@ const About = () => {
       icon: FaUsers,
       title: 'Teamwork',
       description: 'Success comes from perfect coordination and trust between team members.',
-      color: 'from-green-500 to-teal-600',
+      color: 'from-green-500 to-primary-600',
     },
     {
       icon: FaHeart,
       title: 'Passion',
       description: 'Our love for the game drives us to push boundaries and achieve greatness.',
-      color: 'from-pink-500 to-red-600',
+      color: 'from-accent-500 to-red-600',
     },
   ]
 

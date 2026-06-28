@@ -123,7 +123,7 @@ const Navbar = () => {
               animate={{
                 boxShadow: isHome
                   ? ['0 0 20px rgba(255,255,255,0.5)', '0 0 30px rgba(255,255,255,0.3)']
-                  : ['0 0 20px rgba(14,165,233,0.5)', '0 0 30px rgba(14,165,233,0.3)']
+                  : ['0 0 20px rgba(139,92,246,0.5)', '0 0 30px rgba(217,70,239,0.3)']
               }}
               transition={{ duration: 0.8, repeat: Infinity }}
             />
@@ -350,11 +350,12 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center gap-2 justify-self-end">
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden p-2.5 rounded-xl transition-all duration-300 justify-self-end ${
+              className={`p-2.5 rounded-xl transition-all duration-300 ${
                 isHomePage && !scrolled
                   ? 'text-white hover:text-gray-200 border border-white/20 hover:border-white/40 hover:bg-white/10'
                   : 'text-gray-300 hover:text-primary-500 border border-dark-700 hover:border-primary-500/30'
@@ -367,6 +368,7 @@ const Navbar = () => {
                 {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
               </motion.div>
             </motion.button>
+            </div>
           </div>
         </div>
 

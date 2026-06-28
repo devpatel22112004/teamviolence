@@ -1,66 +1,78 @@
-# 🎮 Team VioLencE - BGMI Tournament Platform
+# 🎮 Team VioLencE — BGMI Esports Platform
 
-A comprehensive tournament management system for BGMI (Battlegrounds Mobile India) esports tournaments.
+A modern, premium tournament platform for **Team VioLencE**, a competitive BGMI (Battlegrounds Mobile India) esports clan. Browse tournaments, register your squad, explore the roster, and follow the clan's journey — all in a fast, animated, mobile-friendly web app.
 
 ![Status](https://img.shields.io/badge/status-active-success.svg)
-![MongoDB](https://img.shields.io/badge/MongoDB-Connected-green.svg)
+![Stack](https://img.shields.io/badge/stack-MERN-7c3aed.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+---
+
+## 🧩 Tech Stack
+
+**Frontend** — React 18 · Vite · Tailwind CSS · Framer Motion · React Router v6 · Axios
+**Backend** — Node.js · Express · MongoDB (Mongoose) · JWT auth · Google OAuth · Nodemailer · Multer
+
+The whole app is JavaScript end-to-end. The frontend lives in `client/`, the API in `server/`.
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js v18+ installed
-- MongoDB running (local or Atlas)
+- Node.js v18+
+- A MongoDB database (local, or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster)
 - Git
 
-### Installation
-
+### 1. Clone & install
 ```bash
-# Clone repository
 git clone https://github.com/devpatel22112004/teamviolence.git
 cd teamviolence
 
-# Install all dependencies
-npm install
-cd server && npm install
-cd ../client && npm install
-cd ..
-
-# Configure environment variables (see below)
-
-# Seed database with test data
-cd server && npm run seed
-
-# Start servers
-./start.sh
+# Install root, server, and client dependencies
+npm run install-all
 ```
 
-### Environment Setup
+### 2. Configure environment variables
 
-**Backend (.env in server/):**
+**`server/.env`**
 ```env
 MONGODB_URI=mongodb://localhost:27017/teamviolence
-JWT_SECRET=your_super_secret_jwt_key_change_this
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+JWT_SECRET=change_this_to_a_long_random_string
 PORT=5000
 NODE_ENV=development
+
+# Optional — only needed for the matching features
+GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com   # Google login
+EMAIL_SERVICE=gmail                                                  # password-reset emails
+EMAIL_USER=you@gmail.com
+EMAIL_PASSWORD=your_gmail_app_password
 ```
 
-**Frontend (.env in client/):**
+**`client/.env`** (optional — only for Google login)
 ```env
-VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
 VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 ```
 
-### Access Application
+> Copy `server/.env.example` and `client/.env.example` as starting points.
 
-- **Frontend:** http://localhost:3000/
-- **Backend:** http://localhost:5000
+### 3. Seed sample data (optional)
+```bash
+cd server && npm run seed && cd ..
+```
 
-**Test Credentials:**
+### 4. Run it
+
+```bash
+# Runs the API (port 5000) and the frontend (port 3000) together
+npm run dev
+```
+
+Then open **http://localhost:3000**.
+
+> 💡 You can run just the frontend with `cd client && npm run dev` — useful for design work. Data-driven pages (tournaments) need the backend + MongoDB running to show content.
+
+**Seeded test credentials**
 - User: `user@test.com` / `user123`
 - Admin: `admin@teamviolence.com` / `admin123`
 
@@ -68,43 +80,23 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 
 ## ✨ Features
 
-### User Features
-- 🎮 Browse & view tournaments
-- 📝 Register for tournaments
-- 👥 Team management
-- 💳 Secure payment processing (Razorpay)
-- 📊 View registration history
-- 👤 User profile management
-- 🔐 Secure authentication (JWT + Google OAuth)
+**For players**
+- 🏆 Browse tournaments with live countdown timers, prize breakdowns, and slot tracking
+- 📝 Register a squad (free entry; paid entries are coordinated via WhatsApp/Instagram/YouTube)
+- 👥 Manage your team registrations and view registration history
+- 👤 Profile management with password change
+- 🔐 Email/password auth, Google login, and OTP-based password reset
 
-### Admin Features
-- ➕ Create & manage tournaments
-- 📊 View all registrations
-- 👥 Manage team members
-- ✅ Approve/reject registrations
+**For the clan**
+- 🧑‍🤝‍🧑 Roster showcase (organizers & content creators) with detailed player profiles
+- 🗺️ "The VioLencE Journey" interactive timeline
+- 📈 SEO-optimized landing pages
 
-### Technical Features
-- 🔒 JWT-based authentication
-- 🌐 RESTful API architecture
-- 📱 Fully responsive design
-- ⚡ Real-time updates
-- 🎨 Modern UI with Tailwind CSS
-- 🎭 Smooth animations with Framer Motion
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- React 18, Vite, Tailwind CSS
-- Framer Motion, React Router v6
-- Axios, Context API
-
-### Backend
-- Node.js, Express.js
-- MongoDB with Mongoose
-- JWT, bcryptjs, Multer
-- Razorpay SDK, Google Auth
+**Design & UX**
+- 🟣 Premium violet/neon visual theme
+- 🌗 Light / dark mode toggle
+- ✨ Animated hero, particle effects, smooth page transitions, skeleton loaders
+- 📱 Mobile-responsive across phones, tablets, and desktop
 
 ---
 
@@ -112,104 +104,61 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 
 ```
 teamviolence/
-├── client/                 # React frontend
+├── client/                     # React + Vite frontend
 │   ├── src/
-│   │   ├── components/    # Reusable components
-│   │   ├── pages/        # Page components
-│   │   ├── context/      # Auth context
-│   │   └── App.jsx       # Main app
-│   └── package.json
-├── server/                # Express backend
-│   ├── models/           # Mongoose models
-│   ├── routes/           # API routes
-│   ├── middleware/       # Auth middleware
-│   ├── index.js          # Server entry
-│   └── seed.js           # Database seeder
-├── start.sh              # Start servers
-├── stop.sh               # Stop servers
-├── status.sh             # Check status
-└── README.md             # This file
+│   │   ├── components/          # Navbar, Footer, ThemeToggle, Countdown, ParticleField, Skeleton, …
+│   │   ├── pages/              # Home, Tournaments, Team, Discovery, Login, Dashboard, …
+│   │   ├── context/           # AuthContext, ThemeContext
+│   │   ├── App.jsx            # Routes + global providers
+│   │   └── index.css         # Design system (theme tokens, components)
+│   └── tailwind.config.js     # Color palette, animations
+├── server/                     # Express API
+│   ├── models/                # User, Tournament, Registration, TeamMember
+│   ├── routes/                # auth, tournaments, team, users
+│   ├── middleware/            # JWT auth + admin guard
+│   ├── index.js               # Server entry
+│   └── seed.js                # Database seeder
+└── package.json                # Root scripts (dev, build, install-all)
 ```
 
 ---
 
-## 🔧 Available Scripts
+## 🔧 Scripts
 
-### Helper Scripts
+**Root**
 ```bash
-./start.sh           # Start both servers
-./stop.sh            # Stop all servers
-./status.sh          # Check server status
+npm run dev          # Run API + frontend together
+npm run build        # Build the frontend for production
+npm run install-all  # Install root + server + client deps
 ```
 
-### Backend (server/)
-```bash
-npm start            # Start server
-npm run dev          # Start with nodemon
-npm run seed         # Seed database
-```
-
-### Frontend (client/)
-```bash
-npm run dev          # Start dev server
-npm run build        # Build for production
-npm run preview      # Preview build
-```
+**Backend (`server/`)** — `npm run dev` (nodemon) · `npm start` · `npm run seed`
+**Frontend (`client/`)** — `npm run dev` · `npm run build` · `npm run preview`
 
 ---
 
-## 📡 API Endpoints
+## 📡 Key API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - Register user
-- `POST /api/auth/login` - Login user
-- `POST /api/auth/google` - Google OAuth
+**Auth** — `POST /api/auth/register` · `POST /api/auth/login` · `POST /api/auth/google` · `POST /api/auth/forgot-password` · `POST /api/auth/verify-otp` · `POST /api/auth/reset-password`
 
-### Tournaments
-- `GET /api/tournaments` - Get all tournaments
-- `GET /api/tournaments/:id` - Get tournament
-- `POST /api/tournaments` - Create (admin)
-- `PUT /api/tournaments/:id` - Update (admin)
-- `POST /api/tournaments/:id/register` - Register
+**Tournaments** — `GET /api/tournaments` · `GET /api/tournaments/:id` · `POST /api/tournaments/:id/register` · `GET /api/tournaments/my/registrations` · admin: `POST|PUT|DELETE /api/tournaments/:id`
 
-### Team & Users
-- `GET /api/team/members` - Get team members
-- `GET /api/users/profile` - Get profile
-- `PUT /api/users/profile` - Update profile
+**Team** — `GET /api/team` · admin: `POST|PUT|DELETE /api/team/:id`
+
+**Users** — `GET|PUT /api/users/profile` · `PUT /api/users/change-password` · `GET /api/users/registrations`
 
 ---
 
 ## 🛑 Troubleshooting
 
-### Port Already in Use
-```bash
-./stop.sh
-```
-
-### Database Connection Error
-- Check MongoDB is running
-- Verify `.env` connection string
-
-### Module Not Found
-```bash
-npm install
-cd server && npm install
-cd ../client && npm install
-```
+- **Tournaments page is empty** → the backend isn't running or `MONGODB_URI` is wrong. Start the API and check `server/.env`.
+- **Port already in use** → stop the existing process, or change `PORT` / Vite's port.
+- **Module not found** → run `npm run install-all`.
 
 ---
 
 ## 📝 License
 
-MIT License
+MIT © **Dev Patel** — GitHub: [@devpatel22112004](https://github.com/devpatel22112004)
 
----
-
-## 👨‍💻 Developer
-
-**Dev Patel**
-- GitHub: [@devpatel22112004](https://github.com/devpatel22112004)
-
----
-
-**Made with ❤️ for the BGMI Esports Community**
+**Made with 💜 for the BGMI Esports community.**

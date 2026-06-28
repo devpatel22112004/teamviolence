@@ -22,6 +22,7 @@ import {
 } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import LazyImage from '../components/LazyImage'
+import ParticleField from '../components/ParticleField'
 
 const CLAN_LOGO = '/Line_up/logo.png'
 
@@ -39,10 +40,10 @@ const SOCIAL_QUICK_LINKS = [
     label: 'Google Form',
     href: 'https://forms.gle/z6Vj1eJXtg8RQGfz7',
     icon: FaWpforms,
-    gradient: 'from-sky-500/20 to-blue-600/20',
-    border: 'border-sky-500/30',
-    hover: 'hover:from-sky-500/30 hover:to-blue-600/30 hover:border-sky-400/50',
-    iconColor: 'text-sky-300'
+    gradient: 'from-primary-500/20 to-primary-600/20',
+    border: 'border-primary-500/30',
+    hover: 'hover:from-primary-500/30 hover:to-primary-600/30 hover:border-primary-400/50',
+    iconColor: 'text-primary-300'
   },
   {
     label: 'YouTube',
@@ -57,10 +58,10 @@ const SOCIAL_QUICK_LINKS = [
     label: 'Instagram',
     href: 'https://www.instagram.com/teamviolenceesports?igsh=MTRhOTRzMDR4aHQ2Mw==',
     icon: FaInstagram,
-    gradient: 'from-pink-500/20 to-rose-500/20',
-    border: 'border-pink-500/30',
-    hover: 'hover:from-pink-500/30 hover:to-rose-500/30 hover:border-pink-400/50',
-    iconColor: 'text-pink-300'
+    gradient: 'from-accent-500/20 to-rose-500/20',
+    border: 'border-accent-500/30',
+    hover: 'hover:from-accent-500/30 hover:to-rose-500/30 hover:border-accent-400/50',
+    iconColor: 'text-accent-300'
   },
 ]
 
@@ -85,8 +86,8 @@ const Home = () => {
   ]
 
   const communityStats = [
-    { icon: FaHeart, value: '45K+', label: 'Active Fans', color: 'from-rose-500 to-pink-600' },
-    { icon: FaDiscord, value: '12K+', label: 'Discord Members', color: 'from-indigo-500 to-purple-600' },
+    { icon: FaHeart, value: '45K+', label: 'Active Fans', color: 'from-rose-500 to-accent-600' },
+    { icon: FaDiscord, value: '12K+', label: 'Discord Members', color: 'from-primary-500 to-purple-600' },
     { icon: FaYoutube, value: '25K+', label: 'YouTube Subs', color: 'from-red-500 to-red-600' },
     { icon: FaTwitch, value: '8.5K+', label: 'Twitch Followers', color: 'from-purple-500 to-purple-700' },
   ]
@@ -149,7 +150,7 @@ const Home = () => {
       date: 'Jan 25, 2026',
       type: 'Free',
       slots: '45/100',
-      accent: 'from-emerald-500 to-teal-600',
+      accent: 'from-emerald-500 to-primary-600',
     },
   ]
 
@@ -179,8 +180,9 @@ const Home = () => {
           }}
         />
         <div className="absolute inset-0 grid-overlay opacity-20" />
+        <ParticleField count={18} />
         <div className="absolute -left-32 -top-32 w-96 h-96 bg-primary-500/20 blur-3xl" />
-        <div className="absolute right-0 top-24 w-80 h-80 bg-primary-700/20 blur-3xl" />
+        <div className="absolute right-0 top-24 w-80 h-80 bg-accent-500/20 blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div
@@ -302,11 +304,11 @@ const Home = () => {
       {/* SEO Landing Highlight */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl border border-primary-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 sm:p-8">
-          <div className="absolute -left-16 -top-16 w-56 h-56 bg-cyan-500/20 blur-3xl" />
+          <div className="absolute -left-16 -top-16 w-56 h-56 bg-primary-500/20 blur-3xl" />
           <div className="absolute -right-16 -bottom-16 w-56 h-56 bg-amber-500/20 blur-3xl" />
           <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Violence Esports</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-primary-300">Violence Esports</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
                 Your Home for Competitive Tournaments
               </h2>
@@ -412,7 +414,7 @@ const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl border border-primary-500/25 bg-gradient-to-br from-dark-900 via-purple-950/20 to-dark-950 p-8 sm:p-10 lg:p-12">
           <div className="absolute -right-32 -top-32 w-96 h-96 bg-purple-500/15 blur-3xl" />
-          <div className="absolute -left-32 -bottom-32 w-96 h-96 bg-pink-500/10 blur-3xl" />
+          <div className="absolute -left-32 -bottom-32 w-96 h-96 bg-accent-500/10 blur-3xl" />
           
           <div className="relative space-y-8">
             {/* Header */}
@@ -426,7 +428,7 @@ const Home = () => {
                 <FaHeart className="text-rose-400" />
                 <span className="text-sm font-semibold text-rose-300">Powered by Community</span>
               </motion.div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-rose-200 via-purple-200 to-pink-300 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold bg-gradient-to-r from-rose-200 via-purple-200 to-accent-300 bg-clip-text text-transparent">
                 Join the VioLencE Family
               </h2>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -472,9 +474,9 @@ const Home = () => {
                   href="#"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 flex items-center justify-center hover:from-indigo-500/30 hover:to-purple-500/30 hover:border-indigo-400/50 transition-all"
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-purple-500/20 border border-primary-500/30 flex items-center justify-center hover:from-primary-500/30 hover:to-purple-500/30 hover:border-primary-400/50 transition-all"
                 >
-                  <FaDiscord className="text-xl text-indigo-300" />
+                  <FaDiscord className="text-xl text-primary-300" />
                 </motion.a>
                 <motion.a
                   href="#"
@@ -488,9 +490,9 @@ const Home = () => {
                   href="#"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-pink-500/30 flex items-center justify-center hover:from-pink-500/30 hover:to-rose-500/30 hover:border-pink-400/50 transition-all"
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-500/20 to-rose-500/20 border border-accent-500/30 flex items-center justify-center hover:from-accent-500/30 hover:to-rose-500/30 hover:border-accent-400/50 transition-all"
                 >
-                  <FaInstagram className="text-xl text-pink-300" />
+                  <FaInstagram className="text-xl text-accent-300" />
                 </motion.a>
                 <motion.a
                   href="#"

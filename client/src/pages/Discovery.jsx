@@ -83,7 +83,7 @@ const Discovery = () => {
         'First international tournament held'
       ],
       stats: { events: '24', members: '800', investment: '₹5L', reach: '~50K' },
-      color: 'from-green-500 to-cyan-500',
+      color: 'from-green-500 to-primary-500',
       gradient: 'via-green-600'
     },
     {
@@ -111,7 +111,7 @@ const Discovery = () => {
         'Ranked #1 esports organizer in India'
       ],
       stats: { events: '40', members: '3000', investment: '₹50L+', reach: '~500K' },
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-purple-500 to-accent-500',
       gradient: 'via-purple-600'
     },
     {
@@ -140,8 +140,8 @@ const Discovery = () => {
         'Broadcasting reach: 5M+ across platforms'
       ],
       stats: { events: '50+', members: '5000+', investment: '₹1Cr+', reach: '~5M' },
-      color: 'from-cyan-500 to-blue-500',
-      gradient: 'via-cyan-600'
+      color: 'from-primary-500 to-primary-500',
+      gradient: 'via-primary-600'
     }
   ]
 
@@ -197,15 +197,15 @@ const Discovery = () => {
       title: 'Community Focused',
       shortDesc: 'Our players are our family.',
       fullDesc: 'We grow together, win together, celebrate together. Your success is our success. We invest in building lasting relationships with every member of our community.',
-      color: 'from-blue-500/20 to-cyan-500/20',
-      borderColor: 'border-blue-500/30'
+      color: 'from-primary-500/20 to-primary-500/20',
+      borderColor: 'border-primary-500/30'
     },
     {
       icon: '💎',
       title: 'Premium Quality',
       shortDesc: 'Excellence is non-negotiable.',
       fullDesc: 'World-class infrastructure, 4K streaming, professional commentary, and premium venue setups. We never compromise on quality.',
-      color: 'from-purple-500/20 to-pink-500/20',
+      color: 'from-purple-500/20 to-accent-500/20',
       borderColor: 'border-purple-500/30'
     },
     {
@@ -254,7 +254,7 @@ const Discovery = () => {
       >
         <div className="relative text-center">
           {/* Animated glow orbs */}
-          <div className="absolute -top-20 -left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl" />
+          <div className="absolute -top-20 -left-20 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
 
           <motion.div
@@ -264,13 +264,13 @@ const Discovery = () => {
             className="inline-block mb-8 relative z-10"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 blur-3xl opacity-60 rounded-full w-28 h-28" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-accent-600 blur-3xl opacity-60 rounded-full w-28 h-28" />
               <div className="relative text-8xl animate-pulse">🎮</div>
             </div>
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight relative z-10">
-            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 animate-pulse">VioLencE</span> Journey
+            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-purple-400 to-accent-400 animate-pulse">VioLencE</span> Journey
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8 relative z-10">
@@ -280,13 +280,13 @@ const Discovery = () => {
           <div className="flex flex-wrap justify-center gap-3 relative z-10">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500/30 to-blue-500/30 border-2 border-cyan-500/60 text-cyan-300 font-bold text-sm backdrop-blur-md hover:border-cyan-400 transition-all"
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-primary-500/30 to-primary-500/30 border-2 border-primary-500/60 text-primary-300 font-bold text-sm backdrop-blur-md hover:border-primary-400 transition-all"
             >
               ✨ Since 2019
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 border-2 border-purple-500/60 text-purple-300 font-bold text-sm backdrop-blur-md hover:border-purple-400 transition-all"
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-purple-500/30 to-accent-500/30 border-2 border-purple-500/60 text-purple-300 font-bold text-sm backdrop-blur-md hover:border-purple-400 transition-all"
             >
               🏆 Industry Leaders
             </motion.div>
@@ -321,21 +321,21 @@ const Discovery = () => {
                 whileHover={{ y: -12, scale: 1.02 }}
                 className="relative group"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all duration-500" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all duration-500" />
                 <div className="relative bg-gradient-to-br from-slate-900/98 via-slate-950/98 to-black/98 backdrop-blur-xl border border-slate-700/70 rounded-2xl p-8 hover:border-slate-600 transition-all overflow-hidden">
                   {/* Gradient accent */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="relative">
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 10 }}
-                      className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500/40 to-purple-500/40 mb-6 border border-cyan-500/50"
+                      className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500/40 to-purple-500/40 mb-6 border border-primary-500/50"
                     >
-                      <Icon className="text-3xl text-cyan-300" />
+                      <Icon className="text-3xl text-primary-300" />
                     </motion.div>
                     <h3 className="text-2xl font-black text-white mb-3">{card.title}</h3>
                     <p className="text-gray-300 text-sm leading-relaxed mb-4">{card.desc}</p>
-                    <p className="text-gray-400 text-xs leading-relaxed italic border-l-2 border-cyan-500/50 pl-3">{card.detailed}</p>
+                    <p className="text-gray-400 text-xs leading-relaxed italic border-l-2 border-primary-500/50 pl-3">{card.detailed}</p>
                   </div>
                 </div>
               </motion.div>
@@ -361,7 +361,7 @@ const Discovery = () => {
               onClick={() => setActiveYear(item.year)}
               className={`px-5 sm:px-7 py-3 sm:py-4 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 relative overflow-hidden group ${
                 activeYear === item.year
-                  ? 'bg-gradient-to-r from-cyan-600 to-purple-600 text-white shadow-2xl shadow-cyan-500/60 border border-cyan-400/60'
+                  ? 'bg-gradient-to-r from-primary-600 to-purple-600 text-white shadow-2xl shadow-primary-500/60 border border-primary-400/60'
                   : 'bg-slate-800/60 text-gray-300 border border-slate-700/60 hover:border-slate-600 hover:bg-slate-800/80'
               }`}
             >
@@ -445,7 +445,7 @@ const Discovery = () => {
                 </div>
 
                 {/* Full Story */}
-                <div className="border-l-4 border-cyan-500/50 pl-6 py-4 bg-slate-800/30 rounded-r-lg">
+                <div className="border-l-4 border-primary-500/50 pl-6 py-4 bg-slate-800/30 rounded-r-lg">
                   <p className="text-gray-300 text-base leading-relaxed italic">{activeJourney.fullStory}</p>
                 </div>
 
@@ -459,7 +459,7 @@ const Discovery = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: idx * 0.08 }}
-                        className="flex items-start gap-3 p-4 rounded-lg bg-slate-800/50 border border-slate-700/50 hover:border-cyan-500/30 transition-all group cursor-pointer"
+                        className="flex items-start gap-3 p-4 rounded-lg bg-slate-800/50 border border-slate-700/50 hover:border-primary-500/30 transition-all group cursor-pointer"
                       >
                         <div className={`text-xl mt-0.5 font-black text-transparent bg-clip-text bg-gradient-to-r ${activeJourney.color} group-hover:scale-125 transition-transform`}>✓</div>
                         <p className="text-gray-200 font-semibold text-sm sm:text-base">{highlight}</p>
@@ -526,7 +526,7 @@ const Discovery = () => {
         className="max-w-6xl mx-auto mb-24"
       >
         <h2 className="text-4xl sm:text-5xl font-black text-white text-center mb-4">
-          By The <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Numbers</span>
+          By The <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">Numbers</span>
         </h2>
         <p className="text-center text-gray-400 mb-12 text-lg">Our complete impact across 6 incredible years</p>
 
@@ -543,11 +543,11 @@ const Discovery = () => {
                 whileHover={{ y: -12, scale: 1.05 }}
                 className="relative group"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-all duration-500" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-all duration-500" />
                 <div className="relative bg-gradient-to-br from-slate-900/95 to-slate-950/95 backdrop-blur-xl border border-slate-700/60 rounded-2xl p-8 text-center hover:border-slate-600 transition-all overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   
-                  <Icon className="w-14 h-14 text-cyan-400 mx-auto mb-4 group-hover:scale-125 group-hover:text-purple-400 transition-all" />
+                  <Icon className="w-14 h-14 text-primary-400 mx-auto mb-4 group-hover:scale-125 group-hover:text-purple-400 transition-all" />
                   <div className="text-5xl font-black text-white mb-2">{stat.value}</div>
                   <p className="text-gray-400 font-bold text-sm uppercase tracking-wider mb-4">{stat.label}</p>
                   <div className="flex items-center justify-center gap-1 text-green-400 font-black text-sm mb-3">{stat.trend}</div>
@@ -567,7 +567,7 @@ const Discovery = () => {
         className="max-w-6xl mx-auto mb-24"
       >
         <h2 className="text-4xl sm:text-5xl font-black text-white text-center mb-4">
-          What We <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Stand For</span>
+          What We <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">Stand For</span>
         </h2>
         <p className="text-center text-gray-400 mb-12 text-lg">The pillars that define Team VioLencE</p>
 
@@ -583,7 +583,7 @@ const Discovery = () => {
               onClick={() => setExpandedValue(expandedValue === idx ? -1 : idx)}
               className="relative group text-left"
             >
-              <div className="absolute -inset-1 bg-gradient-to-br from-cyan-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all duration-500" />
               <div className={`relative bg-gradient-to-br from-slate-900/95 to-slate-950/95 backdrop-blur-xl border border-slate-700/60 rounded-2xl p-8 hover:border-slate-600 transition-all ${value.color} ${value.borderColor}`}>
                 <div className="text-5xl mb-4 text-center">{value.icon}</div>
                 <h3 className="text-xl font-black text-white mb-3 text-center">{value.title}</h3>
@@ -611,7 +611,7 @@ const Discovery = () => {
         className="max-w-6xl mx-auto mb-24"
       >
         <h2 className="text-4xl sm:text-5xl font-black text-white text-center mb-4">
-          Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Future Vision</span>
+          Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">Future Vision</span>
         </h2>
         <p className="text-center text-gray-400 mb-12 text-lg">Where we're heading next</p>
 
@@ -626,7 +626,7 @@ const Discovery = () => {
               whileHover={{ scale: 1.05, y: -8 }}
               className="relative group"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-purple-600 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-all" />
               <div className="relative bg-gradient-to-br from-slate-900/95 to-slate-950/95 backdrop-blur-xl border border-slate-700/60 rounded-2xl p-8 hover:border-slate-600 transition-all">
                 <div className="text-5xl mb-4">{item.icon}</div>
                 <h3 className="text-2xl font-black text-white mb-3">{item.title}</h3>
@@ -644,12 +644,12 @@ const Discovery = () => {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto"
       >
-        <div className="relative bg-gradient-to-r from-slate-900/98 via-purple-900/40 to-slate-900/98 backdrop-blur-3xl border-2 border-purple-500/50 rounded-[32px] overflow-hidden p-10 sm:p-16 text-center group"
+        <div className="relative bg-gradient-to-r from-slate-900/98 via-purple-900/40 to-slate-900/98 backdrop-blur-lg border-2 border-purple-500/50 rounded-[32px] overflow-hidden p-10 sm:p-16 text-center group"
         >
           {/* Animated background */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/10 to-purple-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute -top-1/2 -right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-1/2 -left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-1/2 -left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
 
           <div className="relative z-10">
             <motion.div
@@ -662,7 +662,7 @@ const Discovery = () => {
             </motion.div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-              Ready to Be Part of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">The Story?</span>
+              Ready to Be Part of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-purple-400">The Story?</span>
             </h2>
             
             <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
@@ -672,7 +672,7 @@ const Discovery = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/tournaments"
-                className="relative inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-black text-white uppercase tracking-wider text-sm overflow-hidden group/btn bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 shadow-xl shadow-cyan-500/50 hover:shadow-cyan-500/70 transition-all border border-cyan-400/60 hover:border-cyan-300"
+                className="relative inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-black text-white uppercase tracking-wider text-sm overflow-hidden group/btn bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 shadow-xl shadow-primary-500/50 hover:shadow-primary-500/70 transition-all border border-primary-400/60 hover:border-primary-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
                 <FaRocket className="relative text-base" />
@@ -690,7 +690,7 @@ const Discovery = () => {
             </div>
 
             <p className="text-gray-500 text-xs mt-8">
-              Questions? Check out our <Link to="/about" className="text-cyan-400 hover:text-cyan-300 font-bold">About page</Link> or contact support
+              Questions? Check out our <Link to="/about" className="text-primary-400 hover:text-primary-300 font-bold">About page</Link> or contact support
             </p>
           </div>
         </div>
@@ -698,7 +698,7 @@ const Discovery = () => {
 
       {/* Decorative elements */}
       <div className="fixed -bottom-20 -right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed -top-40 -left-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none" />
     </div>
   )
 }

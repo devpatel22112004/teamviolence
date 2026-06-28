@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const Razorpay = require('razorpay')
-const crypto = require('crypto')
 const Tournament = require('../models/Tournament')
 const Registration = require('../models/Registration')
 const { authMiddleware, adminMiddleware } = require('../middleware/auth')
@@ -94,56 +92,6 @@ router.post('/:id/register', authMiddleware, async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({ message: 'Error registering for tournament', error: error.message })
-  }
-})
-
-// Verify payment and complete registration
-router.post('/:id/verify-payment', authMiddleware, async (req, res) => {
-  try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, teamData } = req.body
-
-    // Verify signature
-    const sign = razorpay_order_id + '|' + razorpay_payment_id
-    const expectedSign = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
-      .update(sign.toString())
-      .digest('hex')
-
-    if (razorpay_signature !== expectedSign) {
-      return res.status(400).json({ message: 'Invalid payment signature' })
-    }
-
-    const tournament = await Tournament.findById(req.params.id)
-    
-    if (!tournament) {
-      return res.status(404).json({ message: 'Tournament not found' })
-    }
-
-    // Create registration
-    const registration = new Registration({
-      user: req.user._id,
-      tournament: tournament._id,
-      tournamentTitle: tournament.title,
-      tournamentMode: tournament.mode,
-      tournamentType: tournament.type,
-      entryFee: tournament.entryFee,
-      teamName: teamData.teamName,
-      teamLeader: teamData.teamLeader,
-      players: teamData.players,
-      paymentStatus: 'completed',
-      paymentId: razorpay_payment_id,
-      orderId: razorpay_order_id,
-      amount: tournament.entryFee
-    })
-
-    await registration.save()
-    
-    tournament.registeredTeams += 1
-    await tournament.save()
-
-    res.json({ message: 'Payment verified and registration complete', registration })
-  } catch (error) {
-    res.status(500).json({ message: 'Error verifying payment' })
   }
 })
 
